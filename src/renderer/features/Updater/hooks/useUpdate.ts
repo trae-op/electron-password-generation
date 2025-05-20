@@ -1,0 +1,23 @@
+import { useEffect, useState } from "react";
+import isEqual from "lodash/isEqual";
+
+export const useUpdate = (): TUpdateData => {
+  const [result, setResult] = useState<TUpdateData>({
+    status: "checking-for-update",
+  });
+
+  useEffect(() => {
+    const unSub = window.electron.receive.subscribeUpdateApp((payload) => {
+      setResult((prevPayload) => {
+        if (isEqual(prevPayload, payload)) {
+          return prevPayload;
+        }
+        return payload;
+      });
+    });
+
+    return unSub;
+  }, []);
+
+  return result;
+};
