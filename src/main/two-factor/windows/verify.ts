@@ -8,6 +8,7 @@ import { TWindowManager } from "../../@core/types/window-manager.js";
   options: {
     width: 350,
     height: 300,
+    alwaysOnTop: true,
     autoHideMenuBar: true,
     minimizable: false,
     maximizable: false,

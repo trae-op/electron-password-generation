@@ -10,6 +10,7 @@ import { TwoFactorRestApiService } from "../services/rest-api.js";
   options: {
     width: 500,
     height: 500,
+    alwaysOnTop: true,
     autoHideMenuBar: true,
     minimizable: false,
     maximizable: false,
