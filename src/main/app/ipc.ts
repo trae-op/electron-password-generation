@@ -1,6 +1,5 @@
 import { app, dialog } from "electron";
-import { deleteFromElectronStorage } from "../$shared/store.js";
-import { ipcMainOn, ipcWebContentsSend } from "../$shared/utils.js";
+import { ipcMainOn } from "../$shared/utils.js";
 import { IpcHandler } from "../@core/decorators/ipc-handler.js";
 import { getWindow as getWindows } from "../@core/control-window/receive.js";
 import type {
@@ -68,12 +67,7 @@ export class AppIpc implements TIpcHandlerInterface {
 
     ipcMainOn("logout", async () => {
       if (window !== undefined) {
-        deleteFromElectronStorage("authToken");
-        deleteFromElectronStorage("userId");
-        deleteFromElectronStorage("twoFactorSecret");
-        ipcWebContentsSend("authSocialNetwork", window.webContents, {
-          isAuthenticated: false,
-        });
+        this.appService.logout(window);
       }
     });
   }

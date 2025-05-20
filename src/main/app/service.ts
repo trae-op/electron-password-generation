@@ -1,7 +1,9 @@
-import { app } from "electron";
+import { app, BrowserWindow } from "electron";
 import { Injectable } from "../@core/decorators/injectable.js";
 import { TrayService } from "../tray/service.js";
 import { getWindow } from "../@core/control-window/receive.js";
+import { deleteFromElectronStorage } from "../$shared/store.js";
+import { ipcWebContentsSend } from "../$shared/utils.js";
 
 @Injectable()
 export class AppService {
@@ -21,5 +23,14 @@ export class AppService {
     if (app.dock) {
       app.dock.hide();
     }
+  }
+
+  logout(window: BrowserWindow) {
+    deleteFromElectronStorage("authToken");
+    deleteFromElectronStorage("userId");
+    deleteFromElectronStorage("twoFactorSecret");
+    ipcWebContentsSend("authSocialNetwork", window.webContents, {
+      isAuthenticated: false,
+    });
   }
 }
