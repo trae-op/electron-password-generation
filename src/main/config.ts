@@ -31,9 +31,9 @@ export const menu = {
 };
 
 export const icons = {
-  trayIconTemplate: "trayIconTemplate.png",
-  trayIcon: "trayIcon.png",
-  notificationIcon: "react-72x72.png",
+  trayIconTemplate: "16x16.png",
+  trayIcon: "16x16.png",
+  notificationIcon: "72x72.png",
 };
 
 export const messages = {
