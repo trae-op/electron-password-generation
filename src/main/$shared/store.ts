@@ -7,6 +7,7 @@ type TStore = {
 type TElectronStorage = {
   authToken: string;
   userId: string;
+  twoFactorSecret: string;
 };
 
 const electronStorage = new ElectronStorage<TElectronStorage>();

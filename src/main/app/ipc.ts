@@ -69,6 +69,8 @@ export class AppIpc implements TIpcHandlerInterface {
     ipcMainOn("logout", async () => {
       if (window !== undefined) {
         deleteFromElectronStorage("authToken");
+        deleteFromElectronStorage("userId");
+        deleteFromElectronStorage("twoFactorSecret");
         ipcWebContentsSend("authSocialNetwork", window.webContents, {
           isAuthenticated: false,
         });

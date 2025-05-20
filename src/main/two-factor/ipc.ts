@@ -6,7 +6,7 @@ import { ipcMainOn, ipcWebContentsSend } from "../$shared/utils.js";
 import type { TNameWindows } from "./services/types.js";
 import { TwoFactorWindowsFactoryService } from "./services/windows-factory.js";
 import { TwoFactorRestApiService } from "./services/rest-api.js";
-import { getElectronStorage } from "../$shared/store.js";
+import { getElectronStorage, setElectronStorage } from "../$shared/store.js";
 import { UserService } from "../user/service.js";
 
 @IpcHandler()
@@ -77,7 +77,12 @@ export class TwoFactorIpc {
     const user = userId ? await this.userService.userById(userId) : undefined;
     const mainWindow = getWindows<TNameWindows>("window:main");
 
-    if (mainWindow !== undefined && user !== undefined) {
+    if (
+      mainWindow !== undefined &&
+      user !== undefined &&
+      user.twoFactorSecret
+    ) {
+      setElectronStorage("twoFactorSecret", user.twoFactorSecret);
       ipcWebContentsSend("authSocialNetwork", mainWindow.webContents, {
         isAuthenticated: true,
       });

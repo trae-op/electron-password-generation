@@ -53,11 +53,18 @@ export class AppWindow implements TWindowManager {
 
   private async getUser(window: BrowserWindow) {
     const userId = getElectronStorage("userId");
+    const twoFactorSecret = getElectronStorage("twoFactorSecret");
     const user = userId ? await this.userService.userById(userId) : undefined;
 
-    ipcWebContentsSend("authSocialNetwork", window.webContents, {
-      isAuthenticated: Boolean(user),
-    });
+    if (
+      user !== undefined &&
+      user.isTwoFactorEnabled &&
+      user.twoFactorSecret === twoFactorSecret
+    ) {
+      ipcWebContentsSend("authSocialNetwork", window.webContents, {
+        isAuthenticated: Boolean(user),
+      });
+    }
   }
 
   private buildTray(window: BrowserWindow): void {

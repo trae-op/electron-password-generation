@@ -6,7 +6,7 @@ import { TWindowManager } from "../../@core/types/window-manager.js";
   name: "window:two-factor-verify",
   isCache: true,
   options: {
-    width: 300,
+    width: 350,
     height: 300,
     autoHideMenuBar: true,
     minimizable: false,

@@ -1,5 +1,5 @@
 {
-  "appId": "com.myself.electron-react-updater",
+  "appId": "com.myself.electron-gp",
   "files": ["dist-main", "dist-renderer"],
   "extraResources": [
     "dist-main/preload.cjs",
