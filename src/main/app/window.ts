@@ -53,7 +53,12 @@ export class AppWindow implements TWindowManager {
     this.buildTray(window);
     this.getUser(window);
 
-    this.checkForUpdatesService.checkForUpdates();
+    const userId = getElectronStorage("userId");
+    const authToken = getElectronStorage("authToken");
+
+    if (userId && authToken) {
+      this.checkForUpdatesService.checkForUpdates();
+    }
   }
 
   private async getUser(window: BrowserWindow) {

@@ -3,7 +3,6 @@ import { messages, restApi } from "../config.js";
 import { Injectable } from "../@core/decorators/injectable.js";
 import { RestApiService } from "../rest-api/service.js";
 import { getElectronStorage } from "../$shared/store.js";
-import type { TResponseUserById } from "./types.js";
 
 @Injectable()
 export class UserService {
@@ -22,9 +21,7 @@ export class UserService {
     return;
   }
 
-  async userById<R extends TResponseUserById>(
-    id: string
-  ): Promise<R | undefined> {
+  async userById<R extends TUser>(id: string): Promise<R | undefined> {
     const response = await this.restApiService.get<R>(
       `${restApi.urls.base}${restApi.urls.baseApi}${
         restApi.urls.user.base

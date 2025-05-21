@@ -10,6 +10,7 @@ import { TwoFactorModule } from "./two-factor/module.js";
 import { AppPreloadModule } from "./app-preload/module.js";
 import { NotificationModule } from "./notification/module.js";
 import { AppVersionModule } from "./app-version/module.js";
+import { UserModule } from "./user/module.js";
 
 const envPath = path.join(process.resourcesPath, ".env");
 dotenv.config(!isDev() ? { path: envPath } : undefined);
@@ -27,5 +28,6 @@ app.on("ready", async () => {
     TwoFactorModule,
     AppVersionModule,
     NotificationModule,
+    UserModule,
   ]);
 });

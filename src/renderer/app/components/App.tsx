@@ -12,6 +12,7 @@ import {
   Provider as ProviderTwoFactorVerify,
 } from "@features/TwoFactor";
 import { Window as Update } from "@features/Updater";
+import { Provider as ProviderUser } from "@features/User";
 import { MainLayout } from "./MainLayout";
 import { Home } from "@pages/Home";
 
@@ -27,7 +28,14 @@ export const App = () => {
               </Route>
 
               <Route element={<PrivateRoute />}>
-                <Route path="/window:main" element={<Home />} />
+                <Route
+                  path="/window:main"
+                  element={
+                    <ProviderUser>
+                      <Home />
+                    </ProviderUser>
+                  }
+                />
               </Route>
 
               <Route path="/window:update-app" element={<Update />} />

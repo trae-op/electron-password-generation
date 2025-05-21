@@ -62,7 +62,7 @@ export function createWindow<N extends string>({
     const csp = `
   default-src 'self';
   connect-src 'self' ${LOCALHOST_BASE_REST_API};
-  img-src 'self' data:;
+  img-src * data:;
   style-src 'self' 'unsafe-inline';
   script-src 'self' ${isDev ? "'unsafe-inline'" : ""};
 `

@@ -18,6 +18,10 @@ electron.contextBridge.exposeInMainWorld("electron", {
       ipcOn("authSocialNetwork", (payload) => {
         callback(payload);
       }),
+    subscribeCheckUser: (callback) =>
+      ipcOn("checkUser", (payload) => {
+        callback(payload);
+      }),
     subscribeWindowSendTwoFactorCodeVerify: (callback) =>
       ipcOn("twoFactorCodeVerify", () => {
         callback();
@@ -32,6 +36,9 @@ electron.contextBridge.exposeInMainWorld("electron", {
     },
     openLatestVersion: (payload) => {
       ipcSend("openLatestVersion", payload);
+    },
+    checkUser: () => {
+      ipcSend("checkUser");
     },
     windowAuthSocialNetwork: (payload) => {
       ipcSend("authSocialNetwork", payload);

@@ -1,4 +1,3 @@
-import { BrowserWindow } from "electron";
 import { WindowManager } from "../@core/decorators/window-manager.js";
 import { TWindowManager } from "../@core/types/window-manager.js";
 import { CheckForUpdatesService } from "./services/check-for-updates.js";
@@ -18,7 +17,7 @@ import { CheckForUpdatesService } from "./services/check-for-updates.js";
 export class UpdaterWindow implements TWindowManager {
   constructor(private checkForUpdatesService: CheckForUpdatesService) {}
 
-  onDidFinishLoad(window: BrowserWindow): void {
+  onDidFinishLoad(): void {
     this.checkForUpdatesService.checkForUpdates();
   }
 }

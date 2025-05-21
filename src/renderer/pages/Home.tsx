@@ -1,16 +1,33 @@
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import { ButtonLogout } from "@features/AuthSocialNetwork";
-import Stack from "@mui/material/Stack";
+import { Profile, ContextProfile } from "../features/User";
+import { ButtonLogout } from "../features/AuthSocialNetwork";
+import {
+  useUpdate,
+  Context as ContextUpdater,
+  ButtonDownloaded,
+} from "@features/Updater";
 
 export const Home = () => {
+  const value = useUpdate();
+
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardContent>
-        <Stack spacing={2} alignItems="center">
-          <ButtonLogout text="Log Out" />
-        </Stack>
-      </CardContent>
-    </Card>
+    <ContextProfile.Provider
+      value={{
+        isNewVersionApp: value.status === "update-downloaded",
+        renderButtonLogout: (
+          <ButtonLogout sx={{ pt: 1, pb: 1 }} text="Logout" variant="text" />
+        ),
+        renderButtonUpdateApp: (
+          <ContextUpdater.Provider value={value}>
+            <ButtonDownloaded
+              sx={{ pt: 1, pb: 1 }}
+              variant="text"
+              text="Update"
+            />
+          </ContextUpdater.Provider>
+        ),
+      }}
+    >
+      <Profile />
+    </ContextProfile.Provider>
   );
 };

@@ -23,6 +23,9 @@ type TCallbackTwoFactorQRWindow = {
 type TCallbackAuthSocialNetworkWindow = {
   isAuthenticated: boolean;
 };
+type TCallbackUser = {
+  user: TUser;
+};
 
 type TEventPayloadReceive = {
   updateApp: TUpdateData;
@@ -30,6 +33,7 @@ type TEventPayloadReceive = {
   twoFactorQA: TCallbackTwoFactorQRWindow;
   authSocialNetwork: TCallbackAuthSocialNetworkWindow;
   twoFactorCodeVerify: undefined;
+  checkUser: TCallbackUser;
 };
 
 type TReceive = {
@@ -47,5 +51,8 @@ type TReceive = {
   ) => TUnsubscribeFunction;
   subscribeWindowSendTwoFactorCodeVerify: (
     callback: () => void
+  ) => TUnsubscribeFunction;
+  subscribeCheckUser: (
+    callback: (payload: TEventPayloadReceive["checkUser"]) => void
   ) => TUnsubscribeFunction;
 };

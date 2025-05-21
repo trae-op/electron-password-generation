@@ -14,7 +14,9 @@
       "../../types/collected",
       "../../types/windows",
       "../../types/files",
-      "../../types/providers"
+      "../../types/providers",
+      "../../types/user",
+      "../../types/resource"
     ]
   }
 }

@@ -14,6 +14,7 @@ type TEventPayloadSend = {
   authSocialNetwork: TCallbackAuthSocialNetwork;
   twoFactorCodeVerify: TCallbackSendTwoFactorCodeVerify;
   twoFactorVerify: undefined;
+  checkUser: undefined;
   logout: undefined;
 };
 type TSend = {
@@ -24,6 +25,7 @@ type TSend = {
     payload: TEventPayloadSend["authSocialNetwork"]
   ) => void;
   windowTwoFactorVerify: () => void;
+  checkUser: () => void;
   sendTwoFactorCodeVerify: (
     payload: TEventPayloadSend["twoFactorCodeVerify"]
   ) => void;
