@@ -1,12 +1,11 @@
 import { useState, useEffect, useMemo } from "react";
 import type { TPropsProvider } from "./types";
 import { Context } from "../context";
+import { TContext } from "../context/type";
 
 export const Provider = ({ children }: TPropsProvider) => {
-  const isAuthenticatedFromLS = localStorage.getItem("isAuthenticated");
-  const [isAuthenticated, setAuthenticated] = useState(
-    isAuthenticatedFromLS === "true"
-  );
+  const [isAuthenticated, setAuthenticated] =
+    useState<TContext["isAuthenticated"]>(undefined);
 
   const logout = () => {
     localStorage.removeItem("isAuthenticatedFromLS");
@@ -23,7 +22,7 @@ export const Provider = ({ children }: TPropsProvider) => {
   );
 
   useEffect(() => {
-    setAuthenticated(isAuthenticatedFromLS === "true");
+    setAuthenticated(isAuthenticated);
   }, []);
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

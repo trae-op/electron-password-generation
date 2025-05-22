@@ -1,5 +1,5 @@
 export type TContext = {
-  isAuthenticated: boolean;
+  isAuthenticated: boolean | undefined;
   logout: () => void;
   setAuthenticated: (value: boolean) => void;
 };

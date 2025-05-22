@@ -1,6 +1,6 @@
 import Stack from "@mui/material/Stack";
 import { Circular } from "./CircularProgress";
-import { ButtonDownloaded } from "./ButtonDownloaded";
+import { ButtonDownloaded } from "./ButtonDownloaded/Button";
 import { useUpdate } from "../hooks";
 import { Context } from "../context";
 import { Message } from "./Message";

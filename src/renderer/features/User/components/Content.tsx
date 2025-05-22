@@ -2,17 +2,18 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import {
   useControlContext,
-  useControlContextProfile,
+  useControlContextUserPopover,
 } from "../hooks/useControlContext";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import ButtonGroup from "@mui/material/ButtonGroup";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
 
-export const ProfileList = () => {
+export const Content = () => {
   const { user } = useControlContext();
   const { renderButtonLogout, renderButtonUpdateApp } =
-    useControlContextProfile();
+    useControlContextUserPopover();
 
   if (user === undefined) {
     return null;
@@ -31,16 +32,13 @@ export const ProfileList = () => {
         </Typography>
       </Stack>
       <Divider />
-      <ButtonGroup
-        orientation="vertical"
-        aria-label="Vertical button group"
-        variant="text"
-        fullWidth
-        color="inherit"
-      >
-        {renderButtonUpdateApp}
-        {renderButtonLogout}
-      </ButtonGroup>
+
+      <nav aria-label="secondary mailbox folders">
+        <List>
+          <ListItem disablePadding>{renderButtonUpdateApp}</ListItem>
+          <ListItem disablePadding>{renderButtonLogout}</ListItem>
+        </List>
+      </nav>
     </Box>
   );
 };

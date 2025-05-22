@@ -3,6 +3,6 @@ import type { TContext, TContextProfile } from "./type";
 
 export const Context = createContext<TContext | undefined>(undefined);
 
-export const ContextProfile = createContext<TContextProfile | undefined>(
+export const ContextUserPopover = createContext<TContextProfile | undefined>(
   undefined
 );

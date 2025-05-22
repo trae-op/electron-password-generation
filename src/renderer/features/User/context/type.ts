@@ -5,6 +5,6 @@ export type TContext = {
 
 export type TContextProfile = {
   renderButtonUpdateApp: React.ReactElement | null;
-  renderButtonLogout: React.ReactElement;
+  renderButtonLogout: React.ReactElement | null;
   isNewVersionApp: boolean;
 };

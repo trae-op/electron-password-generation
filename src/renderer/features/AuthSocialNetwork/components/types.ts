@@ -5,7 +5,10 @@ export type TPropsButtonProvider = ButtonProps & {
   text: string;
 };
 
-export type TPropsButtonLogout = TPropsButtonProvider;
+export type TPropsButtonLogout<P extends Record<string, any>> = P & {
+  component: React.ElementType<P>;
+  children?: React.ReactNode;
+};
 
 export type TPropsProvider = {
   children: ReactNode;

@@ -6,10 +6,10 @@ import Popover from "@mui/material/Popover";
 import { useControl } from "../hooks/useControl";
 import {
   useControlContext,
-  useControlContextProfile,
+  useControlContextUserPopover,
 } from "../hooks/useControlContext";
 import { useSubscribeEventUser, useCheckUser } from "../hooks";
-import { ProfileList } from "./List";
+import { Content } from "./Content";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -40,10 +40,10 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-export const Profile = () => {
+export const UserPopover = () => {
   useSubscribeEventUser();
   useCheckUser();
-  const { isNewVersionApp } = useControlContextProfile();
+  const { isNewVersionApp } = useControlContextUserPopover();
   const { handleClick, handleClose, id, isOpen, anchorEl } = useControl();
   const { user } = useControlContext();
 
@@ -72,7 +72,11 @@ export const Profile = () => {
           }}
           variant={isNewVersionApp ? "dot" : "standard"}
         >
-          <Avatar alt="profile" src={user.avatar || ""} />
+          <Avatar
+            sx={{ width: 30, height: 30 }}
+            alt="profile"
+            src={user.avatar || ""}
+          />
         </StyledBadge>
       </IconButton>
 
@@ -90,7 +94,7 @@ export const Profile = () => {
           horizontal: "center",
         }}
       >
-        <ProfileList />
+        <Content />
       </Popover>
     </>
   );

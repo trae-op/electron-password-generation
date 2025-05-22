@@ -14,7 +14,7 @@ import {
 import { Window as Update } from "@features/Updater";
 import { Provider as ProviderUser } from "@features/User";
 import { MainLayout } from "./MainLayout";
-import { Home } from "@pages/Home";
+import { Home } from "@pages/home";
 
 export const App = () => {
   return (
