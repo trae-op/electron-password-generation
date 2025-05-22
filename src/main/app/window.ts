@@ -64,7 +64,7 @@ export class AppWindow implements TWindowManager {
   private async getUser(window: BrowserWindow) {
     const userId = getElectronStorage("userId");
     const twoFactorSecret = getElectronStorage("twoFactorSecret");
-    const user = userId ? await this.userService.userById(userId) : undefined;
+    const user = userId ? await this.userService.byId(userId) : undefined;
 
     if (
       user !== undefined &&

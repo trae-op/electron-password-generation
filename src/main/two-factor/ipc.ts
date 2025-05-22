@@ -74,7 +74,7 @@ export class TwoFactorIpc {
 
   private async isAuthenticated() {
     const userId = getElectronStorage("userId");
-    const user = userId ? await this.userService.userById(userId) : undefined;
+    const user = userId ? await this.userService.byId(userId) : undefined;
     const mainWindow = getWindows<TNameWindows>("window:main");
 
     if (

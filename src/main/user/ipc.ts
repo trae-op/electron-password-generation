@@ -10,7 +10,7 @@ export class UserIpc {
   onInit(): void {
     ipcMainOn("checkUser", async (event) => {
       const userId = getElectronStorage("userId");
-      const user = userId ? await this.userService.userById(userId) : undefined;
+      const user = userId ? await this.userService.byId(userId) : undefined;
 
       event.reply("checkUser", {
         user,

@@ -21,7 +21,7 @@ export class UserService {
     return;
   }
 
-  async userById<R extends TUser>(id: string): Promise<R | undefined> {
+  async byId<R extends TUser>(id: string): Promise<R | undefined> {
     const response = await this.restApiService.get<R>(
       `${restApi.urls.base}${restApi.urls.baseApi}${
         restApi.urls.user.base
