@@ -13,8 +13,9 @@ import { AppService } from "./service.js";
 import { ControlUpdateWindowsPlatformService } from "../updater/services/windows/control-update.js";
 import { TrayService } from "../tray/service.js";
 import { destroyWindows } from "../@core/control-window/destroy.js";
-import { ipcWebContentsSend } from "../$shared/utils.js";
+import { ipcMainHandle, ipcWebContentsSend } from "../$shared/utils.js";
 import { menu } from "../config.js";
+import { ResourcesService } from "../resources/service.js";
 
 @WindowManager<TWindows["main"]>({
   name: "window:main",
@@ -33,6 +34,7 @@ export class AppWindow implements TWindowManager {
     private trayService: TrayService,
     private userService: UserService,
     private appService: AppService,
+    private resourcesService: ResourcesService,
     private setFeedUrlService: SetFeedUrlService,
     private checkForUpdatesService: CheckForUpdatesService,
     private controlUpdateWindowsPlatformService: ControlUpdateWindowsPlatformService
@@ -74,8 +76,19 @@ export class AppWindow implements TWindowManager {
       ipcWebContentsSend("authSocialNetwork", window.webContents, {
         isAuthenticated: Boolean(user),
       });
+      this.getResources(window);
     } else {
       this.appService.logout(window);
+    }
+  }
+
+  private async getResources(window: BrowserWindow) {
+    const resources = await this.resourcesService.list();
+
+    if (resources !== undefined) {
+      ipcWebContentsSend("resources", window.webContents, {
+        items: resources,
+      });
     }
   }
 

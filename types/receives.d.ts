@@ -26,6 +26,9 @@ type TCallbackAuthSocialNetworkWindow = {
 type TCallbackUser = {
   user: TUser;
 };
+type TCallbackResources = {
+  items: TResource[];
+};
 
 type TEventPayloadReceive = {
   updateApp: TUpdateData;
@@ -34,6 +37,7 @@ type TEventPayloadReceive = {
   authSocialNetwork: TCallbackAuthSocialNetworkWindow;
   twoFactorCodeVerify: undefined;
   checkUser: TCallbackUser;
+  resources: TCallbackResources;
 };
 
 type TReceive = {
@@ -54,5 +58,8 @@ type TReceive = {
   ) => TUnsubscribeFunction;
   subscribeCheckUser: (
     callback: (payload: TEventPayloadReceive["checkUser"]) => void
+  ) => TUnsubscribeFunction;
+  subscribeResources: (
+    callback: (payload: TEventPayloadReceive["resources"]) => void
   ) => TUnsubscribeFunction;
 };

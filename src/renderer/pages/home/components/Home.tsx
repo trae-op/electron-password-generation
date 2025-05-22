@@ -1,9 +1,13 @@
+import { Fragment } from "react";
 import Button, { ButtonProps } from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
 import ListItemButton, {
   ListItemButtonProps,
 } from "@mui/material/ListItemButton";
 import { UserPopover, ContextUserPopover } from "@features/User";
 import { ButtonLogout } from "@features/AuthSocialNetwork";
+import { Items as Resources } from "@features/Resources";
+import { Item as Resource } from "@widgets/Resource";
 import {
   useUpdate,
   Context as ContextUpdater,
@@ -36,6 +40,21 @@ export const Home = () => {
       }}
     >
       <UserPopover />
+      <Stack spacing={2} direction="row" sx={{ flexWrap: "wrap" }} useFlexGap>
+        <Resources
+          renderEntity={({ id, name, key }) => (
+            <Fragment key={id}>
+              <Resource
+                id={id}
+                key={key}
+                name={name}
+                handleCopy={() => {}}
+                handleUpdate={() => {}}
+              />
+            </Fragment>
+          )}
+        />
+      </Stack>
     </ContextUserPopover.Provider>
   );
 };

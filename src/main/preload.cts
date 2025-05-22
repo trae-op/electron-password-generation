@@ -26,6 +26,10 @@ electron.contextBridge.exposeInMainWorld("electron", {
       ipcOn("twoFactorCodeVerify", () => {
         callback();
       }),
+    subscribeResources: (callback) =>
+      ipcOn("resources", (payload) => {
+        callback(payload);
+      }),
   },
   send: {
     restart: () => {

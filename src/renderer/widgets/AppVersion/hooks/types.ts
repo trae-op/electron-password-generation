@@ -1,3 +1,3 @@
-export type THookSubscribeEvent = {
+export type THookInvoke = {
   version: string;
 };

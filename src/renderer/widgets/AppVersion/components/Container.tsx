@@ -1,10 +1,10 @@
 import Typography from "@mui/material/Typography";
-import { useSubscribeEvent } from "../hooks";
+import { useInvoke } from "../hooks";
 import { memo } from "react";
 import type { TPropsContainer } from "./types";
 
 export const Container = memo(({ ...other }: TPropsContainer) => {
-  const { version } = useSubscribeEvent();
+  const { version } = useInvoke();
 
   if (version === "") {
     return null;

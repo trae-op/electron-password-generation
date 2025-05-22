@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import type { THookSubscribeEvent } from "./types";
+import type { THookInvoke } from "./types";
 
-export const useSubscribeEvent = (): THookSubscribeEvent => {
+export const useInvoke = (): THookInvoke => {
   const [version, setVersion] = useState("");
 
   useEffect(() => {

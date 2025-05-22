@@ -7,6 +7,7 @@ dotenv.config(!isDev() ? { path: envPath } : undefined);
 
 export const windows: TWindows = {
   main: "window:main",
+  resource: "window:resource",
   preloadApp: "window:preload-app",
   updateApp: "window:update-app",
   twoFactorQA: "window:two-factor-qa",
@@ -86,6 +87,10 @@ export const restApi = {
     },
     user: {
       base: "/user",
+      byId: (id: string) => `/${id}`,
+    },
+    resources: {
+      base: "/resources",
       byId: (id: string) => `/${id}`,
     },
     githubReleases: `https://api.github.com/repos/${publishOptions.owner}/${publishOptions.repo}/releases`,
