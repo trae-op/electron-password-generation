@@ -42,17 +42,25 @@ export const Home = () => {
       <UserPopover />
       <Stack spacing={2} direction="row" sx={{ flexWrap: "wrap" }} useFlexGap>
         <Resources
-          renderEntity={({ id, name, key }) => (
-            <Fragment key={id}>
-              <Resource
-                id={id}
-                key={key}
-                name={name}
-                handleCopy={() => {}}
-                handleUpdate={() => {}}
-              />
-            </Fragment>
-          )}
+          renderEntity={(item) => {
+            const handleUpdate = () => {
+              window.electron.send.resource({
+                item,
+              });
+            };
+
+            return (
+              <Fragment key={item.id}>
+                <Resource
+                  id={item.id}
+                  key={item.key}
+                  name={item.name}
+                  handleCopy={() => {}}
+                  handleUpdate={handleUpdate}
+                />
+              </Fragment>
+            );
+          }}
         />
       </Stack>
     </ContextUserPopover.Provider>

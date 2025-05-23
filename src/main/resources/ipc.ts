@@ -1,6 +1,5 @@
-// import { ipcMainOn } from "../$shared/utils.js";
+import { ipcMainOn } from "../$shared/utils.js";
 import { IpcHandler } from "../@core/decorators/ipc-handler.js";
-// import { getWindow as getWindows } from "../@core/control-window/receive.js";
 import type {
   TIpcHandlerInterface,
   TParamOnInit,
@@ -11,8 +10,21 @@ import { ResourcesService } from "./service.js";
 export class ResourcesIpc implements TIpcHandlerInterface {
   constructor(private resourcesService: ResourcesService) {}
 
-  async onInit({ getWindow }: TParamOnInit<TWindows["resource"]>) {
+  onInit({ getWindow }: TParamOnInit<TWindows["resource"]>) {
     const resourceWindow = getWindow("window:resource");
-    // const window = await resourceWindow.create();
+
+    ipcMainOn("resource", async (event, { item }) => {
+      await resourceWindow.create({
+        hash: `window:resource/${item.id}`,
+      });
+    });
+
+    ipcMainOn("resources", async (event) => {
+      const resources = await this.resourcesService.list();
+
+      event.reply("resources", {
+        items: resources || [],
+      });
+    });
   }
 }

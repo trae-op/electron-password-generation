@@ -13,6 +13,7 @@ import {
 } from "@features/TwoFactor";
 import { Window as Update } from "@features/Updater";
 import { Provider as ProviderUser } from "@features/User";
+import { Form as ResourceUpdateFrom } from "@features/ResourceUpdate";
 import { MainLayout } from "./MainLayout";
 import { Home } from "@pages/home";
 
@@ -42,6 +43,10 @@ export const App = () => {
               <Route
                 path="/window:two-factor-qa"
                 element={<TwoFactorQRWindow />}
+              />
+              <Route
+                path="/window:resource/:id"
+                element={<ResourceUpdateFrom />}
               />
               <Route
                 path="/window:two-factor-verify"

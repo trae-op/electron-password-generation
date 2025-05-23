@@ -1,8 +1,8 @@
 import {
   BrowserWindow,
   dialog,
-  Event,
-  WebContentsWillRedirectEventParams,
+  type Event,
+  type WebContentsWillRedirectEventParams,
 } from "electron";
 import { WindowManager } from "../@core/decorators/window-manager.js";
 import { TWindowManager } from "../@core/types/window-manager.js";

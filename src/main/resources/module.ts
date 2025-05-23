@@ -9,6 +9,5 @@ import { ResourceWindow } from "./window.js";
   ipc: [ResourcesIpc],
   windows: [ResourceWindow],
   providers: [ResourcesService],
-  exports: [ResourcesService],
 })
 export class ResourcesModule {}

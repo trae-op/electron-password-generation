@@ -7,14 +7,14 @@ import { ResourcesService } from "./service.js";
   hash: "window:resource",
   isCache: true,
   options: {
-    width: 600,
-    height: 600,
+    width: 400,
+    height: 400,
   },
 })
 export class ResourceWindow implements TWindowManager {
-  private isWillClose = false;
-
   constructor(private resourcesService: ResourcesService) {}
 
-  onDidFinishLoad(window: BrowserWindow): void {}
+  onDidFinishLoad(window: BrowserWindow): void {
+    window.webContents.openDevTools();
+  }
 }

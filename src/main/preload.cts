@@ -30,6 +30,10 @@ electron.contextBridge.exposeInMainWorld("electron", {
       ipcOn("resources", (payload) => {
         callback(payload);
       }),
+    subscribeResource: (callback) =>
+      ipcOn("resource", (payload) => {
+        callback(payload);
+      }),
   },
   send: {
     restart: () => {
@@ -52,6 +56,12 @@ electron.contextBridge.exposeInMainWorld("electron", {
     },
     sendTwoFactorCodeVerify: (payload) => {
       ipcSend("twoFactorCodeVerify", payload);
+    },
+    resource: (payload) => {
+      ipcSend("resource", payload);
+    },
+    resources: () => {
+      ipcSend("resources");
     },
     logout: () => {
       ipcSend("logout");

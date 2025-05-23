@@ -1,2 +1,2 @@
-export * from "./useCheckUser";
+export * from "./useReceiveUser";
 export * from "./useSubscribeEventUser";

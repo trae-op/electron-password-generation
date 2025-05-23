@@ -8,6 +8,7 @@ import { getWindow } from "./receive.js";
 export function createWindow<N extends string>({
   hash,
   options,
+  paramsRoute,
   isCache,
   loadURL,
 }: TParamsCreateWindow<N>) {

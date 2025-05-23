@@ -2,10 +2,7 @@ import { app, BrowserWindow, Event } from "electron";
 import { WindowManager } from "../@core/decorators/window-manager.js";
 import { TWindowManager } from "../@core/types/window-manager.js";
 import { MenuService } from "../menu/service.js";
-import {
-  deleteFromElectronStorage,
-  getElectronStorage,
-} from "../$shared/store.js";
+import { getElectronStorage } from "../$shared/store.js";
 import { SetFeedUrlService } from "../updater/services/windows/set-feed-url.js";
 import { CheckForUpdatesService } from "../updater/services/check-for-updates.js";
 import { UserService } from "../user/service.js";
@@ -13,14 +10,14 @@ import { AppService } from "./service.js";
 import { ControlUpdateWindowsPlatformService } from "../updater/services/windows/control-update.js";
 import { TrayService } from "../tray/service.js";
 import { destroyWindows } from "../@core/control-window/destroy.js";
-import { ipcMainHandle, ipcWebContentsSend } from "../$shared/utils.js";
+import { ipcWebContentsSend } from "../$shared/utils.js";
 import { menu } from "../config.js";
-import { ResourcesService } from "../resources/service.js";
 
 @WindowManager<TWindows["main"]>({
   hash: "window:main",
   isCache: true,
   options: {
+    resizable: false,
     show: false,
     width: 600,
     height: 600,
@@ -34,7 +31,6 @@ export class AppWindow implements TWindowManager {
     private trayService: TrayService,
     private userService: UserService,
     private appService: AppService,
-    private resourcesService: ResourcesService,
     private setFeedUrlService: SetFeedUrlService,
     private checkForUpdatesService: CheckForUpdatesService,
     private controlUpdateWindowsPlatformService: ControlUpdateWindowsPlatformService
@@ -76,19 +72,8 @@ export class AppWindow implements TWindowManager {
       ipcWebContentsSend("authSocialNetwork", window.webContents, {
         isAuthenticated: Boolean(user),
       });
-      this.getResources(window);
     } else {
       this.appService.logout(window);
-    }
-  }
-
-  private async getResources(window: BrowserWindow) {
-    const resources = await this.resourcesService.list();
-
-    if (resources !== undefined) {
-      ipcWebContentsSend("resources", window.webContents, {
-        items: resources,
-      });
     }
   }
 
