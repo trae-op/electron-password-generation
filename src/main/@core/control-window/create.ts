@@ -6,7 +6,7 @@ import { cacheWindows } from "./cache.js";
 import { getWindow } from "./receive.js";
 
 export function createWindow<N extends string>({
-  name,
+  hash,
   options,
   isCache,
   loadURL,
@@ -37,10 +37,10 @@ export function createWindow<N extends string>({
     );
   }
 
-  const hasWindow = name ? cacheWindows.has(name) : undefined;
+  const hasWindow = hash ? cacheWindows.has(hash) : undefined;
 
-  if (name && hasWindow && hasWindow && isCache) {
-    const existingWindow = getWindow(name);
+  if (hash && hasWindow && hasWindow && isCache) {
+    const existingWindow = getWindow(hash);
     if (existingWindow) {
       existingWindow.show();
 
@@ -86,22 +86,22 @@ export function createWindow<N extends string>({
   if (!loadURL && isDev) {
     newWindow.loadURL(
       `http://localhost:${process.env.LOCALHOST_ELECTRON_SERVER_PORT}${
-        name !== undefined ? `#/${name}` : ""
+        hash !== undefined ? `#/${hash}` : ""
       }`
     );
   }
 
-  if (!loadURL && !isDev && name) {
+  if (!loadURL && !isDev && hash) {
     newWindow.loadFile(uiPath, {
-      hash: name,
+      hash,
     });
   }
 
-  if (name && isCache) {
-    cacheWindows.set(name, newWindow);
+  if (hash && isCache) {
+    cacheWindows.set(hash, newWindow);
 
-    if (cacheWindows.has(name)) {
-      const existingWindow = cacheWindows.get(name);
+    if (cacheWindows.has(hash)) {
+      const existingWindow = cacheWindows.get(hash);
 
       if (existingWindow) {
         existingWindow.on("close", (event) => {

@@ -3,7 +3,7 @@ import { WindowManager } from "../../@core/decorators/window-manager.js";
 import { TWindowManager } from "../../@core/types/window-manager.js";
 
 @WindowManager<TWindows["twoFactorVerify"]>({
-  name: "window:two-factor-verify",
+  hash: "window:two-factor-verify",
   isCache: true,
   options: {
     width: 350,

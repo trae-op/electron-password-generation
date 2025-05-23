@@ -5,7 +5,7 @@ import { ipcWebContentsSend } from "../../$shared/utils.js";
 import { TwoFactorRestApiService } from "../services/rest-api.js";
 
 @WindowManager<TWindows["twoFactorQA"]>({
-  name: "window:two-factor-qa",
+  hash: "window:two-factor-qa",
   isCache: true,
   options: {
     width: 500,

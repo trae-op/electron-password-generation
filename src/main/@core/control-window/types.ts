@@ -1,7 +1,7 @@
 import { BrowserWindow, type BrowserWindowConstructorOptions } from "electron";
 
 export type TParamsCreateWindow<N = string> = {
-  name?: N;
+  hash?: N;
   isCache?: boolean;
   options?: BrowserWindowConstructorOptions;
   loadURL?: string;

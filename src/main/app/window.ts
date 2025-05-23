@@ -18,7 +18,7 @@ import { menu } from "../config.js";
 import { ResourcesService } from "../resources/service.js";
 
 @WindowManager<TWindows["main"]>({
-  name: "window:main",
+  hash: "window:main",
   isCache: true,
   options: {
     show: false,

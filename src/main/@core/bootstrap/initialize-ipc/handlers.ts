@@ -34,7 +34,7 @@ export async function initializeIpcHandlers(
               ): Promise<BrowserWindow | undefined> => {
                 if (
                   windowMetadata?.metadata?.options &&
-                  windowMetadata?.metadata?.name &&
+                  windowMetadata?.metadata?.hash &&
                   windowMetadata.windowClass
                 ) {
                   const browserWindow = createWindowWithParams(

@@ -3,7 +3,7 @@ import { TWindowManager } from "../@core/types/window-manager.js";
 import { CheckForUpdatesService } from "./services/check-for-updates.js";
 
 @WindowManager<TWindows["updateApp"]>({
-  name: "window:update-app",
+  hash: "window:update-app",
   isCache: true,
   options: {
     width: 400,

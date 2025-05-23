@@ -11,8 +11,8 @@ export async function registerWindows(
     for (const windowClass of metadata.windows) {
       const windowMetadataValue: WindowManagerOptions | undefined =
         Reflect.getMetadata("WindowManager", windowClass);
-      if (windowMetadataValue?.name) {
-        container.addProvider(moduleClass, windowMetadataValue.name, {
+      if (windowMetadataValue?.hash) {
+        container.addProvider(moduleClass, windowMetadataValue.hash, {
           metadata: windowMetadataValue,
           windowClass,
         });

@@ -11,7 +11,7 @@ import { TwoFactorWindowsFactoryService } from "../two-factor/services/windows-f
 import { messages } from "../config.js";
 
 @WindowManager<TWindows["authSocialNetwork"]>({
-  name: "window:auth-social-network",
+  hash: "window:auth-social-network",
   options: {
     autoHideMenuBar: true,
     minimizable: false,

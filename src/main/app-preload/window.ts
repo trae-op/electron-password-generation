@@ -5,7 +5,7 @@ import { TWindowManager } from "../@core/types/window-manager.js";
 import { isDev } from "../$shared/utils.js";
 
 @WindowManager<TWindows["preloadApp"]>({
-  name: "window:preload-app",
+  hash: "window:preload-app",
   isCache: true,
   options: {
     backgroundColor: "#444",
