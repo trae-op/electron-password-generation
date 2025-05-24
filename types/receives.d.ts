@@ -29,8 +29,8 @@ type TCallbackUser = {
 type TCallbackResources = {
   items: TResource[];
 };
-type TCallbackResource = {
-  item: TResource;
+type TCallbackGetResource = {
+  item: TResource | undefined;
 };
 
 type TEventPayloadReceive = {
@@ -41,7 +41,7 @@ type TEventPayloadReceive = {
   twoFactorCodeVerify: undefined;
   checkUser: TCallbackUser;
   resources: TCallbackResources;
-  resource: TCallbackResource;
+  getResource: TCallbackGetResource;
 };
 
 type TReceive = {
@@ -66,7 +66,7 @@ type TReceive = {
   subscribeResources: (
     callback: (payload: TEventPayloadReceive["resources"]) => void
   ) => TUnsubscribeFunction;
-  subscribeResource: (
-    callback: (payload: TEventPayloadReceive["resource"]) => void
+  subscribeGetResource: (
+    callback: (payload: TEventPayloadReceive["getResource"]) => void
   ) => TUnsubscribeFunction;
 };

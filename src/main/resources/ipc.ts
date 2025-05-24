@@ -13,9 +13,17 @@ export class ResourcesIpc implements TIpcHandlerInterface {
   onInit({ getWindow }: TParamOnInit<TWindows["resource"]>) {
     const resourceWindow = getWindow("window:resource");
 
-    ipcMainOn("resource", async (event, { item }) => {
+    ipcMainOn("openResource", async (event, { resourceId }) => {
       await resourceWindow.create({
-        hash: `window:resource/${item.id}`,
+        hash: `window:resource/${resourceId}`,
+      });
+    });
+
+    ipcMainOn("getResource", async (event, { resourceId }) => {
+      const item = await this.resourcesService.byId(resourceId);
+
+      event.reply("getResource", {
+        item,
       });
     });
 

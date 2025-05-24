@@ -7,8 +7,8 @@ import { ResourcesService } from "./service.js";
   hash: "window:resource",
   isCache: true,
   options: {
-    width: 400,
-    height: 400,
+    width: 600,
+    height: 600,
   },
 })
 export class ResourceWindow implements TWindowManager {

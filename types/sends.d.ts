@@ -7,9 +7,12 @@ type TCallbackAuthSocialNetwork = {
 type TCallbackSendTwoFactorCodeVerify = {
   twoFactorCode: string;
 };
+
 type TCallbackResource = {
-  item: TResource;
+  resourceId: string;
 };
+
+type TCallbackOpenResource = TCallbackResource;
 
 type TEventPayloadSend = {
   restart: undefined;
@@ -20,7 +23,8 @@ type TEventPayloadSend = {
   twoFactorVerify: undefined;
   checkUser: undefined;
   logout: undefined;
-  resource: TCallbackResource;
+  openResource: TCallbackOpenResource;
+  getResource: TCallbackResource;
   resources: undefined;
 };
 type TSend = {
@@ -35,7 +39,8 @@ type TSend = {
   sendTwoFactorCodeVerify: (
     payload: TEventPayloadSend["twoFactorCodeVerify"]
   ) => void;
-  resource: (payload: TEventPayloadSend["resource"]) => void;
+  windowOpenResource: (payload: TEventPayloadSend["openResource"]) => void;
+  getResource: (payload: TEventPayloadSend["getResource"]) => void;
   logout: () => void;
   resources: () => void;
 };
