@@ -3,7 +3,7 @@ import Stack from "@mui/material/Stack";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { ButtonSubmit } from "./ButtonSubmit";
+import { SubmitButton } from "./SubmitButton";
 import type { TPropsForm } from "./types";
 import { useControl } from "../hooks/useControl";
 import { useControlContext } from "../hooks/useControlContext";
@@ -55,7 +55,7 @@ export const Form = memo(({ renderGenerateCharacters }: TPropsForm) => {
 
         {renderGenerateCharacters}
 
-        <ButtonSubmit />
+        <SubmitButton />
       </Stack>
     </Box>
   );

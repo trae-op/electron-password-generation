@@ -1,6 +1,7 @@
 import Stack from "@mui/material/Stack";
+import Button, { ButtonProps } from "@mui/material/Button";
 import { Circular } from "./CircularProgress";
-import { ButtonDownloaded } from "./ButtonDownloaded/Button";
+import { DownloadedButton } from "./DownloadedButton";
 import { useUpdate } from "../hooks";
 import { Context } from "../context";
 import { Message } from "./Message";
@@ -13,7 +14,9 @@ export const Window = () => {
       <Stack spacing={2} alignItems="center">
         <Message />
         <Circular />
-        <ButtonDownloaded text="Update downloaded" />
+        <DownloadedButton<ButtonProps> component={Button}>
+          Update downloaded
+        </DownloadedButton>
       </Stack>
     </Context.Provider>
   );

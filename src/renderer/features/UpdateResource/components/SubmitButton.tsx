@@ -2,7 +2,7 @@ import { memo } from "react";
 import { useFormStatus } from "react-dom";
 import Button from "@mui/material/Button";
 
-export const ButtonSubmit = memo(() => {
+export const SubmitButton = memo(() => {
   const { pending } = useFormStatus();
 
   return (

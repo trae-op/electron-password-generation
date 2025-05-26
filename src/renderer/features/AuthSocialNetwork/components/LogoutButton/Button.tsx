@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import { useControl } from "../../hooks";
 import type { TComponentGenericForwardRef } from "./types";
 
-export const ButtonLogout = forwardRef(
+export const LogoutButton = forwardRef(
   ({ component: Component, children, ...otherProps }, ref) => {
     const { handleLogout } = useControl();
 

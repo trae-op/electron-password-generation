@@ -3,7 +3,7 @@ import { useControlContext } from "../../hooks";
 import { useUpdateDownloaded } from "../../hooks";
 import type { TComponentGenericForwardRef } from "./types";
 
-export const ButtonDownloaded = forwardRef(
+export const DownloadedButton = forwardRef(
   ({ component: Component, children, ...otherProps }, ref) => {
     const { status, version } = useControlContext();
     const { handleUpdate } = useUpdateDownloaded();

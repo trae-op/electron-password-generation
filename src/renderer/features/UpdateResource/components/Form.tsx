@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import { useIpc } from "../hooks/useIpc";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { ButtonSubmit } from "./ButtonSubmit";
+import { SubmitButton } from "./SubmitButton";
 import type { TPropsForm } from "./types";
 import { useControl } from "../hooks/useControl";
 import { useControlContext } from "../hooks/useControlContext";
@@ -66,7 +66,7 @@ export const Form = memo(({ renderGenerateCharacters }: TPropsForm) => {
 
         {openCreateNewPassword && renderGenerateCharacters}
 
-        <ButtonSubmit />
+        <SubmitButton />
       </Stack>
     </Box>
   );

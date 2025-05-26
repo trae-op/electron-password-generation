@@ -1,17 +1,16 @@
 import { Fragment } from "react";
-import Button, { ButtonProps } from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import ListItemButton, {
   ListItemButtonProps,
 } from "@mui/material/ListItemButton";
 import { UserPopover, ContextUserPopover } from "@features/User";
-import { ButtonLogout } from "@features/AuthSocialNetwork";
+import { LogoutButton } from "@features/AuthSocialNetwork";
 import { Items as Resources } from "@features/Resources";
 import { Item as Resource } from "@widgets/Resource";
 import {
   useUpdate,
   Context as ContextUpdater,
-  ButtonDownloaded,
+  DownloadedButton,
 } from "@features/Updater";
 
 export const Home = () => {
@@ -22,19 +21,15 @@ export const Home = () => {
       value={{
         isNewVersionApp: value.status === "update-downloaded",
         renderButtonLogout: (
-          <ButtonLogout<ListItemButtonProps> component={ListItemButton}>
+          <LogoutButton<ListItemButtonProps> component={ListItemButton}>
             Logout
-          </ButtonLogout>
+          </LogoutButton>
         ),
         renderButtonUpdateApp: (
           <ContextUpdater.Provider value={value}>
-            <ButtonDownloaded<ButtonProps>
-              component={Button}
-              sx={{ pt: 1, pb: 1 }}
-              variant="text"
-            >
+            <DownloadedButton<ListItemButtonProps> component={ListItemButton}>
               Update
-            </ButtonDownloaded>
+            </DownloadedButton>
           </ContextUpdater.Provider>
         ),
       }}

@@ -1,2 +1,2 @@
 export * from "./Window";
-export * from "./ButtonDownloaded";
+export * from "./DownloadedButton";
