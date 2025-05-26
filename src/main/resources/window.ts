@@ -4,7 +4,7 @@ import { TWindowManager } from "../@core/types/window-manager.js";
 import { ResourcesService } from "./service.js";
 
 @WindowManager<TWindows["resource"]>({
-  hash: "window:resource",
+  hash: "window/resource",
   isCache: true,
   options: {
     width: 600,

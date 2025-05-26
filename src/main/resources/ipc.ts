@@ -11,16 +11,16 @@ export class ResourcesIpc implements TIpcHandlerInterface {
   constructor(private resourcesService: ResourcesService) {}
 
   onInit({ getWindow }: TParamOnInit<TWindows["resource"]>) {
-    const resourceWindow = getWindow("window:resource");
+    const resourceWindow = getWindow("window/resource");
 
-    ipcMainOn("openResource", async (event, { resourceId }) => {
+    ipcMainOn("openResource", async (event, { id }) => {
       await resourceWindow.create({
-        hash: `window:resource/${resourceId}`,
+        hash: `window/resource/${id}`,
       });
     });
 
-    ipcMainOn("getResource", async (event, { resourceId }) => {
-      const item = await this.resourcesService.byId(resourceId);
+    ipcMainOn("getResource", async (event, { id }) => {
+      const item = await this.resourcesService.byId(id);
 
       event.reply("getResource", {
         item,

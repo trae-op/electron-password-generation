@@ -45,7 +45,7 @@ export const Home = () => {
           renderEntity={(item) => {
             const handleUpdate = () => {
               window.electron.send.windowOpenResource({
-                resourceId: item.id + "",
+                id: item.id + "",
               });
             };
 

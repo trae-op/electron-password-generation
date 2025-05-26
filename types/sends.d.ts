@@ -9,7 +9,7 @@ type TCallbackSendTwoFactorCodeVerify = {
 };
 
 type TCallbackResource = {
-  resourceId: string;
+  id: string;
 };
 
 type TCallbackOpenResource = TCallbackResource;
