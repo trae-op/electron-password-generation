@@ -1,5 +1,5 @@
-import { useRef, useState, useCallback, useEffect, ChangeEvent } from "react";
-import type { THookControl, TParamControl } from "./types";
+import { useState, useCallback, ChangeEvent } from "react";
+import type { THookControl } from "./types";
 import { gotGenerate } from "../libs";
 import { useDestroyComponent } from "./useDestroyComponent";
 
@@ -10,10 +10,9 @@ const options = {
   isUppercase: false,
 };
 
-export const useControl = <CS extends ChangeEvent<HTMLInputElement>>(
-  watchToGenerate: TParamControl
-): THookControl<CS> => {
-  const isStartToWatchToGenerate = useRef(true);
+export const useControl = <
+  CS extends ChangeEvent<HTMLInputElement>
+>(): THookControl<CS> => {
   const [amount, setAmount] = useState(0);
   const [result, setResult] = useState(
     gotGenerate({
@@ -48,10 +47,9 @@ export const useControl = <CS extends ChangeEvent<HTMLInputElement>>(
 
         const readyResult = gotGenerate(options);
         setResult(readyResult);
-        watchToGenerate(readyResult);
       };
     },
-    [watchToGenerate, setResult]
+    [setResult]
   );
 
   const handleChangeRange = useCallback(
@@ -62,17 +60,9 @@ export const useControl = <CS extends ChangeEvent<HTMLInputElement>>(
       setAmount(options.amount);
       const readyResult = gotGenerate(options);
       setResult(readyResult);
-      watchToGenerate(readyResult);
     },
-    [setAmount, setResult, watchToGenerate]
+    []
   );
-
-  useEffect(() => {
-    if (isStartToWatchToGenerate.current) {
-      isStartToWatchToGenerate.current = false;
-      watchToGenerate(result);
-    }
-  }, [watchToGenerate, result]);
 
   useDestroyComponent(() => {
     options.amount = 10;

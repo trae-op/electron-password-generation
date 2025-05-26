@@ -12,7 +12,6 @@ export type TNamesField = {
 };
 
 export type TProps = {
-  watchToGenerate: (value: string) => void;
   minAmount?: number;
   maxAmount?: number;
   fields?: TNamesField;

@@ -9,5 +9,3 @@ export type THookControl<CS> = {
   checkedChange: (variant: number) => (checked: CS) => void;
   handleChangeRange: TParamsHandleChangeRange;
 };
-
-export type TParamControl = (value: string) => void;

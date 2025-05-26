@@ -11,7 +11,6 @@ import TextField from "@mui/material/TextField";
 
 export const Form = memo(
   ({
-    watchToGenerate,
     maxAmount = 50,
     minAmount = 10,
     fields = {
@@ -22,8 +21,7 @@ export const Form = memo(
       special: "special",
     },
   }: TProps) => {
-    const { checkedChange, result, handleChangeRange, amount } =
-      useControl(watchToGenerate);
+    const { checkedChange, result, handleChangeRange, amount } = useControl();
 
     return (
       <Stack direction="column" spacing={2}>
