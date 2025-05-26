@@ -7,6 +7,7 @@ import { ResourcesService } from "./service.js";
   hash: "window/resource",
   isCache: true,
   options: {
+    alwaysOnTop: true,
     width: 600,
     height: 600,
   },

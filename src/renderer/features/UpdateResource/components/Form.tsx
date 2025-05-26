@@ -1,61 +1,22 @@
-import { ChangeEvent, useActionState, memo } from "react";
-import { useFormStatus } from "react-dom";
-import Button from "@mui/material/Button";
+import { useActionState, memo } from "react";
 import Stack from "@mui/material/Stack";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { useReceiveResource } from "../hooks/useReceiveResource";
-import { useSubscribeEvent } from "../hooks/useSubscribeEvent";
+import { useIpc } from "../hooks/useIpc";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import { ButtonSubmit } from "./ButtonSubmit";
 import type { TPropsForm } from "./types";
-
-const SubmitButton = memo(() => {
-  const { pending } = useFormStatus();
-
-  return (
-    <Button
-      type="submit"
-      variant="contained"
-      color="primary"
-      size="large"
-      loading={pending}
-      sx={{ mt: 3, position: "relative" }}
-      disabled={pending}
-    >
-      {pending ? "Sending..." : "Apply"}
-    </Button>
-  );
-});
-
-async function submitFormAction(
-  _: undefined,
-  formData: FormData
-): Promise<undefined> {
-  const name = formData.get("name") as string;
-  const password = formData.get("password") as string;
-  const range = formData.get("range") as string;
-  const numbers = formData.get("numbers") as string;
-  const uppercase = formData.get("uppercase") as string;
-  const special = formData.get("special") as string;
-
-  console.log({
-    name,
-    password,
-    range,
-    numbers,
-    uppercase,
-    special,
-  });
-}
+import { useControl } from "../hooks/useControl";
+import { useControlContext } from "../hooks/useControlContext";
 
 export const Form = memo(({ renderGenerateCharacters }: TPropsForm) => {
-  useReceiveResource();
-  const { result, name, setName } = useSubscribeEvent();
+  useIpc();
+  const { result, openCreateNewPassword, name } = useControlContext();
+  const { handleTextInputChange, handleCheckedChange, submitFormAction } =
+    useControl();
   const [_, formAction] = useActionState(submitFormAction, undefined);
-
-  const handleTextInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
-  };
 
   if (result === undefined) {
     return (
@@ -97,9 +58,15 @@ export const Form = memo(({ renderGenerateCharacters }: TPropsForm) => {
           fullWidth
         />
 
-        {renderGenerateCharacters}
+        <FormControlLabel
+          control={<Checkbox onChange={handleCheckedChange} />}
+          label="Create a new password"
+          name="new-password"
+        />
 
-        <SubmitButton />
+        {openCreateNewPassword && renderGenerateCharacters}
+
+        <ButtonSubmit />
       </Stack>
     </Box>
   );
