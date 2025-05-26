@@ -60,6 +60,9 @@ electron.contextBridge.exposeInMainWorld("electron", {
     windowOpenUpdateResource: (payload) => {
       ipcSend("openUpdateResource", payload);
     },
+    windowOpenAddResource: () => {
+      ipcSend("openAddResource");
+    },
     getResource: (payload) => {
       ipcSend("getResource", payload);
     },

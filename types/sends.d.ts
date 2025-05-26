@@ -26,6 +26,7 @@ type TEventPayloadSend = {
   openUpdateResource: TCallbackOpenUpdateResource;
   getResource: TCallbackResource;
   resources: undefined;
+  openAddResource: undefined;
 };
 type TSend = {
   restart: () => void;
@@ -42,6 +43,7 @@ type TSend = {
   windowOpenUpdateResource: (
     payload: TEventPayloadSend["openUpdateResource"]
   ) => void;
+  windowOpenAddResource: () => void;
   getResource: (payload: TEventPayloadSend["getResource"]) => void;
   logout: () => void;
   resources: () => void;

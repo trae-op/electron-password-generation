@@ -1,3 +1,4 @@
+import { IconButtonProps } from "@mui/material/IconButton";
 import { ReactNode, ReactElement } from "react";
 
 export type TPropsForm = {
@@ -7,3 +8,5 @@ export type TPropsForm = {
 export type TPropsProvider = {
   children: ReactNode;
 };
+
+export type TPropsButtonProvider = IconButtonProps & {};

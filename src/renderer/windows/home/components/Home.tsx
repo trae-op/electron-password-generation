@@ -8,6 +8,10 @@ import { LogoutButton } from "@features/AuthSocialNetwork";
 import { Items as Resources } from "@features/Resources";
 import { Item as Resource } from "@widgets/Resource";
 import {
+  AddButton as AddResourceButton,
+  Provider as ProviderAddResourceButton,
+} from "@features/AddResource";
+import {
   useUpdate,
   Context as ContextUpdater,
   DownloadedButton,
@@ -58,6 +62,15 @@ export const Home = () => {
           }}
         />
       </Stack>
+      <ProviderAddResourceButton>
+        <AddResourceButton
+          sx={{
+            position: "fixed",
+            bottom: 10,
+            right: 10,
+          }}
+        />
+      </ProviderAddResourceButton>
     </ContextUserPopover.Provider>
   );
 };

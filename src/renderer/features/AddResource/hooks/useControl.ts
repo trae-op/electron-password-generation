@@ -5,6 +5,10 @@ import { THookControl } from "./types";
 export const useControl = (): THookControl => {
   const { setName } = useControlContext();
 
+  const handleAdd = useCallback(() => {
+    window.electron.send.windowOpenAddResource();
+  }, []);
+
   const handleTextInputChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       setName(event.target.value);
@@ -34,6 +38,7 @@ export const useControl = (): THookControl => {
   );
 
   return {
+    handleAdd,
     submitFormAction,
     handleTextInputChange,
   };

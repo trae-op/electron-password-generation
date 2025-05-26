@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, MouseEvent } from "react";
 
 export type THookSubscribeEvent = {
   result: TResource | undefined;
@@ -7,5 +7,6 @@ export type THookSubscribeEvent = {
 };
 export type THookControl = {
   handleTextInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleAdd: (event: MouseEvent<HTMLButtonElement>) => void;
   submitFormAction: (_: undefined, formData: FormData) => Promise<undefined>;
 };

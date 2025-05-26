@@ -1,7 +1,7 @@
 import {
   Form as FormAdd,
   Provider as ProviderAdd,
-} from "@features/UpdateResource";
+} from "@features/AddResource";
 import { Form as FormGenerateCharacters } from "@widgets/GenerateCharacters";
 
 export const Add = () => {

@@ -1,10 +1,15 @@
+import { memo } from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import IconButton from "@mui/material/IconButton";
+import { useControl } from "../hooks/useControl";
+import type { TPropsButtonProvider } from "./types";
 
-export const AddButton = () => {
+export const AddButton = memo(({ ...other }: TPropsButtonProvider) => {
+  const { handleAdd } = useControl();
+
   return (
-    <IconButton aria-label="delete">
-      <AddCircleIcon />
+    <IconButton onClick={handleAdd} {...other}>
+      <AddCircleIcon fontSize="large" />
     </IconButton>
   );
-};
+});
