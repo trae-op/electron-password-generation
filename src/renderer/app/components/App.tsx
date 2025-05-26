@@ -14,9 +14,9 @@ import {
 import { Window as Update } from "@features/Updater";
 import { Provider as ProviderUser } from "@features/User";
 import { MainLayout } from "./MainLayout";
-import { Home } from "@pages/home";
-import { Update as UpdateResource } from "@pages/updateResource";
-import { Add as AddResource } from "@pages/addResource";
+import { Home } from "@windows/home";
+import { Update as UpdateResource } from "@windows/updateResource";
+import { Add as AddResource } from "@windows/addResource";
 
 export const App = () => {
   return (

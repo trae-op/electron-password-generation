@@ -37,7 +37,7 @@
     "baseUrl": "./",
     "paths": {
       "@config/*": ["src/renderer/config/*"],
-      "@pages/*": ["src/renderer/pages/*"],
+      "@windows/*": ["src/renderer/windows/*"],
       "@widgets/*": ["src/renderer/widgets/*"],
       "@features/*": ["src/renderer/features/*"],
       "@shared/*": ["src/renderer/shared/*"]
