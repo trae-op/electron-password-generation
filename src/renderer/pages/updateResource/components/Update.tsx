@@ -4,7 +4,7 @@ import {
 } from "@features/UpdateResource";
 import { Form as FormGenerateCharacters } from "@widgets/GenerateCharacters";
 
-export const ResourceUpdate = () => {
+export const Update = () => {
   return (
     <ProviderUpdateResource>
       <FormResourceUpdate

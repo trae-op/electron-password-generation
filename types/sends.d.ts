@@ -12,7 +12,7 @@ type TCallbackResource = {
   id: string;
 };
 
-type TCallbackOpenResource = TCallbackResource;
+type TCallbackOpenUpdateResource = TCallbackResource;
 
 type TEventPayloadSend = {
   restart: undefined;
@@ -23,7 +23,7 @@ type TEventPayloadSend = {
   twoFactorVerify: undefined;
   checkUser: undefined;
   logout: undefined;
-  openResource: TCallbackOpenResource;
+  openUpdateResource: TCallbackOpenUpdateResource;
   getResource: TCallbackResource;
   resources: undefined;
 };
@@ -39,7 +39,9 @@ type TSend = {
   sendTwoFactorCodeVerify: (
     payload: TEventPayloadSend["twoFactorCodeVerify"]
   ) => void;
-  windowOpenResource: (payload: TEventPayloadSend["openResource"]) => void;
+  windowOpenUpdateResource: (
+    payload: TEventPayloadSend["openUpdateResource"]
+  ) => void;
   getResource: (payload: TEventPayloadSend["getResource"]) => void;
   logout: () => void;
   resources: () => void;

@@ -7,7 +7,8 @@ dotenv.config(!isDev() ? { path: envPath } : undefined);
 
 export const windows: TWindows = {
   main: "window:main",
-  resource: "window/resource",
+  updateResource: "window/resource/update",
+  addResource: "window/resource/add",
   preloadApp: "window:preload-app",
   updateApp: "window:update-app",
   twoFactorQA: "window:two-factor-qa",

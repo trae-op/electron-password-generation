@@ -57,8 +57,8 @@ electron.contextBridge.exposeInMainWorld("electron", {
     sendTwoFactorCodeVerify: (payload) => {
       ipcSend("twoFactorCodeVerify", payload);
     },
-    windowOpenResource: (payload) => {
-      ipcSend("openResource", payload);
+    windowOpenUpdateResource: (payload) => {
+      ipcSend("openUpdateResource", payload);
     },
     getResource: (payload) => {
       ipcSend("getResource", payload);

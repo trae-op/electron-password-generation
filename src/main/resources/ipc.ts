@@ -10,12 +10,12 @@ import { ResourcesService } from "./service.js";
 export class ResourcesIpc implements TIpcHandlerInterface {
   constructor(private resourcesService: ResourcesService) {}
 
-  onInit({ getWindow }: TParamOnInit<TWindows["resource"]>) {
-    const resourceWindow = getWindow("window/resource");
+  onInit({ getWindow }: TParamOnInit<TWindows["updateResource"]>) {
+    const updateResourceWindow = getWindow("window/resource/update");
 
-    ipcMainOn("openResource", async (event, { id }) => {
-      await resourceWindow.create({
-        hash: `window/resource/${id}`,
+    ipcMainOn("openUpdateResource", async (event, { id }) => {
+      await updateResourceWindow.create({
+        hash: `window/resource/update/${id}`,
       });
     });
 
