@@ -4,6 +4,7 @@ type TResource = {
   name: string;
   key: string;
   iv: string;
+  salt?: string;
   createdAt: Date;
   updatedAt: Date;
 };

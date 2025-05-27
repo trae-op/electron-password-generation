@@ -14,6 +14,12 @@ type TCallbackResource = {
 
 type TCallbackOpenUpdateResource = TCallbackResource;
 
+type TCallbackSendResource<V = FormDataEntryValue | null> = {
+  id?: string;
+  name: V;
+  key: V;
+};
+
 type TEventPayloadSend = {
   restart: undefined;
   closePreloadWindow: undefined;
@@ -27,7 +33,10 @@ type TEventPayloadSend = {
   getResource: TCallbackResource;
   resources: undefined;
   openAddResource: undefined;
+  postResource: TCallbackSendResource;
+  putResource: TCallbackSendResource;
 };
+
 type TSend = {
   restart: () => void;
   closePreloadWindow: () => void;
@@ -44,6 +53,8 @@ type TSend = {
     payload: TEventPayloadSend["openUpdateResource"]
   ) => void;
   windowOpenAddResource: () => void;
+  postResource: (payload: TEventPayloadSend["postResource"]) => void;
+  putResource: (payload: TEventPayloadSend["putResource"]) => void;
   getResource: (payload: TEventPayloadSend["getResource"]) => void;
   logout: () => void;
   resources: () => void;

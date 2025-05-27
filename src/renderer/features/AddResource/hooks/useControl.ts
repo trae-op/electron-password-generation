@@ -18,20 +18,12 @@ export const useControl = (): THookControl => {
 
   const submitFormAction = useCallback(
     async (_: undefined, formData: FormData): Promise<undefined> => {
-      const name = formData.get("name") as string;
-      const password = formData.get("password") as string;
-      const range = formData.get("range") as string;
-      const numbers = formData.get("numbers") as string;
-      const uppercase = formData.get("uppercase") as string;
-      const special = formData.get("special") as string;
+      const name = formData.get("name");
+      const key = formData.get("password");
 
-      console.log({
+      window.electron.send.postResource({
         name,
-        password,
-        range,
-        numbers,
-        uppercase,
-        special,
+        key,
       });
     },
     []

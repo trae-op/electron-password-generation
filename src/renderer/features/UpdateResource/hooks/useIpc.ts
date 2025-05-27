@@ -14,7 +14,6 @@ export const useIpc = () => {
 
   useEffect(() => {
     window.electron.receive.subscribeGetResource(({ item }) => {
-      console.log("item", item);
       setResult(item);
       if (item?.name) {
         setName(item.name);

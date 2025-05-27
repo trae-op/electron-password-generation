@@ -1,8 +1,10 @@
 import { ChangeEvent, useCallback } from "react";
+import { useParams } from "react-router-dom";
 import { useControlContext } from "./useControlContext";
 import { THookControl } from "./types";
 
 export const useControl = (): THookControl => {
+  const { id } = useParams<{ id: string }>();
   const { setName, setOpenCreateNewPassword } = useControlContext();
 
   const handleTextInputChange = useCallback(
@@ -22,22 +24,15 @@ export const useControl = (): THookControl => {
   const submitFormAction = useCallback(
     async (_: undefined, formData: FormData): Promise<undefined> => {
       const name = formData.get("name") as string;
-      const password = formData.get("password") as string;
-      const range = formData.get("range") as string;
-      const numbers = formData.get("numbers") as string;
-      const uppercase = formData.get("uppercase") as string;
-      const special = formData.get("special") as string;
+      const key = formData.get("password") as string;
 
-      console.log({
+      window.electron.send.putResource({
+        id,
         name,
-        password,
-        range,
-        numbers,
-        uppercase,
-        special,
+        key,
       });
     },
-    []
+    [id]
   );
 
   return {
