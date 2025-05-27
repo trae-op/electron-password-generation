@@ -1,2 +1,2 @@
 export * from "./useControl";
-export * from "./useSubscribeEvent";
+export * from "./useIpc";

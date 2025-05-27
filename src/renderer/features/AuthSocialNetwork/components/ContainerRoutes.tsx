@@ -1,8 +1,8 @@
 import { memo, type ReactNode } from "react";
-import { useSubscribeEvent } from "../hooks";
+import { useIpc } from "../hooks";
 
 export const ContainerRoutes = memo(({ children }: { children: ReactNode }) => {
-  useSubscribeEvent();
+  useIpc();
 
   return children;
 });

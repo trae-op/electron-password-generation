@@ -5,7 +5,10 @@ import ListItemButton, {
 } from "@mui/material/ListItemButton";
 import { UserPopover, ContextUserPopover } from "@features/User";
 import { LogoutButton } from "@features/AuthSocialNetwork";
-import { Items as Resources } from "@features/Resources";
+import {
+  Items as Resources,
+  Provider as ProviderResources,
+} from "@features/Resources";
 import { Item as Resource } from "@widgets/Resource";
 import {
   AddButton as AddResourceButton,
@@ -40,27 +43,29 @@ export const Home = () => {
     >
       <UserPopover />
       <Stack spacing={2} direction="row" sx={{ flexWrap: "wrap" }} useFlexGap>
-        <Resources
-          renderEntity={(item) => {
-            const handleUpdate = () => {
-              window.electron.send.windowOpenUpdateResource({
-                id: item.id + "",
-              });
-            };
+        <ProviderResources>
+          <Resources
+            renderEntity={(item) => {
+              const handleUpdate = () => {
+                window.electron.send.windowOpenUpdateResource({
+                  id: item.id + "",
+                });
+              };
 
-            return (
-              <Fragment key={item.id}>
-                <Resource
-                  id={item.id}
-                  key={item.key}
-                  name={item.name}
-                  handleCopy={() => {}}
-                  handleUpdate={handleUpdate}
-                />
-              </Fragment>
-            );
-          }}
-        />
+              return (
+                <Fragment key={item.id}>
+                  <Resource
+                    id={item.id}
+                    key={item.key}
+                    name={item.name}
+                    handleCopy={() => {}}
+                    handleUpdate={handleUpdate}
+                  />
+                </Fragment>
+              );
+            }}
+          />
+        </ProviderResources>
       </Stack>
       <ProviderAddResourceButton>
         <AddResourceButton

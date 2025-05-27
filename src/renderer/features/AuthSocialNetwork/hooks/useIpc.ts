@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useControlContext } from "./useControlContext";
 
-export const useSubscribeEvent = () => {
+export const useIpc = () => {
   const { setAuthenticated } = useControlContext();
 
   useEffect(() => {

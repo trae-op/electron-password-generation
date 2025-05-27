@@ -1,13 +1,13 @@
 import { memo } from "react";
 import Stack from "@mui/material/Stack";
 import Skeleton from "@mui/material/Skeleton";
-import { useSubscribeEvent } from "../hooks";
-import { useReceiveResources } from "../hooks/useReceiveResources";
+import { useControlContext } from "../hooks/useControlContext";
+import { useIpc } from "../hooks/useIpc";
 import type { TPropsItems } from "./types";
 
 export const Items = memo(({ renderEntity }: TPropsItems) => {
-  useReceiveResources();
-  const { list } = useSubscribeEvent();
+  useIpc();
+  const { list } = useControlContext();
 
   if (list === undefined) {
     return (
