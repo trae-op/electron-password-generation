@@ -4,9 +4,11 @@ import Stack from "@mui/material/Stack";
 import { useControlTwoFactorVerify } from "../hooks/useControlTwoFactorVerify";
 import { useControlContext } from "../hooks/useControlContext";
 import { messages } from "../../../config/config";
-import { useSubscribeEventTwoFactorVerify } from "../hooks/useSubscribeEventTwoFactorVerify";
+import { useIpcVerify } from "../hooks/useIpcVerify";
 
 export const TwoFactorVerifyWindow = () => {
+  useIpcVerify();
+  const { pending } = useControlContext();
   const {
     handleChange,
     handleSubmit,
@@ -15,8 +17,6 @@ export const TwoFactorVerifyWindow = () => {
     handleFocus,
     isValid,
   } = useControlTwoFactorVerify();
-  const { pending } = useControlContext();
-  useSubscribeEventTwoFactorVerify();
 
   return (
     <form onSubmit={handleSubmit} noValidate autoComplete="off">

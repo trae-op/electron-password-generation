@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useControlContext } from "./useControlContext";
 
-export const useSubscribeEventTwoFactorVerify = () => {
+export const useIpcVerify = () => {
   const { setPending, setTwoFactorCode } = useControlContext();
 
   useEffect(() => {

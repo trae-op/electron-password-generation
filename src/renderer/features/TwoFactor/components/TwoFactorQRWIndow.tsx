@@ -1,12 +1,14 @@
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useControlTwoFactorQA } from "../hooks/useControlTwoFactorQA";
-import { useSubscribeEventTwoFactorQA } from "../hooks/useSubscribeEventTwoFactorQA";
+import { useIpcQA } from "../hooks/useIpcQA";
+import { useControlContext } from "../hooks/useControlContext";
 import Button from "@mui/material/Button";
 
 export const TwoFactorQRWindow = () => {
+  useIpcQA();
+  const { base64 } = useControlContext();
   const { handleNextStep } = useControlTwoFactorQA();
-  const { base64 } = useSubscribeEventTwoFactorQA();
 
   return (
     <Stack spacing={1} alignItems="center">
