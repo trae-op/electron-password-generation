@@ -1,7 +1,7 @@
-import { ReactNode, type ReactElement } from "react";
+import { ElementType, ReactNode } from "react";
 
 export type TPropsItems = {
-  renderEntity: (data: TResource) => ReactElement;
+  entityComponent: ElementType;
 };
 
 export type TPropsProvider = {

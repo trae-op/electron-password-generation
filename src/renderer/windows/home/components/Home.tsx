@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import Stack from "@mui/material/Stack";
 import ListItemButton, {
   ListItemButtonProps,
@@ -9,7 +8,7 @@ import {
   Items as Resources,
   Provider as ProviderResources,
 } from "@features/Resources";
-import { Item as Resource } from "@widgets/Resource";
+import { Item as Resource } from "@entities/Resource";
 import {
   AddButton as AddResourceButton,
   Provider as ProviderAddResourceButton,
@@ -44,27 +43,7 @@ export const Home = () => {
       <UserPopover />
       <Stack spacing={2} direction="row" sx={{ flexWrap: "wrap" }} useFlexGap>
         <ProviderResources>
-          <Resources
-            renderEntity={(item) => {
-              const handleUpdate = () => {
-                window.electron.send.windowOpenUpdateResource({
-                  id: item.id + "",
-                });
-              };
-
-              return (
-                <Fragment key={item.id}>
-                  <Resource
-                    id={item.id}
-                    key={item.key}
-                    name={item.name}
-                    handleCopy={() => {}}
-                    handleUpdate={handleUpdate}
-                  />
-                </Fragment>
-              );
-            }}
-          />
+          <Resources entityComponent={Resource} />
         </ProviderResources>
       </Stack>
       <ProviderAddResourceButton>

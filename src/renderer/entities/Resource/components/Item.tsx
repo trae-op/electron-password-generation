@@ -6,6 +6,10 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { TPropsItem } from "./types";
 
+function arePropsEqual(oldProps: TPropsItem, newProps: TPropsItem): boolean {
+  return oldProps.name === newProps.name && oldProps.id === newProps.id;
+}
+
 export const Item = memo(
   ({ name, id, handleCopy, handleUpdate }: TPropsItem) => {
     return (
@@ -25,5 +29,6 @@ export const Item = memo(
         </CardActions>
       </Card>
     );
-  }
+  },
+  arePropsEqual
 );

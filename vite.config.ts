@@ -22,6 +22,7 @@ export default defineConfig({
     alias: {
       "@config": path.resolve(__dirname, "src/renderer/config"),
       "@windows": path.resolve(__dirname, "src/renderer/windows"),
+      "@entities": path.resolve(__dirname, "src/renderer/entities"),
       "@widgets": path.resolve(__dirname, "src/renderer/widgets"),
       "@features": path.resolve(__dirname, "src/renderer/features"),
       "@shared": path.resolve(__dirname, "src/renderer/shared"),

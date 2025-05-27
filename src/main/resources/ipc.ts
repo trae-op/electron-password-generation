@@ -68,14 +68,17 @@ export class ResourcesIpc implements TIpcHandlerInterface {
         this.updateResourceWindow !== undefined &&
         typeof payload.name === "string" &&
         mainWindow !== undefined &&
-        encryptedVault !== undefined &&
         payload.id !== undefined
       ) {
         await this.resourcesService.put(payload.id, {
           name: payload.name,
-          key: encryptedVault.encryptedData,
-          iv: encryptedVault.iv,
-          salt: encryptedVault.salt,
+          ...(encryptedVault !== undefined
+            ? {
+                key: encryptedVault.encryptedData,
+                iv: encryptedVault.iv,
+                salt: encryptedVault.salt,
+              }
+            : {}),
         });
         const resources = await this.getResources();
         this.updateResourceWindow.hide();

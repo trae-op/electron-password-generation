@@ -1,8 +1,8 @@
-import { ReactElement, RefAttributes } from "react";
+import { ElementType, ReactElement, ReactNode, RefAttributes } from "react";
 
 type TProps<P extends Record<string, any>> = P & {
-  component: React.ElementType<P>;
-  children?: React.ReactNode;
+  component: ElementType<P>;
+  children?: ReactNode;
 };
 
 export type TComponentGenericForwardRef = <P extends Record<string, any>>(

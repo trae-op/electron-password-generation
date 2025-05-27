@@ -1,9 +1,8 @@
 import { useEffect } from "react";
-import isEqual from "lodash/isEqual";
-import { useControlContext } from "./useControlContext";
+import { useControlContextActions } from "./useControlContextActions";
 
 export const useIpc = () => {
-  const { setList } = useControlContext();
+  const { setItems } = useControlContextActions();
 
   useEffect(() => {
     window.electron.send.resources();
@@ -11,7 +10,7 @@ export const useIpc = () => {
 
   useEffect(() => {
     window.electron.receive.subscribeResources(({ items }) => {
-      setList((prevItems) => (isEqual(prevItems, items) ? prevItems : items));
+      setItems(items);
     });
   }, []);
 };

@@ -39,6 +39,7 @@
       "@config/*": ["src/renderer/config/*"],
       "@windows/*": ["src/renderer/windows/*"],
       "@widgets/*": ["src/renderer/widgets/*"],
+      "@entities/*": ["src/renderer/entities/*"],
       "@features/*": ["src/renderer/features/*"],
       "@shared/*": ["src/renderer/shared/*"]
     }

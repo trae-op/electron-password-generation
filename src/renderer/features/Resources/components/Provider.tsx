@@ -1,17 +1,34 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
+import isEqual from "lodash/isEqual";
+import { Context, ContextActions } from "../context";
 import type { TPropsProvider } from "./types";
-import { Context } from "../context";
 
 export const Provider = ({ children }: TPropsProvider) => {
   const [list, setList] = useState<TResource[] | undefined>(undefined);
 
+  const setItems = useCallback((items: TResource[]) => {
+    setList((prevItems) => (isEqual(prevItems, items) ? prevItems : items));
+  }, []);
+
   const value = useMemo(
     () => ({
       list,
-      setList,
     }),
     [list]
   );
 
-  return <Context.Provider value={value}>{children}</Context.Provider>;
+  const actions = useMemo(
+    () => ({
+      setItems,
+    }),
+    [setItems]
+  );
+
+  return (
+    <Context.Provider value={value}>
+      <ContextActions.Provider value={actions}>
+        {children}
+      </ContextActions.Provider>
+    </Context.Provider>
+  );
 };

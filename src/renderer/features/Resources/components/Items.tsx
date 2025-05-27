@@ -5,20 +5,42 @@ import { useControlContext } from "../hooks/useControlContext";
 import { useIpc } from "../hooks/useIpc";
 import type { TPropsItems } from "./types";
 
-export const Items = memo(({ renderEntity }: TPropsItems) => {
-  useIpc();
-  const { list } = useControlContext();
+export const Items = memo(
+  ({ entityComponent: EntityComponent }: TPropsItems) => {
+    useIpc();
+    const { list } = useControlContext();
 
-  if (list === undefined) {
-    return (
-      <Stack spacing={2} direction="row" sx={{ flexWrap: "wrap" }} useFlexGap>
-        <Skeleton variant="rounded" width={170} height={100} />
-        <Skeleton variant="rounded" width={170} height={100} />
-        <Skeleton variant="rounded" width={170} height={100} />
-        <Skeleton variant="rounded" width={170} height={100} />
-      </Stack>
-    );
+    if (list === undefined) {
+      return (
+        <Stack spacing={2} direction="row" sx={{ flexWrap: "wrap" }} useFlexGap>
+          <Skeleton variant="rounded" width={170} height={100} />
+          <Skeleton variant="rounded" width={170} height={100} />
+          <Skeleton variant="rounded" width={170} height={100} />
+          <Skeleton variant="rounded" width={170} height={100} />
+        </Stack>
+      );
+    }
+
+    return list.map((item) => {
+      const handleUpdate = () => {
+        window.electron.send.windowOpenUpdateResource({
+          id: item.id + "",
+        });
+      };
+
+      const handleCopy = () => {
+        console.log(item.id);
+      };
+
+      return (
+        <EntityComponent
+          key={item.id}
+          id={item.id}
+          name={item.name}
+          handleCopy={handleCopy}
+          handleUpdate={handleUpdate}
+        />
+      );
+    });
   }
-
-  return list.map((item) => renderEntity(item));
-});
+);
