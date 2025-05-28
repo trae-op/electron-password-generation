@@ -12,6 +12,7 @@ import {
 import { Window as Update } from "@ui-business/Updater";
 import { Provider as ProviderUser } from "@ui-business/User";
 import { MainLayout } from "@layouts/Main";
+import { FormResourcesLayout } from "@layouts/FormResources";
 import { Home } from "@windows/home";
 import { Update as UpdateResource } from "@windows/updateResource";
 import { Add as AddResource } from "@windows/addResource";
@@ -40,15 +41,18 @@ export const App = () => {
                 />
               </Route>
 
+              <Route element={<FormResourcesLayout />}>
+                <Route path="/window/resource/add" element={<AddResource />} />
+                <Route
+                  path="/window/resource/update/:id"
+                  element={<UpdateResource />}
+                />
+              </Route>
+
               <Route path="/window:update-app" element={<Update />} />
               <Route
                 path="/window:two-factor-qa"
                 element={<TwoFactorQRWindow />}
-              />
-              <Route path="/window/resource/add" element={<AddResource />} />
-              <Route
-                path="/window/resource/update/:id"
-                element={<UpdateResource />}
               />
               <Route
                 path="/window:two-factor-verify"

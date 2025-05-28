@@ -1,6 +1,5 @@
 import { useActionState, memo } from "react";
 import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useIpc } from "../hooks/useIpc";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -23,15 +22,7 @@ export const Form = memo(({ renderGenerateCharacters }: TPropsForm) => {
   }
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-      }}
-      component="form"
-      action={formAction}
-      noValidate
-      autoComplete="off"
-    >
+    <form action={formAction} noValidate autoComplete="off">
       <Stack direction="column" spacing={1}>
         <TextField
           label="Resource name"
@@ -52,6 +43,6 @@ export const Form = memo(({ renderGenerateCharacters }: TPropsForm) => {
 
         <SubmitButton />
       </Stack>
-    </Box>
+    </form>
   );
 });
