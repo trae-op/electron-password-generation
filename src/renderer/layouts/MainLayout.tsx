@@ -2,13 +2,12 @@ import Container from "@mui/material/Container";
 import { Outlet } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import { Container as ContainerAppVersion } from "@widgets/AppVersion";
-import { Container as ContainerAllowedRouters } from "@widgets/AllowedRoutes";
-import { useClosePreloadWindow } from "../hooks";
-import { useControlContext } from "@features/AuthSocialNetwork/hooks/useControlContext";
-import CircularProgress from "@mui/material/CircularProgress";
+import { Container as ContainerAppVersion } from "@ui-composites/AppVersion";
+import { Container as ContainerAllowedRouters } from "@ui-composites/AllowedRoutes";
+import { useClosePreloadWindow } from "@hooks/closePreloadWindow";
+import { useControlContext as useControlContextAuthSocialNetwork } from "@ui-business/AuthSocialNetwork";
+import { LoadingSpinner } from "@components/LoadingSpinner";
 
 const theme = createTheme({
   components: {
@@ -29,7 +28,7 @@ const theme = createTheme({
 
 export const MainLayout = () => {
   useClosePreloadWindow();
-  const { isAuthenticated } = useControlContext();
+  const { isAuthenticated } = useControlContextAuthSocialNetwork();
 
   return (
     <ThemeProvider theme={theme}>
@@ -42,23 +41,7 @@ export const MainLayout = () => {
           height="100vh"
         >
           <ContainerAllowedRouters routes={["window:main", "sign-in"]}>
-            {isAuthenticated === undefined && (
-              <Stack
-                sx={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  zIndex: 1000,
-                  backgroundColor: "rgba(24, 24, 24)",
-                }}
-                alignItems="center"
-                justifyContent="center"
-              >
-                <CircularProgress size={70} />
-              </Stack>
-            )}
+            {isAuthenticated === undefined && <LoadingSpinner />}
 
             <ContainerAppVersion
               sx={{

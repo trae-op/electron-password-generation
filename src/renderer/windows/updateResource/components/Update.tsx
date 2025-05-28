@@ -1,8 +1,8 @@
 import {
   Form as FormResourceUpdate,
   Provider as ProviderUpdateResource,
-} from "@features/UpdateResource";
-import { Form as FormGenerateCharacters } from "@widgets/GenerateCharacters";
+} from "@ui-business/UpdateResource";
+import { Form as FormGenerateCharacters } from "@ui-business/GenerateCharacters";
 
 export const Update = () => {
   return (

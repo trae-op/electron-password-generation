@@ -1,11 +1,11 @@
 import { useActionState, memo } from "react";
 import Stack from "@mui/material/Stack";
-import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useIpc } from "../hooks/useIpc";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import { LoadingSpinner } from "@components/LoadingSpinner";
 import { SubmitButton } from "./SubmitButton";
 import type { TPropsForm } from "./types";
 import { useControl } from "../hooks/useControl";
@@ -19,23 +19,7 @@ export const Form = memo(({ renderGenerateCharacters }: TPropsForm) => {
   const [_, formAction] = useActionState(submitFormAction, undefined);
 
   if (result === undefined) {
-    return (
-      <Stack
-        sx={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: 1000,
-          backgroundColor: "rgba(24, 24, 24)",
-        }}
-        alignItems="center"
-        justifyContent="center"
-      >
-        <CircularProgress size={70} />
-      </Stack>
-    );
+    return <LoadingSpinner />;
   }
 
   return (

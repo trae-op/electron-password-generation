@@ -4,7 +4,7 @@ import type {
   TChangeEvent,
   TFormEvent,
 } from "./types";
-import { isValidTwoFactor } from "@shared/utils";
+import { isValidTwoFactor } from "@utils/regexes";
 import { useControlContext } from "./useControlContext";
 
 export const useControlTwoFactorVerify = (): THookControlTwoFactorVerify => {

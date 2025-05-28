@@ -5,15 +5,15 @@ import {
   SignIn,
   Provider as ProviderAuth,
   ContainerRoutes,
-} from "@features/AuthSocialNetwork";
+} from "@ui-business/AuthSocialNetwork";
 import {
   TwoFactorQRWindow,
   TwoFactorVerifyWindow,
   Provider as ProviderTwoFactorVerify,
-} from "@features/TwoFactor";
-import { Window as Update } from "@features/Updater";
-import { Provider as ProviderUser } from "@features/User";
-import { MainLayout } from "./MainLayout";
+} from "@ui-business/TwoFactor";
+import { Window as Update } from "@ui-business/Updater";
+import { Provider as ProviderUser } from "@ui-business/User";
+import { MainLayout } from "@layouts/MainLayout";
 import { Home } from "@windows/home";
 import { Update as UpdateResource } from "@windows/updateResource";
 import { Add as AddResource } from "@windows/addResource";

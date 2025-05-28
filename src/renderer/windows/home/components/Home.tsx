@@ -2,21 +2,21 @@ import Stack from "@mui/material/Stack";
 import ListItemButton, {
   ListItemButtonProps,
 } from "@mui/material/ListItemButton";
-import { UserPopover, ContextUserPopover } from "@features/User";
-import { LogoutButton } from "@features/AuthSocialNetwork";
+import { UserPopover, ContextUserPopover } from "@ui-business/User";
+import { LogoutButton } from "@ui-business/AuthSocialNetwork";
 import {
   Items as Resources,
   Provider as ProviderResources,
-} from "@features/Resources";
+} from "@ui-business/Resources";
 import {
   AddButton as AddResourceButton,
   Provider as ProviderAddResourceButton,
-} from "@features/AddResource";
+} from "@ui-business/AddResource";
 import {
   useUpdate,
   Context as ContextUpdater,
   DownloadedButton,
-} from "@features/Updater";
+} from "@ui-business/Updater";
 
 export const Home = () => {
   const value = useUpdate();
