@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import { useControlTwoFactorVerify } from "../hooks/useControlTwoFactorVerify";
 import { useControlContext } from "../hooks/useControlContext";
-import { messages } from "../../../config/config";
+import { messages } from "../../../config";
 import { useIpcVerify } from "../hooks/useIpcVerify";
 
 export const TwoFactorVerifyWindow = () => {

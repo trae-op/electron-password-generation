@@ -1,9 +1,10 @@
-import { ElementType, ReactNode } from "react";
-
-export type TPropsItems = {
-  entityComponent: ElementType;
-};
+import { ReactNode } from "react";
 
 export type TPropsProvider = {
   children: ReactNode;
+};
+
+export type TPropsItem = Pick<TResource, "id" | "name" | "key"> & {
+  handleCopy: () => void;
+  handleUpdate: () => void;
 };

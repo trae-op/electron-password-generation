@@ -8,7 +8,6 @@ import {
   Items as Resources,
   Provider as ProviderResources,
 } from "@features/Resources";
-import { Item as Resource } from "@entities/Resource";
 import {
   AddButton as AddResourceButton,
   Provider as ProviderAddResourceButton,
@@ -43,7 +42,7 @@ export const Home = () => {
       <UserPopover />
       <Stack spacing={2} direction="row" sx={{ flexWrap: "wrap" }} useFlexGap>
         <ProviderResources>
-          <Resources entityComponent={Resource} />
+          <Resources />
         </ProviderResources>
       </Stack>
       <ProviderAddResourceButton>
