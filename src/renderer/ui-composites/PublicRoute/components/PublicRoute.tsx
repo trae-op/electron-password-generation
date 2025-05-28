@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useControlContext } from "../hooks/useControlContext";
+import { useControlContext as useControlContextAuth } from "@ui-business/AuthSocialNetwork";
 
 export const PublicRoute = () => {
-  const { isAuthenticated } = useControlContext();
+  const { isAuthenticated } = useControlContextAuth();
   if (isAuthenticated) {
     return <Navigate to="/window:main" replace />;
   }

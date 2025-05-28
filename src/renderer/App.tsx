@@ -1,7 +1,5 @@
 import { HashRouter, Route, Routes } from "react-router-dom";
 import {
-  PrivateRoute,
-  PublicRoute,
   SignIn,
   Provider as ProviderAuth,
   ContainerRoutes,
@@ -13,10 +11,12 @@ import {
 } from "@ui-business/TwoFactor";
 import { Window as Update } from "@ui-business/Updater";
 import { Provider as ProviderUser } from "@ui-business/User";
-import { MainLayout } from "@layouts/MainLayout";
+import { MainLayout } from "@layouts/Main";
 import { Home } from "@windows/home";
 import { Update as UpdateResource } from "@windows/updateResource";
 import { Add as AddResource } from "@windows/addResource";
+import { PublicRoute } from "@ui-composites/PublicRoute";
+import { PrivateRoute } from "@ui-composites/PrivateRoute";
 
 export const App = () => {
   return (
