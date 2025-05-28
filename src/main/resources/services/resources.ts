@@ -44,6 +44,27 @@ export class ResourcesService {
     return response.data;
   }
 
+  async delete<R extends TResource>(id: string): Promise<R | undefined> {
+    const response = await this.restApiService.delete<R>(
+      `${restApi.urls.base}${restApi.urls.baseApi}${
+        restApi.urls.resources.base
+      }${restApi.urls.resources.byId(id)}`,
+      {
+        headers: this.getAuthorization(),
+      }
+    );
+
+    if (response.error !== undefined) {
+      dialog.showMessageBox({
+        title: `Something wrong with server! ${response.error.code || ""}`,
+        message: response.error.message,
+      });
+      return;
+    }
+
+    return response.data;
+  }
+
   async post<R extends TResource>(body: TPostBody): Promise<R | undefined> {
     const response = await this.restApiService.post<R>(
       `${restApi.urls.base}${restApi.urls.baseApi}${restApi.urls.resources.base}`,

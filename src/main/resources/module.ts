@@ -5,11 +5,12 @@ import { ResourcesService } from "./services/resources.js";
 import { CryptoService } from "./services/crypto.js";
 import { UpdateWindow } from "./windows/update.js";
 import { AddWindow } from "./windows/add.js";
+import { DeleteWindow } from "./windows/delete.js";
 
 @RgModule({
   imports: [RestApiModule],
   ipc: [ResourcesIpc],
-  windows: [UpdateWindow, AddWindow],
+  windows: [UpdateWindow, AddWindow, DeleteWindow],
   providers: [ResourcesService, CryptoService],
 })
 export class ResourcesModule {}

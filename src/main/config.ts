@@ -9,6 +9,7 @@ export const windows: TWindows = {
   main: "window:main",
   updateResource: "window/resource/update",
   addResource: "window/resource/add",
+  deleteResource: "window/resource/delete",
   preloadApp: "window:preload-app",
   updateApp: "window:update-app",
   twoFactorQA: "window:two-factor-qa",

@@ -16,6 +16,7 @@ import { FormResourcesLayout } from "@layouts/FormResources";
 import { Home } from "@windows/home";
 import { Update as UpdateResource } from "@windows/updateResource";
 import { Add as AddResource } from "@windows/addResource";
+import { Confirm as ConfirmDeleteResource } from "@ui-business/DeleteResource";
 import { PublicRoute } from "@ui-composites/PublicRoute";
 import { PrivateRoute } from "@ui-composites/PrivateRoute";
 
@@ -48,6 +49,11 @@ export const App = () => {
                   element={<UpdateResource />}
                 />
               </Route>
+
+              <Route
+                path="/window/resource/delete/:id"
+                element={<ConfirmDeleteResource />}
+              />
 
               <Route path="/window:update-app" element={<Update />} />
               <Route

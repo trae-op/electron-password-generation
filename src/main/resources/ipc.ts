@@ -18,6 +18,7 @@ import { TEncryptedVault } from "./services/types.js";
 export class ResourcesIpc implements TIpcHandlerInterface {
   addResourceWindow: BrowserWindow | undefined;
   updateResourceWindow: BrowserWindow | undefined;
+  deleteResourceWindow: BrowserWindow | undefined;
 
   constructor(
     private resourcesService: ResourcesService,
@@ -26,17 +27,33 @@ export class ResourcesIpc implements TIpcHandlerInterface {
 
   onInit({
     getWindow,
-  }: TParamOnInit<TWindows["updateResource"] | TWindows["addResource"]>) {
+  }: TParamOnInit<
+    | TWindows["updateResource"]
+    | TWindows["addResource"]
+    | TWindows["deleteResource"]
+  >) {
     const updateResourceWindow = getWindow("window/resource/update");
     const addResourceWindow = getWindow("window/resource/add");
+    const deleteResourceWindow = getWindow("window/resource/delete");
     const mainWindow = getWindows<TWindows["main"]>("window:main");
 
     this.ipcOpenUpdateResource(updateResourceWindow);
     this.ipcOpenAddResource(addResourceWindow);
+    this.ipcOpenDeleteResource(deleteResourceWindow);
+    this.ipcDeleteResource(mainWindow);
     this.ipcPostResource(mainWindow);
     this.ipcPutResource(mainWindow);
-    this.ipcGetResource();
     this.ipcGetResources();
+    this.ipcGetResource();
+    this.ipcCancelDeleteResource();
+  }
+
+  private ipcCancelDeleteResource(): void {
+    ipcMainOn("cancelDeleteResource", () => {
+      if (this.deleteResourceWindow !== undefined) {
+        this.deleteResourceWindow.hide();
+      }
+    });
   }
 
   private ipcOpenUpdateResource(window: TWindowFactory): void {
@@ -50,6 +67,14 @@ export class ResourcesIpc implements TIpcHandlerInterface {
   private ipcOpenAddResource(window: TWindowFactory): void {
     ipcMainOn("openAddResource", async () => {
       this.addResourceWindow = await window.create();
+    });
+  }
+
+  private ipcOpenDeleteResource(window: TWindowFactory): void {
+    ipcMainOn("openDeleteResource", async (_, { id }) => {
+      this.deleteResourceWindow = await window.create({
+        hash: `window/resource/delete/${id}`,
+      });
     });
   }
 
@@ -143,5 +168,22 @@ export class ResourcesIpc implements TIpcHandlerInterface {
     return {
       items: resources || [],
     };
+  }
+
+  private ipcDeleteResource(mainWindow: BrowserWindow | undefined): void {
+    ipcMainOn("deleteResource", async (_, payload) => {
+      if (
+        payload &&
+        payload.id &&
+        this.deleteResourceWindow !== undefined &&
+        mainWindow !== undefined
+      ) {
+        await this.resourcesService.delete(payload.id);
+
+        const resources = await this.getResources();
+        this.deleteResourceWindow.hide();
+        ipcWebContentsSend("resources", mainWindow.webContents, resources);
+      }
+    });
   }
 }

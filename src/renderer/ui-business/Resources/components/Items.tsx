@@ -31,6 +31,12 @@ export const Items = memo(() => {
       console.log(item.id);
     };
 
+    const handleDelete = () => {
+      window.electron.send.windowOpenDeleteResource({
+        id: item.id + "",
+      });
+    };
+
     return (
       <Item
         key={item.id + ""}
@@ -38,6 +44,7 @@ export const Items = memo(() => {
         name={item.name}
         handleCopy={handleCopy}
         handleUpdate={handleUpdate}
+        handleDelete={handleDelete}
       />
     );
   });
