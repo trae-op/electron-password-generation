@@ -40,7 +40,7 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
   }
 
   private ipcPutResource(mainWindow: BrowserWindow | undefined): void {
-    ipcMainOn("putResource", async (_, payload) => {
+    ipcMainOn("putResource", async (event, payload) => {
       let encryptedVault: TEncryptedVault | undefined;
       const updateResourceWindow = this.cacheWindowsService.getResourceWindows(
         "updateResourceWindow"
@@ -70,14 +70,17 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
             : {}),
         });
         const resources = await this.getResources();
+
         updateResourceWindow.hide();
         ipcWebContentsSend("resources", mainWindow.webContents, resources);
+
+        event.reply("putResource");
       }
     });
   }
 
   private ipcPostResource(mainWindow: BrowserWindow | undefined): void {
-    ipcMainOn("postResource", async (_, payload) => {
+    ipcMainOn("postResource", async (event, payload) => {
       let encryptedVault: TEncryptedVault | undefined;
       const addResourceWindow =
         this.cacheWindowsService.getResourceWindows("addResourceWindow");
@@ -102,8 +105,11 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
           salt: encryptedVault.salt,
         });
         const resources = await this.getResources();
+
         addResourceWindow.hide();
         ipcWebContentsSend("resources", mainWindow.webContents, resources);
+
+        event.reply("postResource");
       }
     });
   }
@@ -137,7 +143,7 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
   }
 
   private ipcDeleteResource(mainWindow: BrowserWindow | undefined): void {
-    ipcMainOn("deleteResource", async (_, payload) => {
+    ipcMainOn("deleteResource", async (event, payload) => {
       const deleteResourceWindow = this.cacheWindowsService.getResourceWindows(
         "deleteResourceWindow"
       );
@@ -151,8 +157,11 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
         await this.resourcesService.delete(payload.id);
 
         const resources = await this.getResources();
+
         deleteResourceWindow.hide();
         ipcWebContentsSend("resources", mainWindow.webContents, resources);
+
+        event.reply("deleteResource");
       }
     });
   }

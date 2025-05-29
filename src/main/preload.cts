@@ -34,6 +34,19 @@ electron.contextBridge.exposeInMainWorld("electron", {
       ipcOn("getResource", (payload) => {
         callback(payload);
       }),
+
+    subscribePutResource: (callback) =>
+      ipcOn("putResource", () => {
+        callback();
+      }),
+    subscribePostResource: (callback) =>
+      ipcOn("postResource", () => {
+        callback();
+      }),
+    subscribeDeleteResource: (callback) =>
+      ipcOn("deleteResource", () => {
+        callback();
+      }),
   },
   send: {
     restart: () => {

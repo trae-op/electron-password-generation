@@ -1,6 +1,7 @@
-import { Dispatch, SetStateAction } from "react";
-
 export type TContext = {
   name: string;
-  setName: Dispatch<SetStateAction<string>>;
+};
+
+export type TContextActions = {
+  setName: React.Dispatch<React.SetStateAction<string>>;
 };

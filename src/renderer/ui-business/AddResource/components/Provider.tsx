@@ -1,17 +1,29 @@
 import { useState, useMemo } from "react";
 import type { TPropsProvider } from "./types";
-import { Context } from "../context";
+import { Context, ContextActions } from "../context";
 
 export const Provider = ({ children }: TPropsProvider) => {
   const [name, setName] = useState("");
 
   const value = useMemo(
     () => ({
-      setName,
       name,
     }),
     [name]
   );
 
-  return <Context.Provider value={value}>{children}</Context.Provider>;
+  const actions = useMemo(
+    () => ({
+      setName,
+    }),
+    [setName]
+  );
+
+  return (
+    <Context.Provider value={value}>
+      <ContextActions.Provider value={actions}>
+        {children}
+      </ContextActions.Provider>
+    </Context.Provider>
+  );
 };

@@ -1,9 +1,9 @@
-import { ChangeEvent, useCallback } from "react";
-import { useControlContext } from "./useControlContext";
+import { ChangeEvent, useCallback, useMemo } from "react";
+import { useControlContextActions } from "./useControlContextActions";
 import { THookControl } from "./types";
 
 export const useControl = (): THookControl => {
-  const { setName } = useControlContext();
+  const { setName } = useControlContextActions();
 
   const handleAdd = useCallback(() => {
     window.electron.send.windowOpenAddResource();
@@ -29,9 +29,14 @@ export const useControl = (): THookControl => {
     []
   );
 
-  return {
-    handleAdd,
-    submitFormAction,
-    handleTextInputChange,
-  };
+  const value = useMemo(
+    () => ({
+      handleAdd,
+      submitFormAction,
+      handleTextInputChange,
+    }),
+    [handleAdd, submitFormAction, handleTextInputChange]
+  );
+
+  return value;
 };
