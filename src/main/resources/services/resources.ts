@@ -1,10 +1,10 @@
+import { dialog } from "electron";
 import { type AxiosRequestConfig } from "axios";
 import { restApi } from "../../config.js";
 import { Injectable } from "../../@core/decorators/injectable.js";
 import { RestApiService } from "../../rest-api/service.js";
 import { getElectronStorage } from "../../$shared/store.js";
-import { TPostBody, TPutBody } from "./types.js";
-import { dialog } from "electron";
+import type { TPostBody, TPutBody } from "./types.js";
 
 @Injectable()
 export class ResourcesService {

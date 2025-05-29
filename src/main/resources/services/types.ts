@@ -1,3 +1,5 @@
+import { BrowserWindow } from "electron";
+
 export type TPostBody = {
   name: string;
   key: string;
@@ -14,3 +16,12 @@ export type TEncryptedVault = {
   salt: string;
   encryptedData: string;
 };
+
+export type TCacheResourceWindows = {
+  [key in string]: BrowserWindow;
+};
+
+export type TNamesResourceWindows =
+  | "addResourceWindow"
+  | "updateResourceWindow"
+  | "deleteResourceWindow";
