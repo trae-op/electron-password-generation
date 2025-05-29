@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import isEqual from "lodash/isEqual";
 
-export const useUpdate = (): TUpdateData => {
+export const useIpc = (): TUpdateData => {
   const [result, setResult] = useState<TUpdateData>({
     status: "checking-for-update",
   });

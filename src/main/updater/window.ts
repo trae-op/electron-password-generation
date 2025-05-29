@@ -6,8 +6,9 @@ import { CheckForUpdatesService } from "./services/check-for-updates.js";
   hash: "window:update-app",
   isCache: true,
   options: {
-    width: 400,
-    height: 400,
+    width: 330,
+    height: 330,
+    alwaysOnTop: true,
     autoHideMenuBar: true,
     minimizable: false,
     maximizable: false,

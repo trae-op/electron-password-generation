@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import type { THookUpdateDownloaded } from "./types";
 import { useControlContext } from "./useControlContext";
 
@@ -17,7 +17,7 @@ export const useUpdateDownloaded = (): THookUpdateDownloaded => {
     }
   }, [platform, updateFile]);
 
-  return {
-    handleUpdate,
-  };
+  const value = useMemo(() => ({ handleUpdate }), [handleUpdate]);
+
+  return value;
 };

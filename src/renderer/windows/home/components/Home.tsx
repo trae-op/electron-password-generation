@@ -13,13 +13,13 @@ import {
   Provider as ProviderAddResourceButton,
 } from "@ui-business/AddResource";
 import {
-  useUpdate,
+  useIpc as useIpcUpdate,
   Context as ContextUpdater,
   DownloadedButton,
 } from "@ui-business/Updater";
 
 export const Home = () => {
-  const value = useUpdate();
+  const value = useIpcUpdate();
 
   return (
     <ContextUserPopover.Provider

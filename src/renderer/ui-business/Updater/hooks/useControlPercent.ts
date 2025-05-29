@@ -12,7 +12,7 @@ export const useControlPercent = (): THookControlPercent => {
     [downloadedPercent]
   );
 
-  return {
-    percent,
-  };
+  const value = useMemo(() => ({ percent }), [percent]);
+
+  return value;
 };

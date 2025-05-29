@@ -1,4 +1,3 @@
-import { BrowserWindow } from "electron";
 import { WindowManager } from "../../@core/decorators/window-manager.js";
 import { TWindowManager } from "../../@core/types/window-manager.js";
 
@@ -14,7 +13,5 @@ import { TWindowManager } from "../../@core/types/window-manager.js";
 export class UpdateWindow implements TWindowManager {
   constructor() {}
 
-  onDidFinishLoad(window: BrowserWindow): void {
-    window.webContents.openDevTools();
-  }
+  onDidFinishLoad(): void {}
 }

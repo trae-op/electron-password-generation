@@ -11,6 +11,7 @@ export const useIpc = () => {
   useEffect(() => {
     window.electron.receive.subscribeResources(({ items }) => {
       setItems(items);
+      localStorage.setItem("count-of-resources", items.length + "");
     });
   }, []);
 };

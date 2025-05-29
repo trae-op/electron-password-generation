@@ -1,4 +1,4 @@
 export * from "./useControlContext";
-export * from "./useUpdate";
+export * from "./useIpc";
 export * from "./useUpdateDownloaded";
 export * from "./useControlPercent";
