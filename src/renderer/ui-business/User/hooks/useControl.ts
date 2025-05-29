@@ -14,13 +14,21 @@ export const useControl = (): THookControl => {
 
   const isOpen = useMemo(() => Boolean(anchorEl), [anchorEl]);
 
-  const id = useMemo(() => (isOpen ? "profile-popover" : undefined), [isOpen]);
+  const id = useMemo<THookControl["id"]>(
+    () => (isOpen ? "profile-popover" : undefined),
+    [isOpen]
+  );
 
-  return {
-    id,
-    isOpen,
-    anchorEl,
-    handleClick,
-    handleClose,
-  };
+  const value = useMemo(
+    () => ({
+      id,
+      isOpen,
+      anchorEl,
+      handleClick,
+      handleClose,
+    }),
+    [id, isOpen, anchorEl, handleClick, handleClose]
+  );
+
+  return value;
 };

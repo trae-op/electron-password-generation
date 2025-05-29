@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useControlContext } from "./useControlContext";
+import { useControlContextActions } from "./useControlContext";
 
 export const useIpc = () => {
-  const { setResult, setName } = useControlContext();
+  const { setResult, setName } = useControlContextActions();
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {

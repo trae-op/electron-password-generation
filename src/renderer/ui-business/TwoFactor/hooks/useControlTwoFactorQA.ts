@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import type { THookControlTwoFactorQA } from "./types";
 
 export const useControlTwoFactorQA = (): THookControlTwoFactorQA => {
@@ -6,7 +6,7 @@ export const useControlTwoFactorQA = (): THookControlTwoFactorQA => {
     window.electron.send.windowTwoFactorVerify();
   }, []);
 
-  return {
-    handleNextStep,
-  };
+  const value = useMemo(() => ({ handleNextStep }), [handleNextStep]);
+
+  return value;
 };

@@ -1,5 +1,8 @@
 export type TContext = {
   user: TUser | undefined;
+};
+
+export type TContextActions = {
   setUser: React.Dispatch<React.SetStateAction<TUser | undefined>>;
 };
 

@@ -5,9 +5,9 @@ import Slider from "@mui/material/Slider";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import type { TProps } from "./types";
-import { useControl } from "../hooks";
 import TextField from "@mui/material/TextField";
+import { useControl } from "../hooks";
+import type { TProps } from "./types";
 
 export const Form = memo(
   ({

@@ -8,7 +8,7 @@ import {
   useControlContext,
   useControlContextUserPopover,
 } from "../hooks/useControlContext";
-import { useSubscribeEventUser, useReceiveUser } from "../hooks";
+import { useIpc } from "../hooks";
 import { Content } from "./Content";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -41,8 +41,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 export const UserPopover = () => {
-  useSubscribeEventUser();
-  useReceiveUser();
+  useIpc();
   const { isNewVersionApp } = useControlContextUserPopover();
   const { handleClick, handleClose, id, isOpen, anchorEl } = useControl();
   const { user } = useControlContext();

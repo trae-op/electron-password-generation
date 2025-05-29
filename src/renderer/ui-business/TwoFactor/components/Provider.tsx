@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import type { TPropsProvider } from "./types";
-import { Context } from "../context";
+import { Context, ContextActions } from "../context";
 
 export const Provider = ({ children }: TPropsProvider) => {
   const [pending, setPending] = useState(false);
@@ -11,13 +11,25 @@ export const Provider = ({ children }: TPropsProvider) => {
     () => ({
       base64,
       pending,
-      setBase64,
-      setPending,
       twoFactorCode,
-      setTwoFactorCode,
     }),
     [pending, twoFactorCode, base64]
   );
 
-  return <Context.Provider value={value}>{children}</Context.Provider>;
+  const actions = useMemo(
+    () => ({
+      setBase64,
+      setPending,
+      setTwoFactorCode,
+    }),
+    [setBase64, setPending, setTwoFactorCode]
+  );
+
+  return (
+    <Context.Provider value={value}>
+      <ContextActions.Provider value={actions}>
+        {children}
+      </ContextActions.Provider>
+    </Context.Provider>
+  );
 };

@@ -1,5 +1,5 @@
 import { ChangeEvent, useCallback, useMemo } from "react";
-import { useControlContextActions } from "./useControlContextActions";
+import { useControlContextActions } from "./useControlContext";
 import { THookControl } from "./types";
 
 export const useControl = (): THookControl => {

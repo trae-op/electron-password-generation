@@ -1,4 +1,4 @@
-import { useState, useCallback, ChangeEvent } from "react";
+import { useState, useCallback, ChangeEvent, useMemo } from "react";
 import type { THookControl } from "./types";
 import { gotGenerate } from "../libs";
 import { useDestroyComponent } from "./useDestroyComponent";
@@ -61,7 +61,7 @@ export const useControl = <
       const readyResult = gotGenerate(options);
       setResult(readyResult);
     },
-    []
+    [setResult, setAmount]
   );
 
   useDestroyComponent(() => {
@@ -71,10 +71,15 @@ export const useControl = <
     options.isUppercase = false;
   });
 
-  return {
-    amount,
-    result,
-    checkedChange,
-    handleChangeRange,
-  };
+  const value = useMemo(
+    () => ({
+      amount,
+      result,
+      checkedChange,
+      handleChangeRange,
+    }),
+    [amount, result, checkedChange, handleChangeRange]
+  );
+
+  return value;
 };

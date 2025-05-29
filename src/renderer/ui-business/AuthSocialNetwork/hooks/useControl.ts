@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import type { THookControl, TEventButton } from "./types";
 
 export const useControl = (): THookControl => {
@@ -14,8 +14,13 @@ export const useControl = (): THookControl => {
     window.electron.send.logout();
   }, []);
 
-  return {
-    handleLogout,
-    handleProvider,
-  };
+  const value = useMemo(
+    () => ({
+      handleLogout,
+      handleProvider,
+    }),
+    [handleLogout, handleProvider]
+  );
+
+  return value;
 };

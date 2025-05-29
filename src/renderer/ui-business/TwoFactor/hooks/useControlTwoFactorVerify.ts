@@ -5,10 +5,14 @@ import type {
   TFormEvent,
 } from "./types";
 import { isValidTwoFactor } from "@utils/regexes";
-import { useControlContext } from "./useControlContext";
+import {
+  useControlContext,
+  useControlContextActions,
+} from "./useControlContext";
 
 export const useControlTwoFactorVerify = (): THookControlTwoFactorVerify => {
-  const { setPending, setTwoFactorCode, twoFactorCode } = useControlContext();
+  const { setTwoFactorCode, setPending } = useControlContextActions();
+  const { twoFactorCode } = useControlContext();
   const [isFocus, setFocus] = useState(false);
 
   const handleChange = useCallback((event: TChangeEvent) => {
@@ -34,12 +38,17 @@ export const useControlTwoFactorVerify = (): THookControlTwoFactorVerify => {
   );
   const isInvalid = useMemo(() => isFocus && !isValid, [isFocus, isValid]);
 
-  return {
-    handleChange,
-    handleSubmit,
-    twoFactorCode,
-    handleFocus,
-    isInvalid,
-    isValid,
-  };
+  const value = useMemo(
+    () => ({
+      handleChange,
+      handleSubmit,
+      twoFactorCode,
+      handleFocus,
+      isInvalid,
+      isValid,
+    }),
+    [handleChange, handleSubmit, twoFactorCode, handleFocus, isInvalid, isValid]
+  );
+
+  return value;
 };

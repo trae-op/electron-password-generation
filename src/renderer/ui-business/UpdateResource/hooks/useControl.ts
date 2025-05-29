@@ -1,11 +1,11 @@
-import { ChangeEvent, useCallback } from "react";
+import { ChangeEvent, useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { useControlContext } from "./useControlContext";
+import { useControlContextActions } from "./useControlContext";
 import { THookControl } from "./types";
 
 export const useControl = (): THookControl => {
   const { id } = useParams<{ id: string }>();
-  const { setName, setOpenCreateNewPassword } = useControlContext();
+  const { setName, setOpenCreateNewPassword } = useControlContextActions();
 
   const handleTextInputChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -35,9 +35,14 @@ export const useControl = (): THookControl => {
     [id]
   );
 
-  return {
-    submitFormAction,
-    handleCheckedChange,
-    handleTextInputChange,
-  };
+  const value = useMemo(
+    () => ({
+      submitFormAction,
+      handleCheckedChange,
+      handleTextInputChange,
+    }),
+    [submitFormAction, handleCheckedChange, handleTextInputChange]
+  );
+
+  return value;
 };

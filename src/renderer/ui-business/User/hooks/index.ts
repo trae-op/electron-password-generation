@@ -1,2 +1,1 @@
-export * from "./useReceiveUser";
-export * from "./useSubscribeEventUser";
+export * from "./useIpc";

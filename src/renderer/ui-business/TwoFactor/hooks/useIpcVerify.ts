@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { useControlContext } from "./useControlContext";
+import { useControlContextActions } from "./useControlContext";
 
 export const useIpcVerify = () => {
-  const { setPending, setTwoFactorCode } = useControlContext();
+  const { setPending, setTwoFactorCode } = useControlContextActions();
 
   useEffect(() => {
     const unSub =

@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import isEqual from "lodash/isEqual";
-import { useControlContext } from "./useControlContext";
+import { useControlContextActions } from "./useControlContext";
 
 export const useIpcQA = () => {
-  const { setBase64 } = useControlContext();
+  const { setBase64 } = useControlContextActions();
 
   useEffect(() => {
     const unSub = window.electron.receive.subscribeWindowTwoFactorQA((data) => {

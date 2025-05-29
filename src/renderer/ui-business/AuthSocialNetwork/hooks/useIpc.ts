@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { useControlContext } from "./useControlContext";
+import { useControlContextActions } from "./useControlContext";
 
 export const useIpc = () => {
-  const { setAuthenticated } = useControlContext();
+  const { setAuthenticated } = useControlContextActions();
 
   useEffect(() => {
     window.electron.receive.subscribeWindowAuthSocialNetwork(

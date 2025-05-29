@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { THookControl } from "./types";
 
@@ -15,8 +15,13 @@ export const useControl = (): THookControl => {
     window.electron.send.cancelDeleteResource();
   }, []);
 
-  return {
-    handleDelete,
-    handleCancel,
-  };
+  const value = useMemo(
+    () => ({
+      handleDelete,
+      handleCancel,
+    }),
+    [handleDelete, handleCancel]
+  );
+
+  return value;
 };
