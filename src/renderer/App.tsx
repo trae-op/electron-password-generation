@@ -11,6 +11,10 @@ import {
 } from "@ui-business/TwoFactor";
 import { Window as Update } from "@ui-business/Updater";
 import { Provider as ProviderUser } from "@ui-business/User";
+import {
+  Provider as ProviderMasterKey,
+  Form as FormMasterKey,
+} from "@ui-business/MasterKey";
 import { MainLayout } from "@layouts/Main";
 import { FormResourcesLayout } from "@layouts/FormResources";
 import { Home } from "@windows/home";
@@ -36,7 +40,9 @@ export const App = () => {
                   path="/window:main"
                   element={
                     <ProviderUser>
-                      <Home />
+                      <ProviderMasterKey>
+                        <Home />
+                      </ProviderMasterKey>
                     </ProviderUser>
                   }
                 />
@@ -59,6 +65,14 @@ export const App = () => {
               <Route
                 path="/window:two-factor-qa"
                 element={<TwoFactorQRWindow />}
+              />
+              <Route
+                path="/window:master-key"
+                element={
+                  <ProviderMasterKey>
+                    <FormMasterKey />
+                  </ProviderMasterKey>
+                }
               />
               <Route
                 path="/window:two-factor-verify"

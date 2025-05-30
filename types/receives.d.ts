@@ -33,6 +33,10 @@ type TCallbackGetResource = {
   item: TResource | undefined;
 };
 
+type TCallbackMasterKey = {
+  isMasterKey: boolean;
+};
+
 type TEventPayloadReceive = {
   updateApp: TUpdateData;
   openUpdateApp: TCallbackOpenUpdateWindow;
@@ -42,6 +46,7 @@ type TEventPayloadReceive = {
   checkUser: TCallbackUser;
   resources: TCallbackResources;
   getResource: TCallbackGetResource;
+  masterKey: TCallbackMasterKey;
 };
 
 type TReceive = {
@@ -68,5 +73,8 @@ type TReceive = {
   ) => TUnsubscribeFunction;
   subscribeGetResource: (
     callback: (payload: TEventPayloadReceive["getResource"]) => void
+  ) => TUnsubscribeFunction;
+  subscribeMasterKey: (
+    callback: (payload: TEventPayloadReceive["masterKey"]) => void
   ) => TUnsubscribeFunction;
 };

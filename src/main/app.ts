@@ -6,6 +6,7 @@ import { AppModule } from "./app/module.js";
 import { AuthSocialNetworkModule } from "./auth-social-network/module.js";
 import { bootstrapModules } from "./@core/bootstrap/bootstrap.js";
 import { UpdaterModule } from "./updater/module.js";
+import { MasterKeyModule } from "./master-key/module.js";
 import { TwoFactorModule } from "./two-factor/module.js";
 import { AppPreloadModule } from "./app-preload/module.js";
 import { NotificationModule } from "./notification/module.js";
@@ -31,5 +32,6 @@ app.on("ready", async () => {
     NotificationModule,
     UserModule,
     ResourcesModule,
+    MasterKeyModule,
   ]);
 });

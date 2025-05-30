@@ -3,10 +3,12 @@ import IconButton from "@mui/material/IconButton";
 import Card from "@mui/material/Card";
 import EditIcon from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
+import KeyIcon from "@mui/icons-material/Key";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import { useControlContext } from "../hooks/useControlContext";
 import { TPropsItem } from "./types";
 
 function arePropsEqual(oldProps: TPropsItem, newProps: TPropsItem): boolean {
@@ -14,7 +16,16 @@ function arePropsEqual(oldProps: TPropsItem, newProps: TPropsItem): boolean {
 }
 
 export const Item = memo(
-  ({ name, id, handleCopy, handleUpdate, handleDelete }: TPropsItem) => {
+  ({
+    name,
+    id,
+    handleCopy,
+    handleUpdate,
+    handleDelete,
+    handleKey,
+  }: TPropsItem) => {
+    const { isMasterKey } = useControlContext();
+
     return (
       <Card sx={{ minWidth: 170 }}>
         <CardContent>
@@ -23,12 +34,20 @@ export const Item = memo(
           </Typography>
         </CardContent>
         <CardActions>
-          <IconButton onClick={handleCopy}>
-            <ContentCopyIcon fontSize="small" />
-          </IconButton>
-          <IconButton data-id={id} onClick={handleUpdate}>
-            <EditIcon fontSize="small" />
-          </IconButton>
+          {!isMasterKey ? (
+            <IconButton onClick={handleKey}>
+              <KeyIcon fontSize="small" />
+            </IconButton>
+          ) : (
+            <>
+              <IconButton onClick={handleCopy}>
+                <ContentCopyIcon fontSize="small" />
+              </IconButton>
+              <IconButton data-id={id} onClick={handleUpdate}>
+                <EditIcon fontSize="small" />
+              </IconButton>
+            </>
+          )}
           <IconButton data-id={id} onClick={handleDelete}>
             <Delete fontSize="small" />
           </IconButton>

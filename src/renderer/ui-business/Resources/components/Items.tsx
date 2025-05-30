@@ -1,11 +1,11 @@
 import { memo } from "react";
 import Stack from "@mui/material/Stack";
 import Skeleton from "@mui/material/Skeleton";
+import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useControlContext } from "../hooks/useControlContext";
 import { useIpc } from "../hooks/useIpc";
 import { Item } from "./Item";
-import Typography from "@mui/material/Typography";
 
 const countResources = localStorage.getItem("count-of-resources");
 
@@ -54,11 +54,16 @@ export const Items = memo(() => {
       });
     };
 
+    const handleKey = () => {
+      window.electron.send.windowMasterKey();
+    };
+
     return (
       <Item
         key={item.id + ""}
         id={item.id}
         name={item.name}
+        handleKey={handleKey}
         handleCopy={handleCopy}
         handleUpdate={handleUpdate}
         handleDelete={handleDelete}

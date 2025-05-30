@@ -12,6 +12,7 @@ export const windows: TWindows = {
   deleteResource: "window/resource/delete",
   preloadApp: "window:preload-app",
   updateApp: "window:update-app",
+  masterKey: "window:master-key",
   twoFactorQA: "window:two-factor-qa",
   twoFactorVerify: "window:two-factor-verify",
   authSocialNetwork: "window:auth-social-network",

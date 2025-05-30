@@ -27,6 +27,8 @@ type TEventPayloadSend = {
   openUpdateResource: TCallbackOpenUpdateResource;
   openDeleteResource: TCallbackOpenDeleteResource;
   getResource: TCallbackResource;
+  masterKey: undefined;
+  checkMasterKey: undefined;
   resources: undefined;
   openAddResource: undefined;
   cancelDeleteResource: undefined;
@@ -50,6 +52,8 @@ type TSend = {
   windowOpenDeleteResource: (
     payload: TEventPayloadSend["openDeleteResource"]
   ) => void;
+  windowMasterKey: () => void;
+  checkMasterKey: () => void;
   windowOpenAddResource: () => void;
   cancelDeleteResource: () => void;
   getResource: (payload: TEventPayloadSend["getResource"]) => void;

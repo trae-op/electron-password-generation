@@ -11,6 +11,7 @@ import { ResourcesService } from "../services/resources.js";
 import { CryptoService } from "../services/crypto.js";
 import { TEncryptedVault } from "../services/types.js";
 import { CacheWindowsService } from "../services/cacheWindows.js";
+import { getElectronStorage } from "../../$shared/store.js";
 
 @IpcHandler()
 export class ResourcesActionsIpc implements TIpcHandlerInterface {
@@ -49,14 +50,16 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
       const updateResourceWindow = this.cacheWindowsService.getResourceWindows(
         "updateResourceWindow"
       );
+      const masterKey = getElectronStorage("masterKey");
 
       if (
+        masterKey !== undefined &&
         payload !== undefined &&
         payload.key &&
         typeof payload.key === "string"
       ) {
         encryptedVault = await this.cryptoService.encrypt(
-          "darkmanxDMX1988",
+          masterKey,
           payload.key
         );
       }
@@ -93,14 +96,16 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
       let encryptedVault: TEncryptedVault | undefined;
       const addResourceWindow =
         this.cacheWindowsService.getResourceWindows("addResourceWindow");
+      const masterKey = getElectronStorage("masterKey");
 
       if (
+        masterKey !== undefined &&
         payload !== undefined &&
         payload.key &&
         typeof payload.key === "string"
       ) {
         encryptedVault = await this.cryptoService.encrypt(
-          "darkmanxDMX1988",
+          masterKey,
           payload.key
         );
       }
@@ -141,8 +146,23 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
   private ipcGetResources(): void {
     ipcMainOn("resources", async (event) => {
       const resources = await this.getResources();
+      const masterKey = getElectronStorage("masterKey");
 
-      event.reply("resources", resources);
+      if (masterKey !== undefined) {
+        for (let i = 0; i <= resources.items.length; i++) {
+          const resource = resources.items[i];
+          if (resource && resource.salt) {
+            const encryptedVault = await this.cryptoService.decrypt(masterKey, {
+              iv: resource.iv,
+              salt: resource.salt,
+              encryptedData: resource.key,
+            });
+            resources.items[i].key = encryptedVault;
+          }
+        }
+
+        event.reply("resources", resources);
+      }
     });
   }
 

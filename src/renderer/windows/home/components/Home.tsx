@@ -9,6 +9,10 @@ import {
   Provider as ProviderResources,
 } from "@ui-business/Resources";
 import {
+  useControlContext as useControlContextMasterKey,
+  useIpc as useIpcMasterKey,
+} from "@ui-business/MasterKey";
+import {
   AddButton as AddResourceButton,
   Provider as ProviderAddResourceButton,
 } from "@ui-business/AddResource";
@@ -19,6 +23,8 @@ import {
 } from "@ui-business/Updater";
 
 export const Home = () => {
+  useIpcMasterKey();
+  const { isMasterKey } = useControlContextMasterKey();
   const value = useIpcUpdate();
 
   return (
@@ -41,7 +47,7 @@ export const Home = () => {
     >
       <UserPopover />
       <Stack spacing={2} direction="row" sx={{ flexWrap: "wrap" }} useFlexGap>
-        <ProviderResources>
+        <ProviderResources isMasterKey={isMasterKey}>
           <Resources />
         </ProviderResources>
       </Stack>
