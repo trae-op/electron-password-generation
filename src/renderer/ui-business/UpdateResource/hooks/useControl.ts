@@ -26,7 +26,7 @@ export const useControl = (): THookControl => {
       const name = formData.get("name") as string;
       const key = formData.get("password") as string;
 
-      window.electron.send.putResource({
+      await window.electron.invoke.putResource({
         id,
         name,
         key,

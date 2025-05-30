@@ -1,5 +1,9 @@
 import { BrowserWindow } from "electron";
-import { ipcMainOn, ipcWebContentsSend } from "../../$shared/utils.js";
+import {
+  ipcMainHandle,
+  ipcMainOn,
+  ipcWebContentsSend,
+} from "../../$shared/utils.js";
 import { IpcHandler } from "../../@core/decorators/ipc-handler.js";
 import { getWindow as getWindows } from "../../@core/control-window/receive.js";
 import type { TIpcHandlerInterface } from "../../@core/types/ipc-handler.js";
@@ -40,13 +44,17 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
   }
 
   private ipcPutResource(mainWindow: BrowserWindow | undefined): void {
-    ipcMainOn("putResource", async (event, payload) => {
+    ipcMainHandle("putResource", async (payload) => {
       let encryptedVault: TEncryptedVault | undefined;
       const updateResourceWindow = this.cacheWindowsService.getResourceWindows(
         "updateResourceWindow"
       );
 
-      if (payload && payload.key && typeof payload.key === "string") {
+      if (
+        payload !== undefined &&
+        payload.key &&
+        typeof payload.key === "string"
+      ) {
         encryptedVault = await this.cryptoService.encrypt(
           "darkmanxDMX1988",
           payload.key
@@ -54,6 +62,7 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
       }
 
       if (
+        payload !== undefined &&
         updateResourceWindow !== undefined &&
         typeof payload.name === "string" &&
         mainWindow !== undefined &&
@@ -73,9 +82,9 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
 
         updateResourceWindow.hide();
         ipcWebContentsSend("resources", mainWindow.webContents, resources);
-
-        event.reply("putResource");
       }
+
+      return undefined;
     });
   }
 

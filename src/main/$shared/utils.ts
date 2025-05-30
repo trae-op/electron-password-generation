@@ -16,14 +16,19 @@ export function isPlatform(platform: NodeJS.Platform): boolean {
   return process.platform === platform;
 }
 
-export function ipcMainHandle<Key extends keyof TEventPayloadInvoke>(
+export function ipcMainHandle<
+  Key extends keyof TEventPayloadInvoke,
+  S extends keyof TEventSendInvoke
+>(
   key: Key,
-  handle: () => TEventPayloadInvoke[Key]
+  handle: (
+    payload?: TEventSendInvoke[S]
+  ) => TEventPayloadInvoke[Key] | Promise<TEventPayloadInvoke[Key]>
 ) {
-  ipcMain.handle(key, (event) => {
+  ipcMain.handle(key, async (event, payload) => {
     validateEventFrame(event.senderFrame);
 
-    return handle();
+    return await handle(payload);
   });
 }
 

@@ -34,11 +34,6 @@ electron.contextBridge.exposeInMainWorld("electron", {
       ipcOn("getResource", (payload) => {
         callback(payload);
       }),
-
-    subscribePutResource: (callback) =>
-      ipcOn("putResource", () => {
-        callback();
-      }),
     subscribePostResource: (callback) =>
       ipcOn("postResource", () => {
         callback();
@@ -82,9 +77,6 @@ electron.contextBridge.exposeInMainWorld("electron", {
     postResource: (payload) => {
       ipcSend("postResource", payload);
     },
-    putResource: (payload) => {
-      ipcSend("putResource", payload);
-    },
     deleteResource: (payload) => {
       ipcSend("deleteResource", payload);
     },
@@ -103,13 +95,15 @@ electron.contextBridge.exposeInMainWorld("electron", {
   },
   invoke: {
     getVersion: () => ipcInvoke("getVersion"),
+    putResource: (payload) => ipcInvoke("putResource", payload),
   },
 } satisfies Window["electron"]);
 
-function ipcInvoke<Key extends keyof TEventPayloadInvoke>(
-  key: Key
-): Promise<TEventPayloadInvoke[Key]> {
-  return electron.ipcRenderer.invoke(key);
+function ipcInvoke<
+  Key extends keyof TEventPayloadInvoke,
+  S extends keyof TEventSendInvoke
+>(key: Key, payload?: TEventSendInvoke[S]): Promise<TEventPayloadInvoke[Key]> {
+  return electron.ipcRenderer.invoke(key, payload);
 }
 
 function ipcSend<Key extends keyof TEventPayloadSend>(

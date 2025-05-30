@@ -37,7 +37,6 @@ type TEventPayloadSend = {
   resources: undefined;
   openAddResource: undefined;
   postResource: TCallbackSendResource;
-  putResource: TCallbackSendResource;
   deleteResource: TCallbackDeleteResource;
   cancelDeleteResource: undefined;
 };
@@ -62,7 +61,6 @@ type TSend = {
   ) => void;
   windowOpenAddResource: () => void;
   postResource: (payload: TEventPayloadSend["postResource"]) => void;
-  putResource: (payload: TEventPayloadSend["putResource"]) => void;
   deleteResource: (payload: TEventPayloadSend["deleteResource"]) => void;
   cancelDeleteResource: () => void;
   getResource: (payload: TEventPayloadSend["getResource"]) => void;
