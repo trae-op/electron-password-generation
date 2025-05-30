@@ -2,6 +2,8 @@ import Stack from "@mui/material/Stack";
 import ListItemButton, {
   ListItemButtonProps,
 } from "@mui/material/ListItemButton";
+import IconButton from "@mui/material/IconButton";
+import HttpsIcon from "@mui/icons-material/Https";
 import { UserPopover, ContextUserPopover } from "@ui-business/User";
 import { LogoutButton } from "@ui-business/AuthSocialNetwork";
 import {
@@ -26,6 +28,9 @@ export const Home = () => {
   useIpcMasterKey();
   const { isMasterKey } = useControlContextMasterKey();
   const value = useIpcUpdate();
+  const handleKey = () => {
+    window.electron.send.windowMasterKey();
+  };
 
   return (
     <ContextUserPopover.Provider
@@ -51,15 +56,39 @@ export const Home = () => {
           <Resources />
         </ProviderResources>
       </Stack>
-      <ProviderAddResourceButton>
-        <AddResourceButton
+
+      {!isMasterKey ? (
+        <IconButton
           sx={{
             position: "fixed",
             bottom: 10,
             right: 10,
           }}
-        />
-      </ProviderAddResourceButton>
+          onClick={handleKey}
+        >
+          <HttpsIcon fontSize="large" />
+        </IconButton>
+      ) : (
+        <ProviderAddResourceButton>
+          <IconButton
+            sx={{
+              position: "fixed",
+              bottom: 10,
+              right: 70,
+            }}
+            onClick={handleKey}
+          >
+            <HttpsIcon fontSize="large" />
+          </IconButton>
+          <AddResourceButton
+            sx={{
+              position: "fixed",
+              bottom: 10,
+              right: 10,
+            }}
+          />
+        </ProviderAddResourceButton>
+      )}
     </ContextUserPopover.Provider>
   );
 };

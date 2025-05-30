@@ -23,12 +23,17 @@ export const useControl = (): THookControl => {
     []
   );
 
+  const handleDeleteMasterKey = useCallback(() => {
+    window.electron.send.deleteMasterKey();
+  }, []);
+
   const value = useMemo(
     () => ({
       submitFormAction,
       handleTextInputChange,
+      handleDeleteMasterKey,
     }),
-    [submitFormAction, handleTextInputChange]
+    [submitFormAction, handleTextInputChange, handleDeleteMasterKey]
   );
 
   return value;

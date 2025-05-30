@@ -8,4 +8,5 @@ export type THookSubscribeEvent = {
 export type THookControl = {
   handleTextInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
   submitFormAction: (_: undefined, formData: FormData) => Promise<undefined>;
+  handleDeleteMasterKey: () => void;
 };

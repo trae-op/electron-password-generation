@@ -76,6 +76,9 @@ electron.contextBridge.exposeInMainWorld("electron", {
     checkMasterKey: () => {
       ipcSend("checkMasterKey");
     },
+    deleteMasterKey: () => {
+      ipcSend("deleteMasterKey");
+    },
     getResource: (payload) => {
       ipcSend("getResource", payload);
     },

@@ -12,7 +12,6 @@ export const SubmitButton = memo(() => {
       color="primary"
       size="large"
       loading={pending}
-      sx={{ mt: 3, position: "relative" }}
       disabled={pending}
     >
       {pending ? "Sending..." : "Apply"}

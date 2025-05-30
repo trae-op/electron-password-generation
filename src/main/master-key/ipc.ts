@@ -7,7 +7,11 @@ import {
   ipcMainOn,
   ipcWebContentsSend,
 } from "../$shared/utils.js";
-import { setElectronStorage, getElectronStorage } from "../$shared/store.js";
+import {
+  setElectronStorage,
+  getElectronStorage,
+  deleteFromElectronStorage,
+} from "../$shared/store.js";
 
 @IpcHandler()
 export class MasterKeyIpc {
@@ -24,6 +28,7 @@ export class MasterKeyIpc {
 
     this.ipcGetMasterKey();
     this.ipcPostMasterKey();
+    // this.ipcDeleteMasterKey();
   }
 
   private ipcPostMasterKey(): void {
@@ -42,12 +47,23 @@ export class MasterKeyIpc {
   }
 
   private ipcGetMasterKey(): void {
-    ipcMainOn("checkMasterKey", async (event) => {
+    ipcMainOn("checkMasterKey", (event) => {
       const masterKey = getElectronStorage("masterKey");
 
       event.reply("masterKey", {
         isMasterKey: Boolean(masterKey),
       });
+    });
+  }
+
+  private ipcDeleteMasterKey(): void {
+    ipcMainOn("deleteMasterKey", () => {
+      const masterKey = getElectronStorage("masterKey");
+
+      if (masterKey !== undefined) {
+        deleteFromElectronStorage("masterKey");
+        this.getMasterKey();
+      }
     });
   }
 

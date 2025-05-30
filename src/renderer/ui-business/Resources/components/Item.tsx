@@ -3,7 +3,7 @@ import IconButton from "@mui/material/IconButton";
 import Card from "@mui/material/Card";
 import EditIcon from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
-import KeyIcon from "@mui/icons-material/Key";
+import HttpsIcon from "@mui/icons-material/Https";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -36,7 +36,7 @@ export const Item = memo(
         <CardActions>
           {!isMasterKey ? (
             <IconButton onClick={handleKey}>
-              <KeyIcon fontSize="small" />
+              <HttpsIcon fontSize="small" />
             </IconButton>
           ) : (
             <>

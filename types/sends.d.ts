@@ -29,6 +29,7 @@ type TEventPayloadSend = {
   getResource: TCallbackResource;
   masterKey: undefined;
   checkMasterKey: undefined;
+  deleteMasterKey: undefined;
   resources: undefined;
   openAddResource: undefined;
   cancelDeleteResource: undefined;
@@ -54,6 +55,7 @@ type TSend = {
   ) => void;
   windowMasterKey: () => void;
   checkMasterKey: () => void;
+  deleteMasterKey: () => void;
   windowOpenAddResource: () => void;
   cancelDeleteResource: () => void;
   getResource: (payload: TEventPayloadSend["getResource"]) => void;
