@@ -89,12 +89,16 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
   }
 
   private ipcPostResource(mainWindow: BrowserWindow | undefined): void {
-    ipcMainOn("postResource", async (event, payload) => {
+    ipcMainHandle("postResource", async (payload) => {
       let encryptedVault: TEncryptedVault | undefined;
       const addResourceWindow =
         this.cacheWindowsService.getResourceWindows("addResourceWindow");
 
-      if (payload && payload.key && typeof payload.key === "string") {
+      if (
+        payload !== undefined &&
+        payload.key &&
+        typeof payload.key === "string"
+      ) {
         encryptedVault = await this.cryptoService.encrypt(
           "darkmanxDMX1988",
           payload.key
@@ -102,6 +106,7 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
       }
 
       if (
+        payload !== undefined &&
         addResourceWindow !== undefined &&
         typeof payload.name === "string" &&
         mainWindow !== undefined &&
@@ -117,9 +122,9 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
 
         addResourceWindow.hide();
         ipcWebContentsSend("resources", mainWindow.webContents, resources);
-
-        event.reply("postResource");
       }
+
+      return undefined;
     });
   }
 

@@ -16,12 +16,6 @@ type TCallbackOpenUpdateResource = TCallbackResource;
 type TCallbackOpenDeleteResource = TCallbackResource;
 type TCallbackDeleteResource = TCallbackResource;
 
-type TCallbackSendResource<V = FormDataEntryValue | null> = {
-  id?: string;
-  name: V;
-  key: V;
-};
-
 type TEventPayloadSend = {
   restart: undefined;
   closePreloadWindow: undefined;
@@ -36,7 +30,6 @@ type TEventPayloadSend = {
   getResource: TCallbackResource;
   resources: undefined;
   openAddResource: undefined;
-  postResource: TCallbackSendResource;
   deleteResource: TCallbackDeleteResource;
   cancelDeleteResource: undefined;
 };
@@ -60,7 +53,6 @@ type TSend = {
     payload: TEventPayloadSend["openDeleteResource"]
   ) => void;
   windowOpenAddResource: () => void;
-  postResource: (payload: TEventPayloadSend["postResource"]) => void;
   deleteResource: (payload: TEventPayloadSend["deleteResource"]) => void;
   cancelDeleteResource: () => void;
   getResource: (payload: TEventPayloadSend["getResource"]) => void;
