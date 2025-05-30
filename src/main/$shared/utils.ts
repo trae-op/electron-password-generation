@@ -16,16 +16,13 @@ export function isPlatform(platform: NodeJS.Platform): boolean {
   return process.platform === platform;
 }
 
-export function ipcMainHandle<
-  Key extends keyof TEventPayloadInvoke,
-  S extends keyof TEventSendInvoke
->(
+export function ipcMainHandle<Key extends keyof TEventSendInvoke>(
   key: Key,
   handle: (
-    payload?: TEventSendInvoke[S]
+    payload?: TEventSendInvoke[Key]
   ) => TEventPayloadInvoke[Key] | Promise<TEventPayloadInvoke[Key]>
 ) {
-  ipcMain.handle(key, async (event, payload) => {
+  ipcMain.handle(key, async (event, payload?: TEventSendInvoke[Key]) => {
     validateEventFrame(event.senderFrame);
 
     return await handle(payload);
@@ -36,14 +33,14 @@ export function ipcWebContentsSend<Key extends keyof TEventPayloadReceive>(
   key: Key,
   webContentsSend: WebContents,
   payload: TEventPayloadReceive[Key]
-) {
+): void {
   webContentsSend.send(key, payload);
 }
 
 export function ipcMainOn<Key extends keyof TEventPayloadSend>(
   key: Key,
   callback: (event: IpcMainEvent, payload: TEventPayloadSend[Key]) => void
-) {
+): void {
   ipcMain.on(key, (event: IpcMainEvent, data: TEventPayloadSend[Key]) => {
     callback(event, data);
   });

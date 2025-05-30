@@ -34,10 +34,6 @@ electron.contextBridge.exposeInMainWorld("electron", {
       ipcOn("getResource", (payload) => {
         callback(payload);
       }),
-    subscribeDeleteResource: (callback) =>
-      ipcOn("deleteResource", () => {
-        callback();
-      }),
   },
   send: {
     restart: () => {
@@ -70,9 +66,6 @@ electron.contextBridge.exposeInMainWorld("electron", {
     windowOpenAddResource: () => {
       ipcSend("openAddResource");
     },
-    deleteResource: (payload) => {
-      ipcSend("deleteResource", payload);
-    },
     getResource: (payload) => {
       ipcSend("getResource", payload);
     },
@@ -90,6 +83,7 @@ electron.contextBridge.exposeInMainWorld("electron", {
     getVersion: () => ipcInvoke("getVersion"),
     putResource: (payload) => ipcInvoke("putResource", payload),
     postResource: (payload) => ipcInvoke("postResource", payload),
+    deleteResource: (payload) => ipcInvoke("deleteResource", payload),
   },
 } satisfies Window["electron"]);
 

@@ -42,7 +42,6 @@ type TEventPayloadReceive = {
   checkUser: TCallbackUser;
   resources: TCallbackResources;
   getResource: TCallbackGetResource;
-  deleteResource: undefined;
 };
 
 type TReceive = {
@@ -70,5 +69,4 @@ type TReceive = {
   subscribeGetResource: (
     callback: (payload: TEventPayloadReceive["getResource"]) => void
   ) => TUnsubscribeFunction;
-  subscribeDeleteResource: (callback: () => void) => TUnsubscribeFunction;
 };

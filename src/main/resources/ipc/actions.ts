@@ -157,7 +157,7 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
   }
 
   private ipcDeleteResource(mainWindow: BrowserWindow | undefined): void {
-    ipcMainOn("deleteResource", async (event, payload) => {
+    ipcMainHandle("deleteResource", async (payload) => {
       const deleteResourceWindow = this.cacheWindowsService.getResourceWindows(
         "deleteResourceWindow"
       );
@@ -174,9 +174,9 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
 
         deleteResourceWindow.hide();
         ipcWebContentsSend("resources", mainWindow.webContents, resources);
-
-        event.reply("deleteResource");
       }
+
+      return undefined;
     });
   }
 }

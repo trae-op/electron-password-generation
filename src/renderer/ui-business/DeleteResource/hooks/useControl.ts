@@ -5,8 +5,8 @@ import { THookControl } from "./types";
 export const useControl = (): THookControl => {
   const { id } = useParams<{ id: string }>();
 
-  const handleDelete = useCallback(() => {
-    window.electron.send.deleteResource({
+  const submitFormAction = useCallback(async (): Promise<undefined> => {
+    await window.electron.invoke.deleteResource({
       id: id + "",
     });
   }, [id]);
@@ -17,10 +17,10 @@ export const useControl = (): THookControl => {
 
   const value = useMemo(
     () => ({
-      handleDelete,
+      submitFormAction,
       handleCancel,
     }),
-    [handleDelete, handleCancel]
+    [submitFormAction, handleCancel]
   );
 
   return value;

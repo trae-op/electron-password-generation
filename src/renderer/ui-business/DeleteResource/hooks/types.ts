@@ -1,4 +1,4 @@
 export type THookControl = {
   handleCancel: () => void;
-  handleDelete: () => void;
+  submitFormAction: () => Promise<undefined>;
 };
