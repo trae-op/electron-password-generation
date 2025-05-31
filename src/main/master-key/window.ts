@@ -18,5 +18,7 @@ import { TWindowManager } from "../@core/types/window-manager.js";
 export class MasterKeyWindow implements TWindowManager {
   constructor() {}
 
-  onDidFinishLoad(window: BrowserWindow): void {}
+  onDidFinishLoad(window: BrowserWindow): void {
+    window.webContents.openDevTools();
+  }
 }

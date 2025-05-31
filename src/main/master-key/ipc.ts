@@ -28,7 +28,7 @@ export class MasterKeyIpc {
 
     this.ipcGetMasterKey();
     this.ipcPostMasterKey();
-    // this.ipcDeleteMasterKey();
+    this.ipcDeleteMasterKey();
   }
 
   private ipcPostMasterKey(): void {
@@ -37,9 +37,7 @@ export class MasterKeyIpc {
         setElectronStorage("masterKey", payload.key);
       }
 
-      if (this.masterKeyWindow !== undefined) {
-        this.masterKeyWindow.hide();
-      }
+      this.hideMasterKeyWindow();
 
       this.getMasterKey();
       return undefined;
@@ -63,6 +61,7 @@ export class MasterKeyIpc {
       if (masterKey !== undefined) {
         deleteFromElectronStorage("masterKey");
         this.getMasterKey();
+        this.hideMasterKeyWindow();
       }
     });
   }
@@ -74,6 +73,18 @@ export class MasterKeyIpc {
       ipcWebContentsSend("masterKey", mainWindow.webContents, {
         isMasterKey: Boolean(masterKey),
       });
+    }
+
+    if (this.masterKeyWindow !== undefined) {
+      ipcWebContentsSend("masterKey", this.masterKeyWindow.webContents, {
+        isMasterKey: Boolean(masterKey),
+      });
+    }
+  }
+
+  private hideMasterKeyWindow(): void {
+    if (this.masterKeyWindow !== undefined) {
+      this.masterKeyWindow.hide();
     }
   }
 }

@@ -10,7 +10,8 @@ import Button from "@mui/material/Button";
 
 export const Form = () => {
   useIpc();
-  const { handleTextInputChange, submitFormAction } = useControl();
+  const { handleTextInputChange, submitFormAction, handleDeleteMasterKey } =
+    useControl();
   const [_, formAction] = useActionState(submitFormAction, undefined);
   const { isMasterKey } = useControlContext();
 
@@ -30,7 +31,12 @@ export const Form = () => {
         />
         <SubmitButton />
         {isMasterKey && (
-          <Button variant="contained" color="primary" size="large">
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={handleDeleteMasterKey}
+          >
             Delete master key
           </Button>
         )}
