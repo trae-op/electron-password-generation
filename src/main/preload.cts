@@ -91,6 +91,9 @@ electron.contextBridge.exposeInMainWorld("electron", {
     cancelDeleteResource: () => {
       ipcSend("cancelDeleteResource");
     },
+    copyKey: (payload) => {
+      ipcSend("copyKey", payload);
+    },
   },
   invoke: {
     getVersion: () => ipcInvoke("getVersion"),
@@ -98,6 +101,7 @@ electron.contextBridge.exposeInMainWorld("electron", {
     postResource: (payload) => ipcInvoke("postResource", payload),
     deleteResource: (payload) => ipcInvoke("deleteResource", payload),
     postMasterKey: (payload) => ipcInvoke("postMasterKey", payload),
+    copyMasterKey: (payload) => ipcInvoke("copyMasterKey", payload),
   },
 } satisfies Window["electron"]);
 

@@ -1,10 +1,10 @@
 import { RgModule } from "../@core/decorators/rg-module.js";
 import { MasterKeyIpc } from "./ipc.js";
 import { MasterKeyWindow } from "./window.js";
-import { TwoFactorModule } from "../two-factor/module.js";
+import { ResourcesModule } from "../resources/module.js";
 
 @RgModule({
-  imports: [TwoFactorModule],
+  imports: [ResourcesModule],
   ipc: [MasterKeyIpc],
   windows: [MasterKeyWindow],
 })

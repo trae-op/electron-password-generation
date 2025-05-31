@@ -5,6 +5,9 @@ import type { TPropsProvider } from "./types";
 
 export const Provider = ({ children, isMasterKey = false }: TPropsProvider) => {
   const [list, setList] = useState<TResource[] | undefined>(undefined);
+  const [copyKeyResourceId, setCopyKeyResourceId] = useState<
+    string | undefined
+  >(undefined);
 
   const setItems = useCallback((items: TResource[]) => {
     setList((prevItems) => (isEqual(prevItems, items) ? prevItems : items));
@@ -14,15 +17,17 @@ export const Provider = ({ children, isMasterKey = false }: TPropsProvider) => {
     () => ({
       list,
       isMasterKey,
+      copyKeyResourceId,
     }),
-    [list, isMasterKey]
+    [list, isMasterKey, copyKeyResourceId]
   );
 
   const actions = useMemo(
     () => ({
       setItems,
+      setCopyKeyResourceId,
     }),
-    [setItems]
+    [setItems, setCopyKeyResourceId]
   );
 
   return (

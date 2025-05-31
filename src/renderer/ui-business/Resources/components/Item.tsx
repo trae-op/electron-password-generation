@@ -4,10 +4,10 @@ import Card from "@mui/material/Card";
 import EditIcon from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
 import HttpsIcon from "@mui/icons-material/Https";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import { CopyKeyFormButton } from "./CopyKeyForm";
 import { useControlContext } from "../hooks/useControlContext";
 import { TPropsItem } from "./types";
 
@@ -16,33 +16,29 @@ function arePropsEqual(oldProps: TPropsItem, newProps: TPropsItem): boolean {
 }
 
 export const Item = memo(
-  ({
-    name,
-    id,
-    handleCopy,
-    handleUpdate,
-    handleDelete,
-    handleKey,
-  }: TPropsItem) => {
+  ({ name, id, handleUpdate, handleDelete, handleKey }: TPropsItem) => {
     const { isMasterKey } = useControlContext();
 
     return (
       <Card sx={{ minWidth: 170 }}>
         <CardContent>
-          <Typography sx={{ mb: 0 }} gutterBottom variant="h5" component="div">
+          <Typography gutterBottom variant="h5">
             {name}
           </Typography>
         </CardContent>
-        <CardActions>
+        <CardActions
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
           {!isMasterKey ? (
             <IconButton onClick={handleKey}>
               <HttpsIcon fontSize="small" />
             </IconButton>
           ) : (
             <>
-              <IconButton onClick={handleCopy}>
-                <ContentCopyIcon fontSize="small" />
-              </IconButton>
+              <CopyKeyFormButton id={id + ""} />
               <IconButton data-id={id} onClick={handleUpdate}>
                 <EditIcon fontSize="small" />
               </IconButton>

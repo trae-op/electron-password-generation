@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useControlContextActions } from "./useControlContextActions";
+import { useControlContextActions } from "./useControlContext";
 
 export const useIpc = () => {
   const { setItems } = useControlContextActions();

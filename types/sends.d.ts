@@ -14,6 +14,7 @@ type TCallbackResource = {
 
 type TCallbackOpenUpdateResource = TCallbackResource;
 type TCallbackOpenDeleteResource = TCallbackResource;
+type TCallbackCopyKey = TCallbackResource;
 
 type TEventPayloadSend = {
   restart: undefined;
@@ -27,6 +28,7 @@ type TEventPayloadSend = {
   openUpdateResource: TCallbackOpenUpdateResource;
   openDeleteResource: TCallbackOpenDeleteResource;
   getResource: TCallbackResource;
+  copyKey: TCallbackCopyKey;
   masterKey: undefined;
   checkMasterKey: undefined;
   deleteMasterKey: undefined;
@@ -53,6 +55,7 @@ type TSend = {
   windowOpenDeleteResource: (
     payload: TEventPayloadSend["openDeleteResource"]
   ) => void;
+  copyKey: (payload: TEventPayloadSend["copyKey"]) => void;
   windowMasterKey: () => void;
   checkMasterKey: () => void;
   deleteMasterKey: () => void;

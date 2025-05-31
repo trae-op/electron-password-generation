@@ -14,5 +14,6 @@ import { DeleteWindow } from "./windows/delete.js";
   ipc: [ResourcesActionsIpc, ResourcesOpenIpc],
   windows: [UpdateWindow, AddWindow, DeleteWindow],
   providers: [ResourcesService, CryptoService, CacheWindowsService],
+  exports: [ResourcesService, CryptoService],
 })
 export class ResourcesModule {}

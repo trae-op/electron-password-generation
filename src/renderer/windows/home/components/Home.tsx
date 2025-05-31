@@ -4,6 +4,7 @@ import ListItemButton, {
 } from "@mui/material/ListItemButton";
 import IconButton from "@mui/material/IconButton";
 import HttpsIcon from "@mui/icons-material/Https";
+import NoEncryptionGmailerrorredIcon from "@mui/icons-material/NoEncryptionGmailerrorred";
 import { UserPopover, ContextUserPopover } from "@ui-business/User";
 import { LogoutButton } from "@ui-business/AuthSocialNetwork";
 import {
@@ -78,7 +79,7 @@ export const Home = () => {
             }}
             onClick={handleKey}
           >
-            <HttpsIcon fontSize="large" />
+            <NoEncryptionGmailerrorredIcon fontSize="large" />
           </IconButton>
           <AddResourceButton
             sx={{

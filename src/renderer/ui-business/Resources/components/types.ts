@@ -5,8 +5,11 @@ export type TPropsProvider = {
   isMasterKey?: boolean;
 };
 
+export type TPropsForm = {
+  id: string;
+};
+
 export type TPropsItem = Pick<TResource, "id" | "name" | "key"> & {
-  handleCopy: () => void;
   handleUpdate: () => void;
   handleDelete: () => void;
   handleKey: () => void;

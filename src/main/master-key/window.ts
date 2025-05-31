@@ -10,8 +10,8 @@ import { TWindowManager } from "../@core/types/window-manager.js";
     height: 300,
     alwaysOnTop: true,
     autoHideMenuBar: true,
-    // minimizable: false,
-    // maximizable: false,
+    minimizable: false,
+    maximizable: false,
     title: "",
   },
 })
@@ -19,6 +19,6 @@ export class MasterKeyWindow implements TWindowManager {
   constructor() {}
 
   onDidFinishLoad(window: BrowserWindow): void {
-    window.webContents.openDevTools();
+    // window.webContents.openDevTools();
   }
 }

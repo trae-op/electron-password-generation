@@ -146,22 +146,6 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
   private ipcGetResources(): void {
     ipcMainOn("resources", async (event) => {
       const resources = await this.getResources();
-      const masterKey = getElectronStorage("masterKey");
-
-      // if (masterKey !== undefined) {
-      //   for (const resource of resources.items) {
-      //     if (resource && resource.salt) {
-      //       const encryptedVault = await this.cryptoService.decrypt(masterKey, {
-      //         iv: resource.iv,
-      //         salt: resource.salt,
-      //         encryptedData: resource.key,
-      //       });
-      //       resource.key = encryptedVault;
-      //     }
-      //   }
-
-      //   event.reply("resources", resources);
-      // }
 
       event.reply("resources", resources);
     });

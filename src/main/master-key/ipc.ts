@@ -1,7 +1,9 @@
-import { BrowserWindow } from "electron";
+import { BrowserWindow, clipboard } from "electron";
 import { IpcHandler } from "../@core/decorators/ipc-handler.js";
 import { getWindow as getWindows } from "../@core/control-window/receive.js";
 import { TParamOnInit } from "../@core/types/ipc-handler.js";
+import { ResourcesService } from "../resources/services/resources.js";
+import { CryptoService } from "../resources/services/crypto.js";
 import {
   ipcMainHandle,
   ipcMainOn,
@@ -17,7 +19,10 @@ import {
 export class MasterKeyIpc {
   masterKeyWindow: BrowserWindow | undefined;
 
-  constructor() {}
+  constructor(
+    private resourcesService: ResourcesService,
+    private cryptoService: CryptoService
+  ) {}
 
   onInit({ getWindow }: TParamOnInit<TWindows["masterKey"]>): void {
     const masterKeyWindow = getWindow("window:master-key");
@@ -29,6 +34,7 @@ export class MasterKeyIpc {
     this.ipcGetMasterKey();
     this.ipcPostMasterKey();
     this.ipcDeleteMasterKey();
+    this.ipcCopyMasterKey();
   }
 
   private ipcPostMasterKey(): void {
@@ -40,6 +46,34 @@ export class MasterKeyIpc {
       this.hideMasterKeyWindow();
 
       this.getMasterKey();
+      return undefined;
+    });
+  }
+
+  private ipcCopyMasterKey(): void {
+    ipcMainHandle("copyMasterKey", async (payload) => {
+      if (payload !== undefined) {
+        const resource = await this.resourcesService.byId(payload.id);
+        const masterKey = getElectronStorage("masterKey");
+
+        if (
+          masterKey !== undefined &&
+          resource !== undefined &&
+          resource.salt !== null
+        ) {
+          const encryptedVault = await this.cryptoService.decrypt(masterKey, {
+            iv: resource.iv,
+            salt: resource.salt,
+            encryptedData: resource.key,
+          });
+          clipboard.writeText(encryptedVault);
+
+          return {
+            ok: true,
+          };
+        }
+      }
+
       return undefined;
     });
   }

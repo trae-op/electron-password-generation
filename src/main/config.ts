@@ -101,10 +101,9 @@ export const restApi = {
 };
 
 export const cryptoOptions = {
-  AES_KEY_LENGTH_BYTES: 32, // Довжина ключа для AES-256 (256 біт = 32 байти)
-  SALT_LENGTH_BYTES: 16, // Рекомендована довжина солі
-  PBKDF2_ITERATIONS: 500000, // Кількість ітерацій PBKDF2. Чим більше, тим безпечніше,
-  // але повільніше. Рекомендується підбирати так, щоб
-  // деривація займала ~100-500 мс на типовому CPU.
-  PBKDF2_DIGEST: "sha512", // Алгоритм хешування для PBKDF2
+  AES_KEY_LENGTH_BYTES: 32,
+  SALT_LENGTH_BYTES: 16,
+  PBKDF2_ITERATIONS: 500000,
+  PBKDF2_DIGEST: "sha512",
+  AES_ALGORITHM: "aes-256-cbc",
 };

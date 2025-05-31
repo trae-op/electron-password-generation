@@ -4,6 +4,7 @@ type TEventPayloadInvoke = {
   postResource: undefined;
   deleteResource: undefined;
   postMasterKey: undefined;
+  copyMasterKey: { ok: boolean } | undefined;
 };
 
 type TSendResource<V = FormDataEntryValue | null> = {
@@ -12,18 +13,22 @@ type TSendResource<V = FormDataEntryValue | null> = {
   key: V;
 };
 
-type TDeleteResource = {
+type TIdResource = {
   id: string;
 };
+
+type TDeleteResource = TIdResource;
 type TPostMasterKey = {
   key: string;
 };
+
 type TEventSendInvoke = {
   getVersion: string;
   putResource: TSendResource;
   postResource: TSendResource;
   deleteResource: TDeleteResource;
   postMasterKey: TPostMasterKey;
+  copyMasterKey: TIdResource;
 };
 
 type TInvoke = {
@@ -40,4 +45,7 @@ type TInvoke = {
   postMasterKey: (
     payload: TEventSendInvoke["postMasterKey"]
   ) => Promise<TEventPayloadInvoke["postMasterKey"]>;
+  copyMasterKey: (
+    payload: TEventSendInvoke["copyMasterKey"]
+  ) => Promise<TEventPayloadInvoke["copyMasterKey"]>;
 };
