@@ -59,9 +59,8 @@ export class AppIpc implements TIpcHandlerInterface {
     ipcMainOn("closePreloadWindow", async () => {
       const preloadAppWindow =
         getWindows<TWindows["preloadApp"]>("window:preload-app");
-      if (preloadAppWindow !== undefined && window !== undefined) {
+      if (preloadAppWindow !== undefined) {
         preloadAppWindow.hide();
-        window.show();
       }
     });
 

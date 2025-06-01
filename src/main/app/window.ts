@@ -17,7 +17,7 @@ import { menu } from "../config.js";
   hash: "window:main",
   isCache: true,
   options: {
-    //resizable: false,
+    resizable: false,
     show: false,
     width: 600,
     height: 600,
