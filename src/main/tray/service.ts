@@ -14,7 +14,12 @@ const trayMenu: TItem[] = [
   {
     label: menu.labels.checkUpdate,
     name: "check-update",
-    // visible: !isDev(),
+    visible: !isDev(),
+  },
+  {
+    label: menu.labels.resources,
+    name: "resources",
+    visible: false,
   },
   {
     label: menu.labels.quit,

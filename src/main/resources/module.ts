@@ -8,9 +8,10 @@ import { CacheWindowsService } from "./services/cacheWindows.js";
 import { UpdateWindow } from "./windows/update.js";
 import { AddWindow } from "./windows/add.js";
 import { DeleteWindow } from "./windows/delete.js";
+import { TrayModule } from "../tray/module.js";
 
 @RgModule({
-  imports: [RestApiModule, CryptoModule],
+  imports: [RestApiModule, CryptoModule, TrayModule],
   ipc: [ResourcesActionsIpc, ResourcesOpenIpc],
   windows: [UpdateWindow, AddWindow, DeleteWindow],
   providers: [ResourcesService, CacheWindowsService],

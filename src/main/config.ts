@@ -30,6 +30,7 @@ export const menu = {
     checkUpdate: "Check for updates...",
     showApp: "Show",
     quit: "Quit",
+    resources: "Resources",
     devTools: "Developer tools",
   },
 };

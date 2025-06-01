@@ -1,4 +1,4 @@
-import { BrowserWindow } from "electron";
+import { BrowserWindow, clipboard } from "electron";
 import {
   ipcMainHandle,
   ipcMainOn,
@@ -12,13 +12,15 @@ import { CryptoService } from "../../crypto/service.js";
 import { TEncryptedVault } from "../services/types.js";
 import { CacheWindowsService } from "../services/cacheWindows.js";
 import { getElectronStorage } from "../../$shared/store.js";
+import { TrayService } from "../../tray/service.js";
 
 @IpcHandler()
 export class ResourcesActionsIpc implements TIpcHandlerInterface {
   constructor(
     private resourcesService: ResourcesService,
     private cryptoService: CryptoService,
-    private cacheWindowsService: CacheWindowsService
+    private cacheWindowsService: CacheWindowsService,
+    private trayService: TrayService
   ) {}
 
   onInit() {
@@ -147,6 +149,10 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
     ipcMainOn("resources", async (event) => {
       const resources = await this.getResources();
 
+      if (resources !== undefined) {
+        this.updateTrayMenu(resources.items);
+      }
+
       event.reply("resources", resources);
     });
   }
@@ -183,5 +189,47 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
 
       return undefined;
     });
+  }
+
+  private updateTrayMenu(resources: TResource[]) {
+    if (resources.length) {
+      this.trayService.buildTray(
+        this.trayService.trayMenu.map((item) => {
+          if (item.name === "resources") {
+            item.visible = true;
+            item.submenu = resources.map((resource) => ({
+              label: resource.name,
+              click: async () => {
+                this.copyMasterKey(resource);
+              },
+            }));
+          }
+
+          return item;
+        })
+      );
+    } else {
+      this.trayService.buildTray(
+        this.trayService.trayMenu.map((item) => {
+          if (item.name === "resources") {
+            item.visible = false;
+          }
+
+          return item;
+        })
+      );
+    }
+  }
+
+  private async copyMasterKey(resource: TResource) {
+    const masterKey = getElectronStorage("masterKey");
+    if (masterKey !== undefined && resource.salt !== null) {
+      const encryptedVault = await this.cryptoService.decrypt(masterKey, {
+        iv: resource.iv,
+        salt: resource.salt,
+        encryptedData: resource.key,
+      });
+      clipboard.writeText(encryptedVault);
+    }
   }
 }

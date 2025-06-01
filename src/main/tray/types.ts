@@ -1,7 +1,7 @@
 import { type MenuItem, type MenuItemConstructorOptions } from "electron";
 
 export type TCustomName = {
-  name: "check-update" | "show" | "quit";
+  name?: "check-update" | "show" | "quit" | "resources";
 };
 
 export interface IMenuItemConstructorOptions
