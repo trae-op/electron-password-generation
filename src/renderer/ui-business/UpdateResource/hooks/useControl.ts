@@ -5,18 +5,11 @@ import { THookControl } from "./types";
 
 export const useControl = (): THookControl => {
   const { id } = useParams<{ id: string }>();
-  const { setName, setOpenCreateNewPassword } = useControlContextActions();
+  const { setName } = useControlContextActions();
 
   const handleTextInputChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       setName(event.target.value);
-    },
-    []
-  );
-
-  const handleCheckedChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      setOpenCreateNewPassword(event.target.checked);
     },
     []
   );
@@ -38,10 +31,9 @@ export const useControl = (): THookControl => {
   const value = useMemo(
     () => ({
       submitFormAction,
-      handleCheckedChange,
       handleTextInputChange,
     }),
-    [submitFormAction, handleCheckedChange, handleTextInputChange]
+    [submitFormAction, handleTextInputChange]
   );
 
   return value;

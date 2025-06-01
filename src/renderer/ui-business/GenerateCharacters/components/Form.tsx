@@ -40,10 +40,10 @@ export const Form = memo(
           onChange={handleChangeRange}
           min={minAmount}
           max={maxAmount}
+          name={fields.range}
           step={1}
           aria-labelledby="range-slider-label"
         />
-        <input type="hidden" name={fields.range} value={amount || minAmount} />
 
         <FormGroup>
           <FormControlLabel

@@ -2,8 +2,6 @@ import { useActionState, memo } from "react";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { useIpc } from "../hooks/useIpc";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import { LoadingSpinner } from "@components/LoadingSpinner";
 import { SubmitButton } from "./SubmitButton";
 import type { TPropsForm } from "./types";
@@ -12,9 +10,8 @@ import { useControlContext } from "../hooks/useControlContext";
 
 export const Form = memo(({ renderGenerateCharacters }: TPropsForm) => {
   useIpc();
-  const { result, openCreateNewPassword, name } = useControlContext();
-  const { handleTextInputChange, handleCheckedChange, submitFormAction } =
-    useControl();
+  const { result, name } = useControlContext();
+  const { handleTextInputChange, submitFormAction } = useControl();
   const [_, formAction] = useActionState(submitFormAction, undefined);
 
   if (result === undefined) {
@@ -33,13 +30,7 @@ export const Form = memo(({ renderGenerateCharacters }: TPropsForm) => {
           fullWidth
         />
 
-        <FormControlLabel
-          control={<Checkbox onChange={handleCheckedChange} />}
-          label="Create a new password"
-          name="new-password"
-        />
-
-        {openCreateNewPassword && renderGenerateCharacters}
+        {renderGenerateCharacters}
 
         <SubmitButton />
       </Stack>

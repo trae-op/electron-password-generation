@@ -14,5 +14,5 @@ import { TWindowManager } from "../../@core/types/window-manager.js";
 export class DeleteWindow implements TWindowManager {
   constructor() {}
 
-  onDidFinishLoad(window: BrowserWindow | undefined): void {}
+  onDidFinishLoad(window: BrowserWindow): void {}
 }

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import isEqual from "lodash.isequal";
 import { useControlContextActions } from "./useControlContext";
 
 export const useIpc = () => {
@@ -14,8 +15,8 @@ export const useIpc = () => {
 
   useEffect(() => {
     window.electron.receive.subscribeGetResource(({ item }) => {
-      setResult(item);
-      if (item?.name) {
+      setResult((prevItem) => (isEqual(prevItem, item) ? prevItem : item));
+      if (item !== undefined) {
         setName(item.name);
       }
     });

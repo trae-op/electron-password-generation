@@ -85,6 +85,10 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
         });
         const resources = await this.getResources();
 
+        if (resources !== undefined) {
+          this.updateTrayMenu(resources.items);
+        }
+
         updateResourceWindow.hide();
         ipcWebContentsSend("resources", mainWindow.webContents, resources);
       }
@@ -126,6 +130,10 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
           salt: encryptedVault.salt,
         });
         const resources = await this.getResources();
+
+        if (resources !== undefined) {
+          this.updateTrayMenu(resources.items);
+        }
 
         addResourceWindow.hide();
         ipcWebContentsSend("resources", mainWindow.webContents, resources);
@@ -192,10 +200,10 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
   }
 
   private updateTrayMenu(resources: TResource[]) {
-    if (resources.length) {
-      this.trayService.buildTray(
-        this.trayService.trayMenu.map((item) => {
-          if (item.name === "resources") {
+    this.trayService.buildTray(
+      this.trayService.trayMenu.map((item) => {
+        if (item.name === "resources") {
+          if (resources.length) {
             item.visible = true;
             item.submenu = resources.map((resource) => ({
               label: resource.name,
@@ -203,22 +211,14 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
                 this.copyMasterKey(resource);
               },
             }));
-          }
-
-          return item;
-        })
-      );
-    } else {
-      this.trayService.buildTray(
-        this.trayService.trayMenu.map((item) => {
-          if (item.name === "resources") {
+          } else {
             item.visible = false;
           }
+        }
 
-          return item;
-        })
-      );
-    }
+        return item;
+      })
+    );
   }
 
   private async copyMasterKey(resource: TResource) {

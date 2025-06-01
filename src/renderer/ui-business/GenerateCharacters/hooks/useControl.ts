@@ -24,7 +24,8 @@ export const useControl = <
   );
   const checkedChange = useCallback(
     (variant: number) => {
-      return (isChecked: CS) => {
+      return (event: CS) => {
+        const isChecked = event.target.checked;
         if (isChecked && variant === 1) {
           options.isNumbers = true;
         }
