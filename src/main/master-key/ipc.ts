@@ -3,7 +3,7 @@ import { IpcHandler } from "../@core/decorators/ipc-handler.js";
 import { getWindow as getWindows } from "../@core/control-window/receive.js";
 import { TParamOnInit } from "../@core/types/ipc-handler.js";
 import { ResourcesService } from "../resources/services/resources.js";
-import { CryptoService } from "../resources/services/crypto.js";
+import { CryptoService } from "../crypto/service.js";
 import {
   ipcMainHandle,
   ipcMainOn,

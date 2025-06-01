@@ -1,8 +1,8 @@
 import crypto from "crypto";
 import { promisify } from "node:util";
-import { Injectable } from "../../@core/decorators/injectable.js";
+import { Injectable } from "../@core/decorators/injectable.js";
 import { TEncryptedVault } from "./types.js";
-import { cryptoOptions } from "../../config.js";
+import { cryptoOptions } from "../config.js";
 import { dialog } from "electron";
 
 const pbkdf2 = promisify(crypto.pbkdf2);

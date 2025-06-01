@@ -8,7 +8,7 @@ import { IpcHandler } from "../../@core/decorators/ipc-handler.js";
 import { getWindow as getWindows } from "../../@core/control-window/receive.js";
 import type { TIpcHandlerInterface } from "../../@core/types/ipc-handler.js";
 import { ResourcesService } from "../services/resources.js";
-import { CryptoService } from "../services/crypto.js";
+import { CryptoService } from "../../crypto/service.js";
 import { TEncryptedVault } from "../services/types.js";
 import { CacheWindowsService } from "../services/cacheWindows.js";
 import { getElectronStorage } from "../../$shared/store.js";
