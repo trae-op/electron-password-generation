@@ -75,13 +75,11 @@ export class CryptoService {
           title: `Something wrong with server! ${error.code || ""}`,
           message: `
           The message: ${error.message}.
-          [DECRYPT] Можливі причини 'BAD_DECRYPT':
-          [DECRYPT]   1. Невірний пароль користувача (masterKey).
-          [DECRYPT] Можливі причини 'BAD_DECRYPT':
-          [DECRYPT]   1. Невірний пароль користувача (masterKey).
-          [DECRYPT]   2. Пошкоджені або неповні зашифровані дані (${encryptedVault.encryptedData}).
-          [DECRYPT]   3. Невірний IV (${encryptedVault.iv}).
-          [DECRYPT]   4. Невідповідність параметрів деривації ключа (iterations, keyLength, digest) між шифруванням та дешифруванням.
+          [DECRYPT] Possible causes of 'BAD_DECRYPT':
+          [DECRYPT]   1. Incorrect user password (masterKey).
+          [DECRYPT]   2. Corrupted or incomplete encrypted data (${encryptedVault.encryptedData}).
+          [DECRYPT]   3. Incorrect IV (${encryptedVault.iv}).
+          [DECRYPT]   4. Key derivation parameters (iterations, keyLength, digest) mismatch between encryption and decryption.
           `,
         });
       }
