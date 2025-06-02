@@ -18,7 +18,9 @@ export const Items = memo(() => {
       <Stack spacing={2} direction="row" sx={{ flexWrap: "wrap" }} useFlexGap>
         {countResources !== null && Number(countResources) ? (
           Array.from({ length: Number(countResources) }, (_, i) => i).map(
-            () => <Skeleton variant="rounded" width={170} height={110} />
+            (_, i) => (
+              <Skeleton key={i} variant="rounded" width={170} height={110} />
+            )
           )
         ) : (
           <CircularProgress size={70} />

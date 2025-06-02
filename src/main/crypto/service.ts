@@ -75,15 +75,16 @@ export class CryptoService {
           title: `Something wrong with server! ${error.code || ""}`,
           message: `
           The message: ${error.message}.
-          [DECRYPT] Possible causes of 'BAD_DECRYPT':
-          [DECRYPT]   1. Incorrect user password (masterKey).
-          [DECRYPT]   2. Corrupted or incomplete encrypted data (${encryptedVault.encryptedData}).
-          [DECRYPT]   3. Incorrect IV (${encryptedVault.iv}).
-          [DECRYPT]   4. Key derivation parameters (iterations, keyLength, digest) mismatch between encryption and decryption.
+          Possible causes:
+          1. You have changed (masterKey) and now you must update you resources.
+          2. Incorrect user password (masterKey).
+          3. Corrupted or incomplete encrypted data (${encryptedVault.encryptedData}).
+          4. Incorrect IV (${encryptedVault.iv}).
+          5. Key derivation parameters (iterations, keyLength, digest) mismatch between encryption and decryption.
           `,
         });
       }
-      throw error;
+      return "";
     }
 
     return decryptedBuffer.toString("utf8");

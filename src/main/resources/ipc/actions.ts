@@ -191,6 +191,10 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
 
         const resources = await this.getResources();
 
+        if (resources !== undefined) {
+          this.updateTrayMenu(resources.items);
+        }
+
         deleteResourceWindow.hide();
         ipcWebContentsSend("resources", mainWindow.webContents, resources);
       }
