@@ -7,7 +7,7 @@ import {
 import {
   TwoFactorQRWindow,
   TwoFactorVerifyWindow,
-  Provider as ProviderTwoFactorVerify,
+  Provider as ProviderTwoFactor,
 } from "@ui-business/TwoFactor";
 import { Window as Update } from "@ui-business/Updater";
 import { Provider as ProviderUser } from "@ui-business/User";
@@ -64,7 +64,11 @@ export const App = () => {
               <Route path="/window:update-app" element={<Update />} />
               <Route
                 path="/window:two-factor-qa"
-                element={<TwoFactorQRWindow />}
+                element={
+                  <ProviderTwoFactor>
+                    <TwoFactorQRWindow />
+                  </ProviderTwoFactor>
+                }
               />
               <Route
                 path="/window:master-key"
@@ -77,9 +81,9 @@ export const App = () => {
               <Route
                 path="/window:two-factor-verify"
                 element={
-                  <ProviderTwoFactorVerify>
+                  <ProviderTwoFactor>
                     <TwoFactorVerifyWindow />
-                  </ProviderTwoFactorVerify>
+                  </ProviderTwoFactor>
                 }
               />
             </Route>

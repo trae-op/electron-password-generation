@@ -12,7 +12,7 @@ export class AuthSocialNetworkIpc {
     const authSocialNetworkWindow = getWindow("window:auth-social-network");
     const authSession = session.fromPartition("persist:auth");
 
-    ipcMainOn("authSocialNetwork", async (event, { providers }) => {
+    ipcMainOn("authSocialNetwork", async (_, { providers }) => {
       authSocialNetworkWindow.create({
         loadURL: `${restApi.urls.base}${restApi.urls.baseApi}${restApi.urls.auth.base}${restApi.urls.auth[providers]}`,
         options: {

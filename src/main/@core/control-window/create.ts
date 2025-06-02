@@ -12,7 +12,7 @@ export function createWindow<N extends string>({
   isCache,
   loadURL,
 }: TParamsCreateWindow<N>) {
-  const LOCALHOST_BASE_REST_API = process.env.LOCALHOST_BASE_REST_API;
+  const BASE_REST_API = process.env.BASE_REST_API;
   const LOCALHOST_ELECTRON_SERVER_PORT =
     process.env.LOCALHOST_ELECTRON_SERVER_PORT;
   const isDev = process.env.NODE_ENV === "development";
@@ -26,9 +26,9 @@ export function createWindow<N extends string>({
     "/" + folders.distMain + "/preload.cjs"
   );
 
-  if (!LOCALHOST_BASE_REST_API) {
+  if (!BASE_REST_API) {
     console.warn(
-      `Warning: You have to add an environment variable called "process.env.LOCALHOST_BASE_REST_API"!`
+      `Warning: You have to add an environment variable called "process.env.BASE_REST_API"!`
     );
   }
 
@@ -62,7 +62,7 @@ export function createWindow<N extends string>({
   if (isCache && !loadURL) {
     const csp = `
   default-src 'self';
-  connect-src 'self' ${LOCALHOST_BASE_REST_API};
+  connect-src 'self' ${BASE_REST_API};
   img-src * data:;
   style-src 'self' 'unsafe-inline';
   script-src 'self' ${isDev ? "'unsafe-inline'" : ""};

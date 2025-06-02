@@ -78,7 +78,7 @@ export const publishOptions = {
 
 export const restApi = {
   urls: {
-    base: process.env.LOCALHOST_BASE_REST_API,
+    base: process.env.BASE_REST_API,
     baseApi: "/api",
     auth: {
       base: "/auth",

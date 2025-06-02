@@ -23,6 +23,8 @@ export class TwoFactorQAWindow implements TWindowManager {
   async onDidFinishLoad(window: BrowserWindow) {
     const response = await this.twoFactorRestApiService.generateQA();
 
+    // window.webContents.openDevTools();
+
     if (response !== undefined) {
       ipcWebContentsSend("twoFactorQA", window.webContents, response);
     }
