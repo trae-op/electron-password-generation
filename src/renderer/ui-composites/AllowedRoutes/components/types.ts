@@ -1,6 +1,6 @@
-import type { TRoutes } from "../../../config/types";
+import { TRoutes } from "../types";
 
 export interface TPropsContainer {
   children: React.ReactNode;
-  routes: TRoutes[keyof TRoutes][];
+  routes: TRoutes[];
 }

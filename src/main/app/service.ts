@@ -27,7 +27,6 @@ export class AppService {
 
   logout(window: BrowserWindow) {
     deleteFromElectronStorage("authToken");
-    deleteFromElectronStorage("masterKey");
     deleteFromElectronStorage("userId");
     deleteFromElectronStorage("twoFactorSecret");
     ipcWebContentsSend("authSocialNetwork", window.webContents, {

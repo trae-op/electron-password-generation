@@ -1,5 +1,5 @@
-import type { TRoutes } from "@config/types";
+import { TRoutes } from "../types";
 
 export type THookControl = {
-  isMainRoute: (routers: TRoutes[keyof TRoutes][]) => boolean;
+  isMainRoute: (routers: TRoutes[]) => boolean;
 };
