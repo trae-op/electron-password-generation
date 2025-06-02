@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import isEqual from "lodash/isEqual";
+import isEqual from "lodash.isequal";
 import { useControlContextActions } from "./useControlContext";
 
 export const useIpcQA = () => {

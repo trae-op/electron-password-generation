@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import isEqual from "lodash/isEqual";
+import isEqual from "lodash.isequal";
 
 export const useIpc = (): TUpdateData => {
   const [result, setResult] = useState<TUpdateData>({

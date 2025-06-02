@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from "react";
-import isEqual from "lodash/isEqual";
+import isEqual from "lodash.isequal";
 import { Context, ContextActions } from "../context";
 import type { TPropsProvider } from "./types";
 
