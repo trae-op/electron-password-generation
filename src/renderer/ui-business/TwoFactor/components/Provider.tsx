@@ -1,8 +1,8 @@
 import { useState, useMemo } from "react";
-import type { TPropsProvider } from "./types";
+import { Outlet } from "react-router-dom";
 import { Context, ContextActions } from "../context";
 
-export const Provider = ({ children }: TPropsProvider) => {
+export const Provider = () => {
   const [pending, setPending] = useState(false);
   const [twoFactorCode, setTwoFactorCode] = useState("");
   const [base64, setBase64] = useState("");
@@ -28,7 +28,7 @@ export const Provider = ({ children }: TPropsProvider) => {
   return (
     <Context.Provider value={value}>
       <ContextActions.Provider value={actions}>
-        {children}
+        <Outlet />
       </ContextActions.Provider>
     </Context.Provider>
   );

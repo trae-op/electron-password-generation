@@ -5,11 +5,7 @@ import {
   Provider as ProviderAuth,
   ContainerRoutes,
 } from "@ui-business/AuthSocialNetwork";
-import {
-  TwoFactorQRWindow,
-  TwoFactorVerifyWindow,
-  Provider as ProviderTwoFactor,
-} from "@ui-business/TwoFactor";
+import { Provider as ProviderTwoFactor } from "@ui-business/TwoFactor";
 import { Provider as ProviderUser } from "@ui-business/User";
 import { Provider as ProviderMasterKey } from "@ui-business/MasterKey";
 import { MainLayout } from "@layouts/Main";
@@ -31,6 +27,10 @@ const LazyAddResourceWindow = lazy(
 const LazyUpdaterWindow = lazy(() => import("./windows/updater/Updater"));
 const LazyMasterKeyFormWindow = lazy(
   () => import("./windows/masterKey/MasterKeyForm")
+);
+const LazyTwoFactorQRWindow = lazy(() => import("./windows/twoFactor/QR"));
+const LazyTwoFactorVerifyWindow = lazy(
+  () => import("./windows/twoFactor/Verify")
 );
 
 export const App = () => {
@@ -77,14 +77,7 @@ export const App = () => {
                 path="/window:update-app"
                 element={<LazyUpdaterWindow />}
               />
-              <Route
-                path="/window:two-factor-qa"
-                element={
-                  <ProviderTwoFactor>
-                    <TwoFactorQRWindow />
-                  </ProviderTwoFactor>
-                }
-              />
+
               <Route
                 path="/window:master-key"
                 element={
@@ -93,14 +86,17 @@ export const App = () => {
                   </ProviderMasterKey>
                 }
               />
-              <Route
-                path="/window:two-factor-verify"
-                element={
-                  <ProviderTwoFactor>
-                    <TwoFactorVerifyWindow />
-                  </ProviderTwoFactor>
-                }
-              />
+
+              <Route element={<ProviderTwoFactor />}>
+                <Route
+                  path="/window:two-factor-qa"
+                  element={<LazyTwoFactorQRWindow />}
+                />
+                <Route
+                  path="/window:two-factor-verify"
+                  element={<LazyTwoFactorVerifyWindow />}
+                />
+              </Route>
             </Route>
           </Routes>
         </HashRouter>
