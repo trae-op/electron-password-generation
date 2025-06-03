@@ -1,7 +1,6 @@
 import { lazy } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import {
-  SignIn,
   Provider as ProviderAuth,
   ContainerRoutes,
 } from "@ui-business/AuthSocialNetwork";
@@ -14,15 +13,12 @@ import { PublicRoute } from "@ui-composites/PublicRoute";
 import { PrivateRoute } from "@ui-composites/PrivateRoute";
 
 const LazyHomeWindow = lazy(() => import("./windows/home/Home"));
-
 const LazyUpdateResourceWindow = lazy(
   () => import("./windows/updateResource/UpdateResource")
 );
-
 const LazyAddResourceWindow = lazy(
   () => import("./windows/addResource/AddResource")
 );
-
 const LazyUpdaterWindow = lazy(() => import("./windows/updater/Updater"));
 const LazyMasterKeyFormWindow = lazy(
   () => import("./windows/masterKey/MasterKeyForm")
@@ -34,6 +30,7 @@ const LazyTwoFactorVerifyWindow = lazy(
 const LazyConfirmDeleteResourceWindow = lazy(
   () => import("./windows/confirmDeleteResource/ConfirmDeleteResource")
 );
+const LazyLogInWindow = lazy(() => import("./windows/logIn/LogIn"));
 
 export const App = () => {
   return (
@@ -43,7 +40,7 @@ export const App = () => {
           <Routes>
             <Route element={<MainLayout />}>
               <Route element={<PublicRoute />}>
-                <Route path="/sign-in" element={<SignIn />} />
+                <Route path="/sign-in" element={<LazyLogInWindow />} />
               </Route>
 
               <Route element={<PrivateRoute />}>
