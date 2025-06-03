@@ -1,4 +1,4 @@
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import {
   Provider as ProviderAuth,
@@ -11,6 +11,7 @@ import { MainLayout } from "@layouts/Main";
 import { FormResourcesLayout } from "@layouts/FormResources";
 import { PublicRoute } from "@ui-composites/PublicRoute";
 import { PrivateRoute } from "@ui-composites/PrivateRoute";
+import { LoadingSpinner } from "@components/LoadingSpinner";
 
 const LazyHomeWindow = lazy(() => import("./windows/home/Home"));
 const LazyUpdateResourceWindow = lazy(
@@ -37,67 +38,69 @@ export const App = () => {
     <ProviderAuth>
       <ContainerRoutes>
         <HashRouter>
-          <Routes>
-            <Route element={<MainLayout />}>
-              <Route element={<PublicRoute />}>
-                <Route path="/sign-in" element={<LazyLogInWindow />} />
-              </Route>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Routes>
+              <Route element={<MainLayout />}>
+                <Route element={<PublicRoute />}>
+                  <Route path="/sign-in" element={<LazyLogInWindow />} />
+                </Route>
 
-              <Route element={<PrivateRoute />}>
+                <Route element={<PrivateRoute />}>
+                  <Route
+                    path="/window:main"
+                    element={
+                      <ProviderUser>
+                        <ProviderMasterKey>
+                          <LazyHomeWindow />
+                        </ProviderMasterKey>
+                      </ProviderUser>
+                    }
+                  />
+                </Route>
+
+                <Route element={<FormResourcesLayout />}>
+                  <Route
+                    path="/window/resource/add"
+                    element={<LazyAddResourceWindow />}
+                  />
+                  <Route
+                    path="/window/resource/update/:id"
+                    element={<LazyUpdateResourceWindow />}
+                  />
+                </Route>
+
                 <Route
-                  path="/window:main"
+                  path="/window/resource/delete/:id"
+                  element={<LazyConfirmDeleteResourceWindow />}
+                />
+
+                <Route
+                  path="/window:update-app"
+                  element={<LazyUpdaterWindow />}
+                />
+
+                <Route
+                  path="/window:master-key"
                   element={
-                    <ProviderUser>
-                      <ProviderMasterKey>
-                        <LazyHomeWindow />
-                      </ProviderMasterKey>
-                    </ProviderUser>
+                    <ProviderMasterKey>
+                      <LazyMasterKeyFormWindow />
+                    </ProviderMasterKey>
                   }
                 />
+
+                <Route element={<ProviderTwoFactor />}>
+                  <Route
+                    path="/window:two-factor-qa"
+                    element={<LazyTwoFactorQRWindow />}
+                  />
+                  <Route
+                    path="/window:two-factor-verify"
+                    element={<LazyTwoFactorVerifyWindow />}
+                  />
+                </Route>
               </Route>
-
-              <Route element={<FormResourcesLayout />}>
-                <Route
-                  path="/window/resource/add"
-                  element={<LazyAddResourceWindow />}
-                />
-                <Route
-                  path="/window/resource/update/:id"
-                  element={<LazyUpdateResourceWindow />}
-                />
-              </Route>
-
-              <Route
-                path="/window/resource/delete/:id"
-                element={<LazyConfirmDeleteResourceWindow />}
-              />
-
-              <Route
-                path="/window:update-app"
-                element={<LazyUpdaterWindow />}
-              />
-
-              <Route
-                path="/window:master-key"
-                element={
-                  <ProviderMasterKey>
-                    <LazyMasterKeyFormWindow />
-                  </ProviderMasterKey>
-                }
-              />
-
-              <Route element={<ProviderTwoFactor />}>
-                <Route
-                  path="/window:two-factor-qa"
-                  element={<LazyTwoFactorQRWindow />}
-                />
-                <Route
-                  path="/window:two-factor-verify"
-                  element={<LazyTwoFactorVerifyWindow />}
-                />
-              </Route>
-            </Route>
-          </Routes>
+            </Routes>
+          </Suspense>
         </HashRouter>
       </ContainerRoutes>
     </ProviderAuth>

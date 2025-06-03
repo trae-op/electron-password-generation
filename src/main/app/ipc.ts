@@ -29,7 +29,7 @@ export class AppIpc implements TIpcHandlerInterface {
       });
     });
 
-    app.on("render-process-gone", (event, webContents, details) => {
+    app.on("render-process-gone", (_event, _webContents, details) => {
       this.destroyProcess({
         error: details,
         message: `Exit Code: ${details.exitCode}, Reason: ${details.reason}`,
@@ -61,6 +61,10 @@ export class AppIpc implements TIpcHandlerInterface {
         getWindows<TWindows["preloadApp"]>("window:preload-app");
       if (preloadAppWindow !== undefined) {
         preloadAppWindow.hide();
+      }
+
+      if (window !== undefined) {
+        window.show();
       }
     });
 
