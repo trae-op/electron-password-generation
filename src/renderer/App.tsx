@@ -11,10 +11,7 @@ import {
   Provider as ProviderTwoFactor,
 } from "@ui-business/TwoFactor";
 import { Provider as ProviderUser } from "@ui-business/User";
-import {
-  Provider as ProviderMasterKey,
-  Form as FormMasterKey,
-} from "@ui-business/MasterKey";
+import { Provider as ProviderMasterKey } from "@ui-business/MasterKey";
 import { MainLayout } from "@layouts/Main";
 import { FormResourcesLayout } from "@layouts/FormResources";
 import { Confirm as ConfirmDeleteResource } from "@ui-business/DeleteResource";
@@ -32,6 +29,9 @@ const LazyAddResourceWindow = lazy(
 );
 
 const LazyUpdaterWindow = lazy(() => import("./windows/updater/Updater"));
+const LazyMasterKeyFormWindow = lazy(
+  () => import("./windows/masterKey/MasterKeyForm")
+);
 
 export const App = () => {
   return (
@@ -89,7 +89,7 @@ export const App = () => {
                 path="/window:master-key"
                 element={
                   <ProviderMasterKey>
-                    <FormMasterKey />
+                    <LazyMasterKeyFormWindow />
                   </ProviderMasterKey>
                 }
               />
