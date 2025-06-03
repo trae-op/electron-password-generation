@@ -10,7 +10,6 @@ import { Provider as ProviderUser } from "@ui-business/User";
 import { Provider as ProviderMasterKey } from "@ui-business/MasterKey";
 import { MainLayout } from "@layouts/Main";
 import { FormResourcesLayout } from "@layouts/FormResources";
-import { Confirm as ConfirmDeleteResource } from "@ui-business/DeleteResource";
 import { PublicRoute } from "@ui-composites/PublicRoute";
 import { PrivateRoute } from "@ui-composites/PrivateRoute";
 
@@ -31,6 +30,9 @@ const LazyMasterKeyFormWindow = lazy(
 const LazyTwoFactorQRWindow = lazy(() => import("./windows/twoFactor/QR"));
 const LazyTwoFactorVerifyWindow = lazy(
   () => import("./windows/twoFactor/Verify")
+);
+const LazyConfirmDeleteResourceWindow = lazy(
+  () => import("./windows/confirmDeleteResource/ConfirmDeleteResource")
 );
 
 export const App = () => {
@@ -70,7 +72,7 @@ export const App = () => {
 
               <Route
                 path="/window/resource/delete/:id"
-                element={<ConfirmDeleteResource />}
+                element={<LazyConfirmDeleteResourceWindow />}
               />
 
               <Route
