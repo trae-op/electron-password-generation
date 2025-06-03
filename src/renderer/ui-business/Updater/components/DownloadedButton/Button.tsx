@@ -15,6 +15,7 @@ export const DownloadedButton = forwardRef(
     return (
       <Component onClick={handleUpdate} ref={ref} {...otherProps}>
         {children}
+        {` v${version}`}
       </Component>
     );
   }

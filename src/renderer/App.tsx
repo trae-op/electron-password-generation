@@ -1,3 +1,4 @@
+import { lazy } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import {
   SignIn,
@@ -9,7 +10,6 @@ import {
   TwoFactorVerifyWindow,
   Provider as ProviderTwoFactor,
 } from "@ui-business/TwoFactor";
-import { Window as Update } from "@ui-business/Updater";
 import { Provider as ProviderUser } from "@ui-business/User";
 import {
   Provider as ProviderMasterKey,
@@ -17,12 +17,21 @@ import {
 } from "@ui-business/MasterKey";
 import { MainLayout } from "@layouts/Main";
 import { FormResourcesLayout } from "@layouts/FormResources";
-import { Home } from "@windows/home";
-import { Update as UpdateResource } from "@windows/updateResource";
-import { Add as AddResource } from "@windows/addResource";
 import { Confirm as ConfirmDeleteResource } from "@ui-business/DeleteResource";
 import { PublicRoute } from "@ui-composites/PublicRoute";
 import { PrivateRoute } from "@ui-composites/PrivateRoute";
+
+const LazyHomeWindow = lazy(() => import("./windows/home/Home"));
+
+const LazyUpdateResourceWindow = lazy(
+  () => import("./windows/updateResource/UpdateResource")
+);
+
+const LazyAddResourceWindow = lazy(
+  () => import("./windows/addResource/AddResource")
+);
+
+const LazyUpdaterWindow = lazy(() => import("./windows/updater/Updater"));
 
 export const App = () => {
   return (
@@ -41,7 +50,7 @@ export const App = () => {
                   element={
                     <ProviderUser>
                       <ProviderMasterKey>
-                        <Home />
+                        <LazyHomeWindow />
                       </ProviderMasterKey>
                     </ProviderUser>
                   }
@@ -49,10 +58,13 @@ export const App = () => {
               </Route>
 
               <Route element={<FormResourcesLayout />}>
-                <Route path="/window/resource/add" element={<AddResource />} />
+                <Route
+                  path="/window/resource/add"
+                  element={<LazyAddResourceWindow />}
+                />
                 <Route
                   path="/window/resource/update/:id"
-                  element={<UpdateResource />}
+                  element={<LazyUpdateResourceWindow />}
                 />
               </Route>
 
@@ -61,7 +73,10 @@ export const App = () => {
                 element={<ConfirmDeleteResource />}
               />
 
-              <Route path="/window:update-app" element={<Update />} />
+              <Route
+                path="/window:update-app"
+                element={<LazyUpdaterWindow />}
+              />
               <Route
                 path="/window:two-factor-qa"
                 element={
