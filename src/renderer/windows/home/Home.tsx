@@ -5,7 +5,11 @@ import ListItemButton, {
 import IconButton from "@mui/material/IconButton";
 import HttpsIcon from "@mui/icons-material/Https";
 import NoEncryptionGmailerrorredIcon from "@mui/icons-material/NoEncryptionGmailerrorred";
-import { UserPopover, ContextUserPopover } from "@ui-business/User";
+import {
+  UserPopover,
+  ContextUserPopover,
+  Provider as ProviderUser,
+} from "@ui-business/User";
 import { LogoutButton } from "@ui-business/AuthSocialNetwork";
 import {
   Items as Resources,
@@ -14,6 +18,7 @@ import {
 import {
   useControlContext as useControlContextMasterKey,
   useIpc as useIpcMasterKey,
+  Provider as ProviderMasterKey,
 } from "@ui-business/MasterKey";
 import {
   AddButton as AddResourceButton,
@@ -24,8 +29,6 @@ import {
   Context as ContextUpdater,
   DownloadedButton,
 } from "@ui-business/Updater";
-import { Provider as ProviderUser } from "@ui-business/User";
-import { Provider as ProviderMasterKey } from "@ui-business/MasterKey";
 
 const Home = () => {
   useIpcMasterKey();
