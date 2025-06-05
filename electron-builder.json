@@ -39,7 +39,7 @@
     {
       "provider": "github",
       "owner": "trae-op",
-      "repo": "update-app-electron-js",
+      "repo": "electron-password-generation",
       "releaseType": "release"
     }
   ]
