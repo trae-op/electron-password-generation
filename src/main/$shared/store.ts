@@ -1,7 +1,12 @@
+import { AxiosResponse } from "axios";
 import ElectronStorage from "electron-store";
 
 type TStore = {
   updateProcess: boolean;
+};
+
+type TCacheResponse = {
+  [key: string]: AxiosResponse<any>;
 };
 
 type TElectronStorage = {
@@ -9,6 +14,7 @@ type TElectronStorage = {
   userId: string;
   twoFactorSecret: string;
   masterKey: string;
+  response: TCacheResponse;
 };
 
 const electronStorage = new ElectronStorage<TElectronStorage>();
