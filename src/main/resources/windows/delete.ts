@@ -7,8 +7,8 @@ import { TWindowManager } from "../../@core/types/window-manager.js";
   isCache: true,
   options: {
     alwaysOnTop: true,
-    width: 330,
-    height: 170,
+    width: 350,
+    height: 190,
   },
 })
 export class DeleteWindow implements TWindowManager {
