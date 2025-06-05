@@ -72,7 +72,7 @@ export const messages = {
 };
 
 export const publishOptions = {
-  repo: "update-app-electron-js",
+  repo: "electron-password-generation",
   owner: "trae-op",
 };
 
