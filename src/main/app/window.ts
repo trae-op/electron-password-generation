@@ -11,7 +11,7 @@ import { ControlUpdateWindowsPlatformService } from "../updater/services/windows
 import { TrayService } from "../tray/service.js";
 import { destroyWindows } from "../@core/control-window/destroy.js";
 import { ipcWebContentsSend } from "../$shared/utils.js";
-import { menu } from "../config.js";
+import { menu, restApi } from "../config.js";
 
 @WindowManager<TWindows["main"]>({
   hash: "window:main",
@@ -49,7 +49,7 @@ export class AppWindow implements TWindowManager {
   onDidFinishLoad(window: BrowserWindow): void {
     this.buildMenu(window);
     this.buildTray(window);
-    this.getUser(window);
+    this.checkUser(window);
 
     const userId = getElectronStorage("userId");
     const authToken = getElectronStorage("authToken");
@@ -59,7 +59,7 @@ export class AppWindow implements TWindowManager {
     }
   }
 
-  private async getUser(window: BrowserWindow) {
+  private async checkUser(window: BrowserWindow) {
     const userId = getElectronStorage("userId");
     const twoFactorSecret = getElectronStorage("twoFactorSecret");
     const user = userId ? await this.userService.byId(userId) : undefined;
@@ -69,12 +69,34 @@ export class AppWindow implements TWindowManager {
       user.isTwoFactorEnabled &&
       user.twoFactorSecret === twoFactorSecret
     ) {
-      ipcWebContentsSend("authSocialNetwork", window.webContents, {
+      ipcWebContentsSend("statusAuthSocialNetwork", window.webContents, {
         isAuthenticated: Boolean(user),
       });
     } else {
       this.appService.logout(window);
     }
+
+    if (this.isCacheAuthenticated(userId)) {
+      ipcWebContentsSend("authSocialNetwork", window.webContents, {
+        isAuthenticated: this.isCacheAuthenticated(userId),
+      });
+    } else {
+      this.appService.logout(window);
+    }
+  }
+
+  private isCacheAuthenticated(userId: string | undefined): boolean {
+    const cacheResponse = getElectronStorage("response");
+    const cacheUser =
+      cacheResponse !== undefined &&
+      userId !== undefined &&
+      cacheResponse[
+        `${restApi.urls.base}${restApi.urls.baseApi}${
+          restApi.urls.user.base
+        }${restApi.urls.user.byId(userId)}`
+      ] !== undefined;
+
+    return Boolean(cacheUser);
   }
 
   private buildTray(window: BrowserWindow): void {

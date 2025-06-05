@@ -42,6 +42,7 @@ type TEventPayloadReceive = {
   openUpdateApp: TCallbackOpenUpdateWindow;
   twoFactorQA: TCallbackTwoFactorQRWindow;
   authSocialNetwork: TCallbackAuthSocialNetworkWindow;
+  statusAuthSocialNetwork: TCallbackAuthSocialNetworkWindow;
   twoFactorCodeVerify: undefined;
   checkUser: TCallbackUser;
   resources: TCallbackResources;
@@ -61,6 +62,9 @@ type TReceive = {
   ) => TUnsubscribeFunction;
   subscribeWindowAuthSocialNetwork: (
     callback: (payload: TEventPayloadReceive["authSocialNetwork"]) => void
+  ) => TUnsubscribeFunction;
+  subscribeWindowStatusAuthSocialNetwork: (
+    callback: (payload: TEventPayloadReceive["statusAuthSocialNetwork"]) => void
   ) => TUnsubscribeFunction;
   subscribeWindowSendTwoFactorCodeVerify: (
     callback: () => void

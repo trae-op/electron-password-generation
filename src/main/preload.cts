@@ -18,6 +18,10 @@ electron.contextBridge.exposeInMainWorld("electron", {
       ipcOn("authSocialNetwork", (payload) => {
         callback(payload);
       }),
+    subscribeWindowStatusAuthSocialNetwork: (callback) =>
+      ipcOn("statusAuthSocialNetwork", (payload) => {
+        callback(payload);
+      }),
     subscribeCheckUser: (callback) =>
       ipcOn("checkUser", (payload) => {
         callback(payload);

@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import ElectronStorage from "electron-store";
 
 type TStore = {
@@ -6,7 +5,7 @@ type TStore = {
 };
 
 type TCacheResponse = {
-  [key: string]: AxiosResponse<any>;
+  [key: string]: any | undefined;
 };
 
 type TElectronStorage = {

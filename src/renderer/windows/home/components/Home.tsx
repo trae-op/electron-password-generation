@@ -32,6 +32,7 @@ import {
 } from "@ui-business/Updater";
 import { TopPanel } from "@layouts/TopPanel";
 import { Container as ContainerAppVersion } from "@ui-composites/AppVersion";
+import { PreloadStatusTopPanel } from "./PreloadStatusTopPanel";
 
 const Home = () => {
   useIpcMasterKey();
@@ -61,7 +62,14 @@ const Home = () => {
           variant="subtitle2"
           component="span"
         />
-        <Stack spacing={1} alignItems="flex-end" sx={{ width: "100%" }}>
+        <Stack
+          spacing={1}
+          direction="row"
+          justifyContent="flex-end"
+          alignItems="center"
+          sx={{ width: "100%" }}
+        >
+          <PreloadStatusTopPanel />
           <ContextUserPopover.Provider
             value={{
               isNewVersionApp: value.status === "update-downloaded",

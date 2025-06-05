@@ -48,7 +48,7 @@ export class AuthSocialNetworkWindow implements TWindowManager {
   }
 
   onWillRedirect(
-    event: Event<WebContentsWillRedirectEventParams>,
+    _: Event<WebContentsWillRedirectEventParams>,
     url: string,
     window: BrowserWindow
   ): void {

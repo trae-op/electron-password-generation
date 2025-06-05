@@ -3,7 +3,9 @@ import axios, {
   type AxiosInstance,
   type AxiosResponse,
 } from "axios";
+import merge from "lodash.merge";
 import { Injectable } from "../@core/decorators/injectable.js";
+import { setElectronStorage, getElectronStorage } from "../$shared/store.js";
 import { restApi } from "../config.js";
 import type { ApiResponse, RequestOptions } from "./types.js";
 
@@ -69,9 +71,32 @@ export class RestApiService {
         endpoint,
         options
       );
+
+      this.setResponseElectronStorage(endpoint, response);
+
       return this.handleResponse<T>(response);
     } catch (error: any) {
       return this.handleError(error as AxiosError);
+    }
+  }
+
+  private setResponseElectronStorage(
+    endpoint: string,
+    response: AxiosResponse<any, any>
+  ) {
+    if (response.status >= 200 && response.status < 300) {
+      const cacheResponse = getElectronStorage("response");
+
+      setElectronStorage(
+        "response",
+        cacheResponse !== undefined
+          ? merge(cacheResponse, {
+              [endpoint]: response.data,
+            })
+          : {
+              [endpoint]: response.data,
+            }
+      );
     }
   }
 
