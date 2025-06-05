@@ -31,8 +31,6 @@ export class UserService {
       }
     );
 
-    console.log("byId response", response);
-
     if (response.error !== undefined) {
       return;
     }

@@ -10,9 +10,5 @@ export const Container = memo(({ ...other }: TPropsContainer) => {
     return null;
   }
 
-  return (
-    <Typography variant="h5" component="div" {...other}>
-      v{version}
-    </Typography>
-  );
+  return <Typography {...other}>Current v{version}</Typography>;
 });

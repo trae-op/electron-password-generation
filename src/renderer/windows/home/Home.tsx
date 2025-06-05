@@ -3,6 +3,7 @@ import ListItemButton, {
   ListItemButtonProps,
 } from "@mui/material/ListItemButton";
 import IconButton from "@mui/material/IconButton";
+import { grey } from "@mui/material/colors";
 import HttpsIcon from "@mui/icons-material/Https";
 import NoEncryptionGmailerrorredIcon from "@mui/icons-material/NoEncryptionGmailerrorred";
 import {
@@ -29,6 +30,8 @@ import {
   Context as ContextUpdater,
   DownloadedButton,
 } from "@ui-business/Updater";
+import { TopPanel } from "@layouts/TopPanel";
+import { Container as ContainerAppVersion } from "@ui-composites/AppVersion";
 
 const Home = () => {
   useIpcMasterKey();
@@ -40,71 +43,87 @@ const Home = () => {
 
   return (
     <ProviderUser>
-      <ProviderMasterKey>
-        <ContextUserPopover.Provider
-          value={{
-            isNewVersionApp: value.status === "update-downloaded",
-            renderButtonLogout: (
-              <LogoutButton<ListItemButtonProps> component={ListItemButton}>
-                Logout
-              </LogoutButton>
-            ),
-            renderButtonUpdateApp: (
-              <ContextUpdater.Provider value={value}>
-                <DownloadedButton<ListItemButtonProps>
-                  component={ListItemButton}
-                >
-                  Update
-                </DownloadedButton>
-              </ContextUpdater.Provider>
-            ),
-          }}
-        >
-          <UserPopover />
-          <Stack
-            spacing={2}
-            direction="row"
-            sx={{ flexWrap: "wrap" }}
-            useFlexGap
+      <TopPanel
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          paddingTop: 0.5,
+          paddingBottom: 0.5,
+          paddingRight: 1,
+          paddingLeft: 1,
+          backgroundColor: grey[900],
+        }}
+      >
+        <ContainerAppVersion
+          sx={{ width: "100%" }}
+          variant="subtitle2"
+          component="span"
+        />
+        <Stack spacing={1} alignItems="flex-end" sx={{ width: "100%" }}>
+          <ContextUserPopover.Provider
+            value={{
+              isNewVersionApp: value.status === "update-downloaded",
+              renderButtonLogout: (
+                <LogoutButton<ListItemButtonProps> component={ListItemButton}>
+                  Logout
+                </LogoutButton>
+              ),
+              renderButtonUpdateApp: (
+                <ContextUpdater.Provider value={value}>
+                  <DownloadedButton<ListItemButtonProps>
+                    component={ListItemButton}
+                  >
+                    Update
+                  </DownloadedButton>
+                </ContextUpdater.Provider>
+              ),
+            }}
           >
-            <ProviderResources isMasterKey={isMasterKey}>
-              <Resources />
-            </ProviderResources>
-          </Stack>
+            <UserPopover />
+          </ContextUserPopover.Provider>
+        </Stack>
+      </TopPanel>
+      <ProviderMasterKey>
+        <Stack spacing={2} direction="row" sx={{ flexWrap: "wrap" }} useFlexGap>
+          <ProviderResources isMasterKey={isMasterKey}>
+            <Resources />
+          </ProviderResources>
+        </Stack>
 
-          {!isMasterKey ? (
+        {!isMasterKey ? (
+          <IconButton
+            sx={{
+              position: "fixed",
+              bottom: 10,
+              right: 10,
+            }}
+            onClick={handleKey}
+          >
+            <HttpsIcon fontSize="large" />
+          </IconButton>
+        ) : (
+          <ProviderAddResourceButton>
             <IconButton
+              sx={{
+                position: "fixed",
+                bottom: 10,
+                right: 70,
+              }}
+              onClick={handleKey}
+            >
+              <NoEncryptionGmailerrorredIcon fontSize="large" />
+            </IconButton>
+            <AddResourceButton
               sx={{
                 position: "fixed",
                 bottom: 10,
                 right: 10,
               }}
-              onClick={handleKey}
-            >
-              <HttpsIcon fontSize="large" />
-            </IconButton>
-          ) : (
-            <ProviderAddResourceButton>
-              <IconButton
-                sx={{
-                  position: "fixed",
-                  bottom: 10,
-                  right: 70,
-                }}
-                onClick={handleKey}
-              >
-                <NoEncryptionGmailerrorredIcon fontSize="large" />
-              </IconButton>
-              <AddResourceButton
-                sx={{
-                  position: "fixed",
-                  bottom: 10,
-                  right: 10,
-                }}
-              />
-            </ProviderAddResourceButton>
-          )}
-        </ContextUserPopover.Provider>
+            />
+          </ProviderAddResourceButton>
+        )}
       </ProviderMasterKey>
     </ProviderUser>
   );

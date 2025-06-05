@@ -53,11 +53,6 @@ export const UserPopover = () => {
   return (
     <>
       <IconButton
-        sx={{
-          position: "absolute",
-          top: 10,
-          right: 10,
-        }}
         size="small"
         onClick={handleClick}
         aria-describedby={id}
@@ -72,7 +67,7 @@ export const UserPopover = () => {
           variant={isNewVersionApp ? "dot" : "standard"}
         >
           <Avatar
-            sx={{ width: 30, height: 30 }}
+            sx={{ width: 28, height: 28 }}
             alt="profile"
             src={user.avatar || ""}
           />
