@@ -87,7 +87,7 @@ export function createWindow<N extends string>({
   if (!loadURL && isDev) {
     newWindow.loadURL(
       `http://localhost:${process.env.LOCALHOST_ELECTRON_SERVER_PORT}${
-        hash !== undefined ? `#/${hash}` : ""
+        hash !== undefined ? `#${hash}` : ""
       }`
     );
   }
