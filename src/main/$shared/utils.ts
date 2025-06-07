@@ -4,8 +4,6 @@ import {
   type WebContents,
   type IpcMainEvent,
 } from "electron";
-import { pathToFileURL } from "url";
-import { getUIPath } from "./pathResolver.js";
 import { windows } from "../config.js";
 
 export function isDev(): boolean {
@@ -46,6 +44,13 @@ export function ipcMainOn<Key extends keyof TEventPayloadSend>(
   });
 }
 
+function containsAnyIdentifier(
+  fullUrl: string,
+  identifiers: string[]
+): boolean {
+  return identifiers.some((identifier) => fullUrl.includes(identifier));
+}
+
 export function validateEventFrame(frame: WebFrameMain | null) {
   if (frame === null) {
     throw new Error("Invalid frame: Frame is null");
@@ -60,12 +65,10 @@ export function validateEventFrame(frame: WebFrameMain | null) {
     return;
   }
 
-  const urls = Object.values(windows).map((allowedUrl) =>
-    decodeURIComponent(pathToFileURL(getUIPath() + "#" + allowedUrl).toString())
-  );
+  const isPresent = containsAnyIdentifier(frame.url, Object.values(windows));
 
   if (
-    (!urls.includes(frame.url) && url.hash !== "") ||
+    (!isPresent && url.hash !== "") ||
     (url.protocol !== "file:" && url.hash === "")
   ) {
     throw new Error(`The event is from an unauthorized frame: ${frame.url}`);
