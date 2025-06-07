@@ -47,7 +47,6 @@ export class AppWindow implements TWindowManager {
   }
 
   onDidFinishLoad(window: BrowserWindow): void {
-    console.log("onDidFinishLoad");
     this.buildMenu(window);
     this.buildTray(window);
     this.checkAccess(window);

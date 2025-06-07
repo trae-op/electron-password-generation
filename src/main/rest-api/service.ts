@@ -33,6 +33,8 @@ export class RestApiService {
   }
 
   private handleError(error: AxiosError): ApiResponse<any> {
+    console.log("handleError", error);
+
     if (error.response) {
       return {
         status: error.response.status,
@@ -84,6 +86,7 @@ export class RestApiService {
     endpoint: string,
     response: AxiosResponse<any, any>
   ) {
+    console.log("setResponseElectronStorage", endpoint, response.data);
     if (response.status >= 200 && response.status < 300) {
       const cacheResponse = getElectronStorage("response");
 

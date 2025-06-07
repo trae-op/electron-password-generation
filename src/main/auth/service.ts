@@ -29,8 +29,6 @@ export class AuthService {
       }
     );
 
-    console.log("access response", response);
-
     if (response.error !== undefined) {
       return;
     }
