@@ -9,7 +9,8 @@
       "./types/files",
       "./types/providers",
       "./types/user",
-      "./types/resource"
+      "./types/resource",
+      "./types/sync"
     ],
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "ES2020",

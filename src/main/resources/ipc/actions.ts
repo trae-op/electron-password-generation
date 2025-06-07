@@ -13,6 +13,7 @@ import { TEncryptedVault } from "../services/types.js";
 import { CacheWindowsService } from "../services/cacheWindows.js";
 import { getElectronStorage } from "../../$shared/store.js";
 import { TrayService } from "../../tray/service.js";
+import { restApi } from "../../config.js";
 
 @IpcHandler()
 export class ResourcesActionsIpc implements TIpcHandlerInterface {
@@ -153,15 +154,49 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
     });
   }
 
+  private cacheResources(): TResource[] | undefined {
+    let resources: TResource[] | undefined = undefined;
+    const cacheResponse = getElectronStorage("response");
+
+    if (cacheResponse !== undefined) {
+      resources =
+        cacheResponse[
+          `${restApi.urls.base}${restApi.urls.baseApi}${restApi.urls.resources.base}`
+        ];
+    }
+
+    if (resources !== undefined) {
+      return resources;
+    }
+
+    return undefined;
+  }
+
   private ipcGetResources(): void {
     ipcMainOn("resources", async (event) => {
-      const resources = await this.getResources();
+      const cacheResources = this.cacheResources();
+      const mainWindow = getWindows<TWindows["main"]>("window:main");
 
-      if (resources !== undefined) {
-        this.updateTrayMenu(resources.items);
+      if (mainWindow !== undefined) {
+        ipcWebContentsSend("sync", mainWindow.webContents, {
+          isResources: false,
+        });
+
+        if (cacheResources !== undefined) {
+          event.reply("resources", cacheResources);
+        }
+
+        const resources = await this.getResources();
+        if (resources !== undefined) {
+          this.updateTrayMenu(resources.items);
+        }
+
+        event.reply("resources", resources);
+
+        ipcWebContentsSend("sync", mainWindow.webContents, {
+          isResources: true,
+        });
       }
-
-      event.reply("resources", resources);
     });
   }
 

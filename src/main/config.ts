@@ -88,6 +88,7 @@ export const restApi = {
       generate: "/generate",
       authenticate: "/authenticate",
       enable: "/enable",
+      access: "/access",
     },
     user: {
       base: "/user",

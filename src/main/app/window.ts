@@ -5,7 +5,7 @@ import { MenuService } from "../menu/service.js";
 import { getElectronStorage } from "../$shared/store.js";
 import { SetFeedUrlService } from "../updater/services/windows/set-feed-url.js";
 import { CheckForUpdatesService } from "../updater/services/check-for-updates.js";
-import { UserService } from "../user/service.js";
+import { AuthService } from "../auth/service.js";
 import { AppService } from "./service.js";
 import { ControlUpdateWindowsPlatformService } from "../updater/services/windows/control-update.js";
 import { TrayService } from "../tray/service.js";
@@ -29,7 +29,7 @@ export class AppWindow implements TWindowManager {
   constructor(
     private menuService: MenuService,
     private trayService: TrayService,
-    private userService: UserService,
+    private authService: AuthService,
     private appService: AppService,
     private setFeedUrlService: SetFeedUrlService,
     private checkForUpdatesService: CheckForUpdatesService,
@@ -50,6 +50,7 @@ export class AppWindow implements TWindowManager {
     this.buildMenu(window);
     this.buildTray(window);
     this.checkUser(window);
+    this.setInterval(window);
 
     const userId = getElectronStorage("userId");
     const authToken = getElectronStorage("authToken");
@@ -59,44 +60,57 @@ export class AppWindow implements TWindowManager {
     }
   }
 
-  private async checkUser(window: BrowserWindow) {
-    const userId = getElectronStorage("userId");
-    const twoFactorSecret = getElectronStorage("twoFactorSecret");
-    const user = userId ? await this.userService.byId(userId) : undefined;
+  private setInterval(window: BrowserWindow) {
+    const interval = setInterval(async () => {
+      try {
+        ipcWebContentsSend("sync", window.webContents, {
+          isAuthenticated: false,
+        });
 
-    if (
-      user !== undefined &&
-      user.isTwoFactorEnabled &&
-      user.twoFactorSecret === twoFactorSecret
-    ) {
-      ipcWebContentsSend("statusAuthSocialNetwork", window.webContents, {
-        isAuthenticated: Boolean(user),
-      });
-    } else {
-      this.appService.logout(window);
-    }
+        const response = await this.authService.access();
 
-    if (this.isCacheAuthenticated(userId)) {
-      ipcWebContentsSend("authSocialNetwork", window.webContents, {
-        isAuthenticated: this.isCacheAuthenticated(userId),
-      });
-    } else {
-      this.appService.logout(window);
-    }
+        if (response !== undefined) {
+          ipcWebContentsSend("sync", window.webContents, {
+            isAuthenticated: response.ok,
+          });
+        }
+      } catch (error) {
+        ipcWebContentsSend("sync", window.webContents, {
+          isAuthenticated: true,
+        });
+        this.appService.logout(window);
+      }
+
+      const authToken = getElectronStorage("authToken");
+      if (authToken === undefined) {
+        clearInterval(interval);
+      }
+    }, 10000);
   }
 
-  private isCacheAuthenticated(userId: string | undefined): boolean {
-    const cacheResponse = getElectronStorage("response");
-    const cacheUser =
-      cacheResponse !== undefined &&
-      userId !== undefined &&
-      cacheResponse[
-        `${restApi.urls.base}${restApi.urls.baseApi}${
-          restApi.urls.user.base
-        }${restApi.urls.user.byId(userId)}`
-      ] !== undefined;
+  private async checkUser(window: BrowserWindow) {
+    // const userId = getElectronStorage("userId");
+    // const twoFactorSecret = getElectronStorage("twoFactorSecret");
+    const response = await this.authService.access();
 
-    return Boolean(cacheUser);
+    if (response !== undefined) {
+      ipcWebContentsSend("sync", window.webContents, {
+        isAuthenticated: response.ok,
+      });
+      ipcWebContentsSend("authSocialNetwork", window.webContents, {
+        isAuthenticated: response.ok,
+      });
+    } else {
+      this.appService.logout(window);
+    }
+
+    // if (this.isCacheAuthenticated(userId)) {
+    //   ipcWebContentsSend("authSocialNetwork", window.webContents, {
+    //     isAuthenticated: this.isCacheAuthenticated(userId),
+    //   });
+    // } else {
+    //   this.appService.logout(window);
+    // }
   }
 
   private buildTray(window: BrowserWindow): void {

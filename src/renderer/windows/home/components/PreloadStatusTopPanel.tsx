@@ -1,10 +1,11 @@
-import { useControlContext as useControlContextAuthSocialNetwork } from "@ui-business/AuthSocialNetwork";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useControlContext, useIpc } from "@ui-business/Sync";
 
 export const PreloadStatusTopPanel = () => {
-  const { isStatusAuthenticated } = useControlContextAuthSocialNetwork();
+  useIpc();
+  const { isAuthenticated, isResources, isUser } = useControlContext();
 
-  if (isStatusAuthenticated) {
+  if (isResources && isUser && isAuthenticated) {
     return null;
   }
 

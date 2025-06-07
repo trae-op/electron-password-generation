@@ -1,34 +1,31 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import type { TPropsProvider } from "./types";
 import { Context, ContextActions } from "../context";
-import { TContext } from "../context/type";
 
 export const Provider = ({ children }: TPropsProvider) => {
-  const [isAuthenticated, setAuthenticated] =
-    useState<TContext["isAuthenticated"]>(undefined);
-
-  const logout = () => {
-    setAuthenticated(false);
-  };
+  const [isUser, setUser] = useState<boolean | undefined>(undefined);
+  const [isAuthenticated, setAuthenticated] = useState<boolean | undefined>(
+    undefined
+  );
+  const [isResources, setResources] = useState<boolean | undefined>(undefined);
 
   const value = useMemo(
     () => ({
+      isUser,
       isAuthenticated,
+      isResources,
     }),
-    [isAuthenticated]
+    [isUser, isAuthenticated, isResources]
   );
 
   const actions = useMemo(
     () => ({
+      setUser,
+      setResources,
       setAuthenticated,
-      logout,
     }),
-    [setAuthenticated, logout]
+    [setUser, setAuthenticated, setResources]
   );
-
-  useEffect(() => {
-    setAuthenticated(isAuthenticated);
-  }, []);
 
   return (
     <Context.Provider value={value}>

@@ -32,17 +32,17 @@ type TCallbackResources = {
 type TCallbackGetResource = {
   item: TResource | undefined;
 };
-
 type TCallbackMasterKey = {
   isMasterKey: boolean;
 };
+type TCallbackSync = TSync;
 
 type TEventPayloadReceive = {
   updateApp: TUpdateData;
   openUpdateApp: TCallbackOpenUpdateWindow;
   twoFactorQA: TCallbackTwoFactorQRWindow;
   authSocialNetwork: TCallbackAuthSocialNetworkWindow;
-  statusAuthSocialNetwork: TCallbackAuthSocialNetworkWindow;
+  sync: TCallbackSync;
   twoFactorCodeVerify: undefined;
   checkUser: TCallbackUser;
   resources: TCallbackResources;
@@ -63,8 +63,8 @@ type TReceive = {
   subscribeWindowAuthSocialNetwork: (
     callback: (payload: TEventPayloadReceive["authSocialNetwork"]) => void
   ) => TUnsubscribeFunction;
-  subscribeWindowStatusAuthSocialNetwork: (
-    callback: (payload: TEventPayloadReceive["statusAuthSocialNetwork"]) => void
+  subscribeSync: (
+    callback: (payload: TEventPayloadReceive["sync"]) => void
   ) => TUnsubscribeFunction;
   subscribeWindowSendTwoFactorCodeVerify: (
     callback: () => void

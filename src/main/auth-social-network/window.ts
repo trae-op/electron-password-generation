@@ -26,27 +26,6 @@ export class AuthSocialNetworkWindow implements TWindowManager {
     private twoFactorWindowsFactoryService: TwoFactorWindowsFactoryService
   ) {}
 
-  private setToStore(
-    nameWindow: TWindows["twoFactorQA"] | TWindows["twoFactorVerify"],
-    window: BrowserWindow,
-    searchParams: URLSearchParams
-  ): void {
-    window.close();
-    const token = searchParams.get("token");
-    const userId = searchParams.get("userId");
-
-    if (token !== null && userId !== null) {
-      setElectronStorage("authToken", token);
-      setElectronStorage("userId", userId);
-      this.twoFactorWindowsFactoryService.createWindow(nameWindow);
-    } else {
-      dialog.showMessageBox({
-        title: messages.auth.errorTokenUserMissing,
-        message: `Token=${token}\nUserId: ${userId}`,
-      });
-    }
-  }
-
   onWillRedirect(
     _: Event<WebContentsWillRedirectEventParams>,
     url: string,
@@ -82,6 +61,27 @@ export class AuthSocialNetworkWindow implements TWindowManager {
       default: {
         return;
       }
+    }
+  }
+
+  private setToStore(
+    nameWindow: TWindows["twoFactorQA"] | TWindows["twoFactorVerify"],
+    window: BrowserWindow,
+    searchParams: URLSearchParams
+  ): void {
+    window.close();
+    const token = searchParams.get("token");
+    const userId = searchParams.get("userId");
+
+    if (token !== null && userId !== null) {
+      setElectronStorage("authToken", token);
+      setElectronStorage("userId", userId);
+      this.twoFactorWindowsFactoryService.createWindow(nameWindow);
+    } else {
+      dialog.showMessageBox({
+        title: messages.auth.errorTokenUserMissing,
+        message: `Token=${token}\nUserId: ${userId}`,
+      });
     }
   }
 }

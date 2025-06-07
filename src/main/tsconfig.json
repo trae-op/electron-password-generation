@@ -16,7 +16,8 @@
       "../../types/files",
       "../../types/providers",
       "../../types/user",
-      "../../types/resource"
+      "../../types/resource",
+      "../../types/sync"
     ]
   }
 }
