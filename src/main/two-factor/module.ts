@@ -6,9 +6,10 @@ import { TwoFactorWindowsFactoryService } from "./services/windows-factory.js";
 import { RestApiModule } from "../rest-api/module.js";
 import { TwoFactorRestApiService } from "./services/rest-api.js";
 import { UserModule } from "../user/module.js";
+import { AuthModule } from "../auth/module.js";
 
 @RgModule({
-  imports: [RestApiModule, UserModule],
+  imports: [RestApiModule, UserModule, AuthModule],
   ipc: [TwoFactorIpc],
   windows: [TwoFactorQAWindow, TwoFactorVerifyWindow],
   providers: [TwoFactorWindowsFactoryService, TwoFactorRestApiService],

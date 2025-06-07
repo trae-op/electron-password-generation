@@ -6,7 +6,6 @@ import { getElectronStorage } from "../$shared/store.js";
 import { SetFeedUrlService } from "../updater/services/windows/set-feed-url.js";
 import { CheckForUpdatesService } from "../updater/services/check-for-updates.js";
 import { AuthService } from "../auth/service.js";
-import { AppService } from "./service.js";
 import { ControlUpdateWindowsPlatformService } from "../updater/services/windows/control-update.js";
 import { TrayService } from "../tray/service.js";
 import { destroyWindows } from "../@core/control-window/destroy.js";
@@ -30,7 +29,6 @@ export class AppWindow implements TWindowManager {
     private menuService: MenuService,
     private trayService: TrayService,
     private authService: AuthService,
-    private appService: AppService,
     private setFeedUrlService: SetFeedUrlService,
     private checkForUpdatesService: CheckForUpdatesService,
     private controlUpdateWindowsPlatformService: ControlUpdateWindowsPlatformService
@@ -49,8 +47,8 @@ export class AppWindow implements TWindowManager {
   onDidFinishLoad(window: BrowserWindow): void {
     this.buildMenu(window);
     this.buildTray(window);
-    this.checkAccess(window);
-    this.setCheckAccessInterval(window);
+    this.checkAuthenticated(window);
+    this.authService.setCheckAccessInterval(window);
 
     const userId = getElectronStorage("userId");
     const authToken = getElectronStorage("authToken");
@@ -78,50 +76,20 @@ export class AppWindow implements TWindowManager {
     return undefined;
   }
 
-  private setCheckAccessInterval(window: BrowserWindow) {
-    const interval = setInterval(async () => {
-      const cacheAccess = this.cacheAccess();
-      try {
-        if (cacheAccess !== undefined) {
-          ipcWebContentsSend("sync", window.webContents, {
-            isAuthenticated: cacheAccess.ok,
-          });
-        }
-
-        ipcWebContentsSend("sync", window.webContents, {
-          isAuthenticated: false,
-        });
-
-        const response = await this.authService.access();
-
-        if (response !== undefined) {
-          ipcWebContentsSend("sync", window.webContents, {
-            isAuthenticated: response.ok,
-          });
-        }
-      } catch (error) {
-        ipcWebContentsSend("sync", window.webContents, {
-          isAuthenticated: true,
-        });
-        this.appService.logout(window);
-      }
-
-      const authToken = getElectronStorage("authToken");
-      if (authToken === undefined) {
-        clearInterval(interval);
-      }
-    }, 10000);
-  }
-
-  private async checkAccess(window: BrowserWindow) {
-    // const userId = getElectronStorage("userId");
-    // const twoFactorSecret = getElectronStorage("twoFactorSecret");
+  private async checkAuthenticated(window: BrowserWindow) {
     const cacheAccess = this.cacheAccess();
     if (cacheAccess !== undefined) {
       ipcWebContentsSend("sync", window.webContents, {
         isAuthenticated: cacheAccess.ok,
       });
+      ipcWebContentsSend("authSocialNetwork", window.webContents, {
+        isAuthenticated: cacheAccess.ok,
+      });
     }
+
+    ipcWebContentsSend("sync", window.webContents, {
+      isAuthenticated: false,
+    });
 
     const response = await this.authService.access();
 
@@ -129,20 +97,7 @@ export class AppWindow implements TWindowManager {
       ipcWebContentsSend("sync", window.webContents, {
         isAuthenticated: response.ok,
       });
-      ipcWebContentsSend("authSocialNetwork", window.webContents, {
-        isAuthenticated: response.ok,
-      });
-    } else {
-      this.appService.logout(window);
     }
-
-    // if (this.isCacheAuthenticated(userId)) {
-    //   ipcWebContentsSend("authSocialNetwork", window.webContents, {
-    //     isAuthenticated: this.isCacheAuthenticated(userId),
-    //   });
-    // } else {
-    //   this.appService.logout(window);
-    // }
   }
 
   private buildTray(window: BrowserWindow): void {

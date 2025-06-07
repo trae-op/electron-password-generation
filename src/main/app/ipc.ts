@@ -7,12 +7,16 @@ import type {
   TParamOnInit,
 } from "../@core/types/ipc-handler.js";
 import { AppService } from "./service.js";
+import { AuthService } from "../auth/service.js";
 import { messages } from "../config.js";
 import type { TDestroyProcess } from "./types.js";
 
 @IpcHandler()
 export class AppIpc implements TIpcHandlerInterface {
-  constructor(private appService: AppService) {
+  constructor(
+    private appService: AppService,
+    private authService: AuthService
+  ) {
     process.on("uncaughtException", (error) => {
       this.destroyProcess({
         error,
@@ -70,7 +74,7 @@ export class AppIpc implements TIpcHandlerInterface {
 
     ipcMainOn("logout", async () => {
       if (window !== undefined) {
-        this.appService.logout(window);
+        this.authService.logout(window);
       }
     });
   }

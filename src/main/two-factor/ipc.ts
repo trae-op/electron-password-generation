@@ -8,6 +8,7 @@ import { TwoFactorWindowsFactoryService } from "./services/windows-factory.js";
 import { TwoFactorRestApiService } from "./services/rest-api.js";
 import { getElectronStorage, setElectronStorage } from "../$shared/store.js";
 import { UserService } from "../user/service.js";
+import { AuthService } from "../auth/service.js";
 
 @IpcHandler()
 export class TwoFactorIpc {
@@ -17,7 +18,8 @@ export class TwoFactorIpc {
   constructor(
     private twoFactorWindowsFactoryService: TwoFactorWindowsFactoryService,
     private twoFactorRestApiService: TwoFactorRestApiService,
-    private userService: UserService
+    private userService: UserService,
+    private authService: AuthService
   ) {}
 
   onInit({ getWindow }: TParamOnInit<TNameWindows>): void {
@@ -86,6 +88,10 @@ export class TwoFactorIpc {
       ipcWebContentsSend("authSocialNetwork", mainWindow.webContents, {
         isAuthenticated: true,
       });
+      ipcWebContentsSend("sync", mainWindow.webContents, {
+        isAuthenticated: true,
+      });
+      this.authService.setCheckAccessInterval(mainWindow);
     }
   }
 

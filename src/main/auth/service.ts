@@ -1,8 +1,13 @@
+import { BrowserWindow } from "electron";
 import { type AxiosRequestConfig } from "axios";
 import { messages, restApi } from "../config.js";
 import { Injectable } from "../@core/decorators/injectable.js";
 import { RestApiService } from "../rest-api/service.js";
-import { getElectronStorage } from "../$shared/store.js";
+import {
+  deleteFromElectronStorage,
+  getElectronStorage,
+} from "../$shared/store.js";
+import { ipcWebContentsSend } from "../$shared/utils.js";
 
 @Injectable()
 export class AuthService {
@@ -34,5 +39,68 @@ export class AuthService {
     }
 
     return response.data;
+  }
+
+  setCheckAccessInterval(window: BrowserWindow) {
+    const interval = setInterval(async () => {
+      const cacheAccess = this.cacheAccess();
+      try {
+        if (cacheAccess !== undefined) {
+          ipcWebContentsSend("sync", window.webContents, {
+            isAuthenticated: cacheAccess.ok,
+          });
+        }
+
+        ipcWebContentsSend("sync", window.webContents, {
+          isAuthenticated: false,
+        });
+
+        const response = await this.access();
+
+        if (response !== undefined) {
+          ipcWebContentsSend("sync", window.webContents, {
+            isAuthenticated: response.ok,
+          });
+        }
+      } catch (error) {
+        ipcWebContentsSend("sync", window.webContents, {
+          isAuthenticated: true,
+        });
+        this.logout(window);
+      }
+
+      const authToken = getElectronStorage("authToken");
+      if (authToken === undefined) {
+        clearInterval(interval);
+      }
+    }, 10000);
+  }
+
+  private cacheAccess(): { ok: boolean } | undefined {
+    let access: { ok: boolean } | undefined = undefined;
+    const cacheResponse = getElectronStorage("response");
+
+    if (cacheResponse !== undefined) {
+      access =
+        cacheResponse[
+          `${restApi.urls.base}${restApi.urls.baseApi}${restApi.urls.auth.base}${restApi.urls.auth.access}`
+        ];
+    }
+
+    if (access !== undefined) {
+      return access;
+    }
+
+    return undefined;
+  }
+
+  logout(window: BrowserWindow) {
+    deleteFromElectronStorage("authToken");
+    deleteFromElectronStorage("response");
+    deleteFromElectronStorage("userId");
+    deleteFromElectronStorage("twoFactorSecret");
+    ipcWebContentsSend("authSocialNetwork", window.webContents, {
+      isAuthenticated: false,
+    });
   }
 }

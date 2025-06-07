@@ -24,14 +24,4 @@ export class AppService {
       app.dock.hide();
     }
   }
-
-  logout(window: BrowserWindow) {
-    deleteFromElectronStorage("authToken");
-    deleteFromElectronStorage("response");
-    deleteFromElectronStorage("userId");
-    deleteFromElectronStorage("twoFactorSecret");
-    ipcWebContentsSend("authSocialNetwork", window.webContents, {
-      isAuthenticated: false,
-    });
-  }
 }
