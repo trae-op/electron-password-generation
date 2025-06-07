@@ -47,10 +47,11 @@ export class AppWindow implements TWindowManager {
   }
 
   onDidFinishLoad(window: BrowserWindow): void {
+    console.log("onDidFinishLoad");
     this.buildMenu(window);
     this.buildTray(window);
-    this.checkUser(window);
-    this.setInterval(window);
+    this.checkAccess(window);
+    this.setCheckAccessInterval(window);
 
     const userId = getElectronStorage("userId");
     const authToken = getElectronStorage("authToken");
@@ -60,9 +61,34 @@ export class AppWindow implements TWindowManager {
     }
   }
 
-  private setInterval(window: BrowserWindow) {
+  private cacheAccess(): { ok: boolean } | undefined {
+    let access: { ok: boolean } | undefined = undefined;
+    const cacheResponse = getElectronStorage("response");
+
+    if (cacheResponse !== undefined) {
+      access =
+        cacheResponse[
+          `${restApi.urls.base}${restApi.urls.baseApi}${restApi.urls.auth.base}${restApi.urls.auth.access}`
+        ];
+    }
+
+    if (access !== undefined) {
+      return access;
+    }
+
+    return undefined;
+  }
+
+  private setCheckAccessInterval(window: BrowserWindow) {
     const interval = setInterval(async () => {
+      const cacheAccess = this.cacheAccess();
       try {
+        if (cacheAccess !== undefined) {
+          ipcWebContentsSend("sync", window.webContents, {
+            isAuthenticated: cacheAccess.ok,
+          });
+        }
+
         ipcWebContentsSend("sync", window.webContents, {
           isAuthenticated: false,
         });
@@ -88,9 +114,16 @@ export class AppWindow implements TWindowManager {
     }, 10000);
   }
 
-  private async checkUser(window: BrowserWindow) {
+  private async checkAccess(window: BrowserWindow) {
     // const userId = getElectronStorage("userId");
     // const twoFactorSecret = getElectronStorage("twoFactorSecret");
+    const cacheAccess = this.cacheAccess();
+    if (cacheAccess !== undefined) {
+      ipcWebContentsSend("sync", window.webContents, {
+        isAuthenticated: cacheAccess.ok,
+      });
+    }
+
     const response = await this.authService.access();
 
     if (response !== undefined) {
