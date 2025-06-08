@@ -3,10 +3,11 @@ import {
   AddButton as AddResourceButton,
   Provider as ProviderAddResourceButton,
 } from "@ui-business/AddResource";
+import { useControlContext as useControlContextSync } from "@ui-business/Sync";
 import { TPropsHomeChildren } from "./types";
 
 const AddResource = memo(({ isMasterKey }: TPropsHomeChildren) => {
-  console.log("AddResource isMasterKey", isMasterKey);
+  const { isAuthenticated } = useControlContextSync();
 
   if (!isMasterKey) {
     return null;
@@ -15,6 +16,7 @@ const AddResource = memo(({ isMasterKey }: TPropsHomeChildren) => {
   return (
     <ProviderAddResourceButton>
       <AddResourceButton
+        disabled={!isAuthenticated}
         sx={{
           position: "fixed",
           bottom: 10,

@@ -17,7 +17,7 @@ function arePropsEqual(oldProps: TPropsItem, newProps: TPropsItem): boolean {
 
 export const Item = memo(
   ({ name, id, handleUpdate, handleDelete, handleKey }: TPropsItem) => {
-    const { isMasterKey } = useControlContext();
+    const { isMasterKey, isDisabledActions } = useControlContext();
 
     return (
       <Card sx={{ minWidth: 170 }}>
@@ -33,18 +33,26 @@ export const Item = memo(
           }}
         >
           {!isMasterKey ? (
-            <IconButton onClick={handleKey}>
+            <IconButton disabled={isDisabledActions} onClick={handleKey}>
               <HttpsIcon fontSize="small" />
             </IconButton>
           ) : (
             <>
               <CopyKeyFormButton id={id + ""} />
-              <IconButton data-id={id} onClick={handleUpdate}>
+              <IconButton
+                disabled={isDisabledActions}
+                data-id={id}
+                onClick={handleUpdate}
+              >
                 <EditIcon fontSize="small" />
               </IconButton>
             </>
           )}
-          <IconButton data-id={id} onClick={handleDelete}>
+          <IconButton
+            disabled={isDisabledActions}
+            data-id={id}
+            onClick={handleDelete}
+          >
             <Delete fontSize="small" />
           </IconButton>
         </CardActions>

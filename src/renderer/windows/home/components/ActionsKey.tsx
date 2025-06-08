@@ -2,9 +2,11 @@ import { memo } from "react";
 import IconButton from "@mui/material/IconButton";
 import HttpsIcon from "@mui/icons-material/Https";
 import NoEncryptionGmailerrorredIcon from "@mui/icons-material/NoEncryptionGmailerrorred";
+import { useControlContext as useControlContextSync } from "@ui-business/Sync";
 import { TPropsHomeChildren } from "./types";
 
 const ActionsKey = memo(({ isMasterKey }: TPropsHomeChildren) => {
+  const { isAuthenticated } = useControlContextSync();
   const handleKey = () => {
     window.electron.send.windowMasterKey();
   };
@@ -12,6 +14,7 @@ const ActionsKey = memo(({ isMasterKey }: TPropsHomeChildren) => {
   if (!isMasterKey) {
     return (
       <IconButton
+        disabled={!isAuthenticated}
         sx={{
           position: "fixed",
           bottom: 10,
@@ -26,6 +29,7 @@ const ActionsKey = memo(({ isMasterKey }: TPropsHomeChildren) => {
 
   return (
     <IconButton
+      disabled={!isAuthenticated}
       sx={{
         position: "fixed",
         bottom: 10,

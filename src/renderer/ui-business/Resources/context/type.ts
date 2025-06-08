@@ -4,6 +4,7 @@ export type TContext = {
   list: TResource[] | undefined;
   isMasterKey?: boolean;
   copyKeyResourceId?: string;
+  isDisabledActions: boolean;
 };
 
 export type TContextActions = {

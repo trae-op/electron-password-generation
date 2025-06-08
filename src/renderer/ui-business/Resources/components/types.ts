@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 export type TPropsProvider = {
   children: ReactNode;
   isMasterKey?: boolean;
+  isDisabledActions?: boolean;
 };
 
 export type TPropsForm = {

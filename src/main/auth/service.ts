@@ -1,6 +1,6 @@
 import { BrowserWindow } from "electron";
 import { type AxiosRequestConfig } from "axios";
-import { messages, restApi } from "../config.js";
+import { restApi } from "../config.js";
 import { Injectable } from "../@core/decorators/injectable.js";
 import { RestApiService } from "../rest-api/service.js";
 import {
@@ -41,27 +41,31 @@ export class AuthService {
     return response.data;
   }
 
+  async checkAuthenticated(window: BrowserWindow) {
+    const cacheAccess = this.cacheAccess();
+    if (cacheAccess !== undefined) {
+      ipcWebContentsSend("sync", window.webContents, {
+        isAuthenticated: cacheAccess.ok,
+      });
+    }
+
+    ipcWebContentsSend("sync", window.webContents, {
+      isAuthenticated: false,
+    });
+
+    const response = await this.access();
+
+    if (response !== undefined) {
+      ipcWebContentsSend("sync", window.webContents, {
+        isAuthenticated: response.ok,
+      });
+    }
+  }
+
   setCheckAccessInterval(window: BrowserWindow) {
     const interval = setInterval(async () => {
-      const cacheAccess = this.cacheAccess();
       try {
-        if (cacheAccess !== undefined) {
-          ipcWebContentsSend("sync", window.webContents, {
-            isAuthenticated: cacheAccess.ok,
-          });
-        }
-
-        ipcWebContentsSend("sync", window.webContents, {
-          isAuthenticated: false,
-        });
-
-        const response = await this.access();
-
-        if (response !== undefined) {
-          ipcWebContentsSend("sync", window.webContents, {
-            isAuthenticated: response.ok,
-          });
-        }
+        await this.checkAuthenticated(window);
       } catch (error) {
         ipcWebContentsSend("sync", window.webContents, {
           isAuthenticated: true,
@@ -76,7 +80,7 @@ export class AuthService {
     }, 10000);
   }
 
-  private cacheAccess(): { ok: boolean } | undefined {
+  cacheAccess(): { ok: boolean } | undefined {
     let access: { ok: boolean } | undefined = undefined;
     const cacheResponse = getElectronStorage("response");
 

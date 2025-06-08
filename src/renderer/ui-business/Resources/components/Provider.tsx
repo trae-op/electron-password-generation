@@ -3,7 +3,11 @@ import isEqual from "lodash.isequal";
 import { Context, ContextActions } from "../context";
 import type { TPropsProvider } from "./types";
 
-export const Provider = ({ children, isMasterKey = false }: TPropsProvider) => {
+export const Provider = ({
+  children,
+  isMasterKey = false,
+  isDisabledActions = false,
+}: TPropsProvider) => {
   const [list, setList] = useState<TResource[] | undefined>(undefined);
   const [copyKeyResourceId, setCopyKeyResourceId] = useState<
     string | undefined
@@ -17,9 +21,10 @@ export const Provider = ({ children, isMasterKey = false }: TPropsProvider) => {
     () => ({
       list,
       isMasterKey,
+      isDisabledActions,
       copyKeyResourceId,
     }),
-    [list, isMasterKey, copyKeyResourceId]
+    [list, isMasterKey, copyKeyResourceId, isDisabledActions]
   );
 
   const actions = useMemo(

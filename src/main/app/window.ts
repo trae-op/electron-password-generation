@@ -10,7 +10,7 @@ import { ControlUpdateWindowsPlatformService } from "../updater/services/windows
 import { TrayService } from "../tray/service.js";
 import { destroyWindows } from "../@core/control-window/destroy.js";
 import { ipcWebContentsSend } from "../$shared/utils.js";
-import { menu, restApi } from "../config.js";
+import { menu } from "../config.js";
 
 @WindowManager<TWindows["main"]>({
   hash: "window:main",
@@ -58,45 +58,21 @@ export class AppWindow implements TWindowManager {
     }
   }
 
-  private cacheAccess(): { ok: boolean } | undefined {
-    let access: { ok: boolean } | undefined = undefined;
-    const cacheResponse = getElectronStorage("response");
-
-    if (cacheResponse !== undefined) {
-      access =
-        cacheResponse[
-          `${restApi.urls.base}${restApi.urls.baseApi}${restApi.urls.auth.base}${restApi.urls.auth.access}`
-        ];
-    }
-
-    if (access !== undefined) {
-      return access;
-    }
-
-    return undefined;
-  }
-
   private async checkAuthenticated(window: BrowserWindow) {
-    const cacheAccess = this.cacheAccess();
+    const cacheAccess = this.authService.cacheAccess();
     if (cacheAccess !== undefined) {
-      ipcWebContentsSend("sync", window.webContents, {
-        isAuthenticated: cacheAccess.ok,
-      });
       ipcWebContentsSend("authSocialNetwork", window.webContents, {
         isAuthenticated: cacheAccess.ok,
       });
     }
 
-    ipcWebContentsSend("sync", window.webContents, {
-      isAuthenticated: false,
-    });
-
-    const response = await this.authService.access();
-
-    if (response !== undefined) {
+    try {
+      await this.authService.checkAuthenticated(window);
+    } catch (error) {
       ipcWebContentsSend("sync", window.webContents, {
-        isAuthenticated: response.ok,
+        isAuthenticated: true,
       });
+      this.authService.logout(window);
     }
   }
 
