@@ -12,4 +12,5 @@ export interface ApiResponse<T> {
 
 export interface RequestOptions extends AxiosRequestConfig {
   params?: Record<string, any>;
+  isCache?: boolean;
 }

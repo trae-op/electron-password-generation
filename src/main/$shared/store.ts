@@ -4,11 +4,11 @@ type TStore = {
   updateProcess: boolean;
 };
 
-type TCacheResponse = {
+export type TCacheResponse = {
   [key: string]: any | undefined;
 };
 
-type TElectronStorage = {
+export type TElectronStorage = {
   authToken: string;
   userId: string;
   twoFactorSecret: string;

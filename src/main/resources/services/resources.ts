@@ -115,6 +115,7 @@ export class ResourcesService {
       `${restApi.urls.base}${restApi.urls.baseApi}${restApi.urls.resources.base}`,
       {
         headers: this.getAuthorization(),
+        isCache: true,
       }
     );
 

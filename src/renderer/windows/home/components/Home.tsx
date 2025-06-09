@@ -3,9 +3,9 @@ import { Provider as ProviderUser } from "@ui-business/User";
 import {
   useIpc as useIpcMasterKey,
   Provider as ProviderMasterKey,
+  useControlContext as useControlContextMasterKey,
 } from "@ui-business/MasterKey";
 import { Provider as ProviderSync } from "@ui-business/Sync";
-import { useControlContext as useControlContextMasterKey } from "@ui-business/MasterKey";
 import { LoadingSpinner } from "@components/LoadingSpinner";
 
 const LazyTopPanel = lazy(() => import("./TopPanel"));

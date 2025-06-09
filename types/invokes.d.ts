@@ -22,9 +22,12 @@ type TPostMasterKey = {
   key: string;
 };
 
+type OptionalProps<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>> &
+  Partial<Pick<T, K>>;
+
 type TEventSendInvoke = {
   getVersion: string;
-  putResource: TSendResource;
+  putResource: OptionalProps<TSendResource, "key">;
   postResource: TSendResource;
   deleteResource: TDeleteResource;
   postMasterKey: TPostMasterKey;

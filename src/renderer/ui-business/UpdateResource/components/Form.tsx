@@ -7,11 +7,18 @@ import { SubmitButton } from "./SubmitButton";
 import type { TPropsForm } from "./types";
 import { useControl } from "../hooks/useControl";
 import { useControlContext } from "../hooks/useControlContext";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 
 export const Form = memo(({ renderGenerateCharacters }: TPropsForm) => {
   useIpc();
   const { result, name } = useControlContext();
-  const { handleTextInputChange, submitFormAction } = useControl();
+  const {
+    handleTextInputChange,
+    submitFormAction,
+    handleCheckboxChange,
+    isUpdateKey,
+  } = useControl();
   const [_, formAction] = useActionState(submitFormAction, undefined);
 
   if (result === undefined) {
@@ -30,7 +37,14 @@ export const Form = memo(({ renderGenerateCharacters }: TPropsForm) => {
           fullWidth
         />
 
-        {renderGenerateCharacters}
+        <FormControlLabel
+          control={
+            <Checkbox onChange={handleCheckboxChange} name="update-key" />
+          }
+          label="Update key"
+        />
+
+        {isUpdateKey && renderGenerateCharacters}
 
         <SubmitButton />
       </Stack>

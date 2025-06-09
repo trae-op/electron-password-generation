@@ -3,9 +3,12 @@ import axios, {
   type AxiosInstance,
   type AxiosResponse,
 } from "axios";
-import merge from "lodash.merge";
 import { Injectable } from "../@core/decorators/injectable.js";
-import { setElectronStorage, getElectronStorage } from "../$shared/store.js";
+import {
+  setElectronStorage,
+  getElectronStorage,
+  TCacheResponse,
+} from "../$shared/store.js";
 import { restApi } from "../config.js";
 import type { ApiResponse, RequestOptions } from "./types.js";
 
@@ -72,7 +75,9 @@ export class RestApiService {
         options
       );
 
-      this.setResponseElectronStorage(endpoint, response);
+      if (options?.isCache) {
+        this.setResponseElectronStorage(endpoint, response);
+      }
 
       return this.handleResponse<T>(response);
     } catch (error: any) {
@@ -80,23 +85,78 @@ export class RestApiService {
     }
   }
 
+  merge(data: TCacheResponse): TCacheResponse | undefined {
+    let cacheStore = getElectronStorage("response");
+    if (!cacheStore) {
+      cacheStore = {};
+    }
+
+    for (const key in data) {
+      if (Object.prototype.hasOwnProperty.call(data, key)) {
+        const incomingValue = data[key];
+        const existingValue = cacheStore[key];
+
+        const isIncomingArrayOfCacheableItems =
+          Array.isArray(incomingValue) &&
+          incomingValue.every(
+            (item) => typeof item === "object" && item !== null && "id" in item
+          );
+
+        if (isIncomingArrayOfCacheableItems) {
+          const existingArray: any[] = Array.isArray(existingValue)
+            ? [...existingValue]
+            : [];
+          const updatedArray: any[] = [];
+
+          incomingValue.forEach((incomingItem: any) => {
+            const existingItemIndex = existingArray.findIndex(
+              (existingItem: any) => existingItem.id === incomingItem.id
+            );
+
+            if (existingItemIndex !== -1) {
+              updatedArray.push({
+                ...existingArray[existingItemIndex],
+                ...incomingItem,
+              });
+
+              existingArray.splice(existingItemIndex, 1);
+            } else {
+              updatedArray.push(incomingItem);
+            }
+          });
+
+          cacheStore[key] = updatedArray;
+        } else if (
+          typeof incomingValue === "object" &&
+          incomingValue !== null &&
+          !Array.isArray(incomingValue)
+        ) {
+          cacheStore[key] = {
+            ...(typeof existingValue === "object" && existingValue !== null
+              ? existingValue
+              : {}),
+            ...incomingValue,
+          };
+        } else {
+          cacheStore[key] = incomingValue;
+        }
+      }
+    }
+
+    return cacheStore;
+  }
+
   private setResponseElectronStorage(
     endpoint: string,
     response: AxiosResponse<any, any>
   ) {
     if (response.status >= 200 && response.status < 300) {
-      const cacheResponse = getElectronStorage("response");
-
-      setElectronStorage(
-        "response",
-        cacheResponse !== undefined
-          ? merge(cacheResponse, {
-              [endpoint]: response.data,
-            })
-          : {
-              [endpoint]: response.data,
-            }
-      );
+      const merged = this.merge({
+        [endpoint]: response.data,
+      });
+      if (merged !== undefined) {
+        setElectronStorage("response", merged);
+      }
     }
   }
 

@@ -28,6 +28,7 @@ export class UserService {
       }${restApi.urls.user.byId(id)}`,
       {
         headers: this.getAuthorization(),
+        isCache: true,
       }
     );
 

@@ -31,6 +31,7 @@ export class AuthService {
       `${restApi.urls.base}${restApi.urls.baseApi}${restApi.urls.auth.base}${restApi.urls.auth.access}`,
       {
         headers: this.getAuthorization(),
+        isCache: true,
       }
     );
 
@@ -41,7 +42,9 @@ export class AuthService {
     return response.data;
   }
 
-  async checkAuthenticated(window: BrowserWindow) {
+  async checkAuthenticated(
+    window: BrowserWindow
+  ): Promise<{ isAuthenticated: boolean } | undefined> {
     const cacheAccess = this.cacheAccess();
     if (cacheAccess !== undefined) {
       ipcWebContentsSend("sync", window.webContents, {
@@ -54,24 +57,25 @@ export class AuthService {
     });
 
     const response = await this.access();
-
     if (response !== undefined) {
       ipcWebContentsSend("sync", window.webContents, {
         isAuthenticated: response.ok,
       });
+
+      return {
+        isAuthenticated: true,
+      };
+    } else {
+      ipcWebContentsSend("sync", window.webContents, {
+        isAuthenticated: true,
+      });
+      this.logout(window);
     }
   }
 
   setCheckAccessInterval(window: BrowserWindow) {
     const interval = setInterval(async () => {
-      try {
-        await this.checkAuthenticated(window);
-      } catch (error) {
-        ipcWebContentsSend("sync", window.webContents, {
-          isAuthenticated: true,
-        });
-        this.logout(window);
-      }
+      await this.checkAuthenticated(window);
 
       const authToken = getElectronStorage("authToken");
       if (authToken === undefined) {

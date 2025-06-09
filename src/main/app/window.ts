@@ -59,20 +59,11 @@ export class AppWindow implements TWindowManager {
   }
 
   private async checkAuthenticated(window: BrowserWindow) {
-    const cacheAccess = this.authService.cacheAccess();
-    if (cacheAccess !== undefined) {
+    const response = await this.authService.checkAuthenticated(window);
+    if (response !== undefined) {
       ipcWebContentsSend("authSocialNetwork", window.webContents, {
-        isAuthenticated: cacheAccess.ok,
+        isAuthenticated: response.isAuthenticated,
       });
-    }
-
-    try {
-      await this.authService.checkAuthenticated(window);
-    } catch (error) {
-      ipcWebContentsSend("sync", window.webContents, {
-        isAuthenticated: true,
-      });
-      this.authService.logout(window);
     }
   }
 

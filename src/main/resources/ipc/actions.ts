@@ -58,8 +58,8 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
       if (
         masterKey !== undefined &&
         payload !== undefined &&
-        payload.key &&
-        typeof payload.key === "string"
+        typeof payload.key === "string" &&
+        payload.key.length
       ) {
         encryptedVault = await this.cryptoService.encrypt(
           masterKey,
@@ -183,7 +183,9 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
         });
 
         if (cacheResources !== undefined) {
-          event.reply("resources", cacheResources);
+          event.reply("resources", {
+            items: cacheResources,
+          });
         }
 
         const resources = await this.getResources();
