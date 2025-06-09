@@ -8,6 +8,7 @@ import {
   getElectronStorage,
 } from "../$shared/store.js";
 import { ipcWebContentsSend } from "../$shared/utils.js";
+import { getWindow as getWindows } from "../@core/control-window/receive.js";
 
 @Injectable()
 export class AuthService {
@@ -36,6 +37,10 @@ export class AuthService {
     );
 
     if (response.error !== undefined) {
+      const mainWindow = getWindows<TWindows["main"]>("window:main");
+      if (response.status === 401 && mainWindow !== undefined) {
+        this.logout(mainWindow);
+      }
       return;
     }
 
@@ -69,7 +74,6 @@ export class AuthService {
       ipcWebContentsSend("sync", window.webContents, {
         isAuthenticated: true,
       });
-      this.logout(window);
     }
   }
 
