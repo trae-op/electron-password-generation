@@ -1,8 +1,11 @@
 import { useState, useMemo } from "react";
 import type { TPropsProvider } from "./types";
-import { Context, ContextActions } from "../context";
+import { Context, ContextActions, ContextComponents } from "../context";
 
-export const Provider = ({ children }: TPropsProvider) => {
+export const Provider = ({
+  children,
+  renderGenerateCharacters,
+}: TPropsProvider) => {
   const [result, setResult] = useState<TResource>();
   const [name, setName] = useState("");
   const [openCreateNewPassword, setOpenCreateNewPassword] = useState(false);
@@ -25,11 +28,20 @@ export const Provider = ({ children }: TPropsProvider) => {
     [setResult, setName, setOpenCreateNewPassword]
   );
 
+  const components = useMemo(
+    () => ({
+      renderGenerateCharacters,
+    }),
+    [renderGenerateCharacters]
+  );
+
   return (
-    <Context.Provider value={value}>
-      <ContextActions.Provider value={actions}>
-        {children}
-      </ContextActions.Provider>
-    </Context.Provider>
+    <ContextComponents.Provider value={components}>
+      <Context.Provider value={value}>
+        <ContextActions.Provider value={actions}>
+          {children}
+        </ContextActions.Provider>
+      </Context.Provider>
+    </ContextComponents.Provider>
   );
 };

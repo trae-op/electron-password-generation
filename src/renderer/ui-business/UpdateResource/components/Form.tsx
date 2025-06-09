@@ -1,24 +1,17 @@
-import { useActionState, memo } from "react";
+import { useActionState } from "react";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { useIpc } from "../hooks/useIpc";
 import { LoadingSpinner } from "@components/LoadingSpinner";
 import { SubmitButton } from "./SubmitButton";
-import type { TPropsForm } from "./types";
 import { useControl } from "../hooks/useControl";
 import { useControlContext } from "../hooks/useControlContext";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import { CheckboxUpdateKey } from "./CheckboxUpdateKey";
 
-export const Form = memo(({ renderGenerateCharacters }: TPropsForm) => {
+export const Form = () => {
   useIpc();
   const { result, name } = useControlContext();
-  const {
-    handleTextInputChange,
-    submitFormAction,
-    handleCheckboxChange,
-    isUpdateKey,
-  } = useControl();
+  const { handleTextInputChange, submitFormAction } = useControl();
   const [_, formAction] = useActionState(submitFormAction, undefined);
 
   if (result === undefined) {
@@ -37,17 +30,10 @@ export const Form = memo(({ renderGenerateCharacters }: TPropsForm) => {
           fullWidth
         />
 
-        <FormControlLabel
-          control={
-            <Checkbox onChange={handleCheckboxChange} name="update-key" />
-          }
-          label="Update key"
-        />
-
-        {isUpdateKey && renderGenerateCharacters}
+        <CheckboxUpdateKey />
 
         <SubmitButton />
       </Stack>
     </form>
   );
-});
+};

@@ -6,8 +6,6 @@ export type THookSubscribeEvent = {
   setName: Dispatch<SetStateAction<string>>;
 };
 export type THookControl = {
-  isUpdateKey: boolean;
   handleTextInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
   submitFormAction: (_: undefined, formData: FormData) => Promise<undefined>;
-  handleCheckboxChange: (event: ChangeEvent<HTMLInputElement>) => void;
 };

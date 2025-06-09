@@ -3,8 +3,8 @@ import { Form as FormGenerateCharacters } from "@ui-business/GenerateCharacters"
 
 const UpdateResource = () => {
   return (
-    <Provider>
-      <Form renderGenerateCharacters={<FormGenerateCharacters />} />
+    <Provider renderGenerateCharacters={<FormGenerateCharacters />}>
+      <Form />
     </Provider>
   );
 };

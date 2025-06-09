@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useMemo, useState } from "react";
+import { ChangeEvent, useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useControlContextActions } from "./useControlContext";
 import { THookControl } from "./types";
@@ -6,7 +6,6 @@ import { THookControl } from "./types";
 export const useControl = (): THookControl => {
   const { id } = useParams<{ id: string }>();
   const { setName } = useControlContextActions();
-  const [isUpdateKey, setUpdateKey] = useState(false);
 
   const handleTextInputChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -31,15 +30,9 @@ export const useControl = (): THookControl => {
     [id]
   );
 
-  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setUpdateKey(event.target.checked);
-  };
-
   const value = useMemo(
     () => ({
-      isUpdateKey,
       submitFormAction,
-      handleCheckboxChange,
       handleTextInputChange,
     }),
     [submitFormAction, handleTextInputChange]
