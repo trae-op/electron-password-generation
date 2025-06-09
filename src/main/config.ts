@@ -102,6 +102,10 @@ export const restApi = {
   },
 };
 
+export const timers = {
+  intervalCheckAuth: 60000,
+};
+
 export const cryptoOptions = {
   AES_KEY_LENGTH_BYTES: 32,
   SALT_LENGTH_BYTES: 16,

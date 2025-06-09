@@ -1,6 +1,6 @@
 import { BrowserWindow } from "electron";
 import { type AxiosRequestConfig } from "axios";
-import { restApi } from "../config.js";
+import { restApi, timers } from "../config.js";
 import { Injectable } from "../@core/decorators/injectable.js";
 import { RestApiService } from "../rest-api/service.js";
 import {
@@ -81,7 +81,7 @@ export class AuthService {
       if (authToken === undefined) {
         clearInterval(interval);
       }
-    }, 10000);
+    }, timers.intervalCheckAuth);
   }
 
   cacheAccess(): { ok: boolean } | undefined {
