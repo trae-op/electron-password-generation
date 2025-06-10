@@ -20,7 +20,7 @@ export const Item = memo(
     const { isMasterKey, isDisabledActions } = useControlContext();
 
     return (
-      <Card sx={{ minWidth: 170 }}>
+      <Card sx={{ width: "100%" }}>
         <CardContent>
           <Typography gutterBottom variant="h5">
             {name}

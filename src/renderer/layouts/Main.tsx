@@ -13,6 +13,8 @@ const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         body: {
+          overflowY: "auto",
+          overflowX: "hidden",
           "& #root": {
             width: "100%",
           },

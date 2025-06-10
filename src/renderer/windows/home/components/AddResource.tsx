@@ -15,14 +15,7 @@ const AddResource = memo(({ isMasterKey }: TPropsHomeChildren) => {
 
   return (
     <ProviderAddResourceButton>
-      <AddResourceButton
-        disabled={!isAuthenticated}
-        sx={{
-          position: "fixed",
-          bottom: 10,
-          right: 10,
-        }}
-      />
+      <AddResourceButton size="small" disabled={!isAuthenticated} />
     </ProviderAddResourceButton>
   );
 });

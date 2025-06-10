@@ -9,7 +9,7 @@ export const AddButton = memo(({ ...other }: TPropsButtonProvider) => {
 
   return (
     <IconButton onClick={handleAdd} {...other}>
-      <AddCircleIcon fontSize="large" />
+      <AddCircleIcon fontSize="medium" />
     </IconButton>
   );
 });

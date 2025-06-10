@@ -9,17 +9,17 @@ import { AuthService } from "../auth/service.js";
 import { ControlUpdateWindowsPlatformService } from "../updater/services/windows/control-update.js";
 import { TrayService } from "../tray/service.js";
 import { destroyWindows } from "../@core/control-window/destroy.js";
-import { ipcWebContentsSend } from "../$shared/utils.js";
+import { ipcWebContentsSend, isDev } from "../$shared/utils.js";
 import { menu } from "../config.js";
 
 @WindowManager<TWindows["main"]>({
   hash: "window:main",
   isCache: true,
   options: {
-    resizable: false,
+    resizable: isDev(),
     show: false,
-    width: 600,
-    height: 600,
+    width: 280,
+    height: 500,
   },
 })
 export class AppWindow implements TWindowManager {

@@ -1,3 +1,4 @@
+import { lazy, memo, Suspense } from "react";
 import Stack from "@mui/material/Stack";
 import ListItemButton, {
   ListItemButtonProps,
@@ -5,6 +6,7 @@ import ListItemButton, {
 import { grey } from "@mui/material/colors";
 import { UserPopover, ContextUserPopover } from "@ui-business/User";
 import { LogoutButton } from "@ui-business/AuthSocialNetwork";
+import CircularProgress from "@mui/material/CircularProgress";
 import {
   useIpc as useIpcUpdate,
   Context as ContextUpdater,
@@ -13,8 +15,12 @@ import {
 import { TopPanel } from "@layouts/TopPanel";
 import { Container as ContainerAppVersion } from "@ui-composites/AppVersion";
 import { PreloadStatusTopPanel } from "./PreloadStatusTopPanel";
+import { TPropsHomeChildren } from "./types";
 
-const ContainerTopPanel = () => {
+const LazyAddResource = lazy(() => import("./AddResource"));
+const LazyActionsKey = lazy(() => import("./ActionsKey"));
+
+const ContainerTopPanel = memo(({ isMasterKey }: TPropsHomeChildren) => {
   const value = useIpcUpdate();
 
   return (
@@ -31,11 +37,7 @@ const ContainerTopPanel = () => {
         backgroundColor: grey[900],
       }}
     >
-      <ContainerAppVersion
-        sx={{ width: "100%" }}
-        variant="subtitle2"
-        component="span"
-      />
+      <ContainerAppVersion sx={{ width: "100%" }} variant="caption" />
       <Stack
         spacing={1}
         direction="row"
@@ -44,6 +46,15 @@ const ContainerTopPanel = () => {
         sx={{ width: "100%" }}
       >
         <PreloadStatusTopPanel />
+
+        <Suspense fallback={<CircularProgress size={20} />}>
+          <LazyActionsKey isMasterKey={isMasterKey} />
+        </Suspense>
+
+        <Suspense fallback={<CircularProgress size={20} />}>
+          <LazyAddResource isMasterKey={isMasterKey} />
+        </Suspense>
+
         <ContextUserPopover.Provider
           value={{
             isNewVersionApp: value.status === "update-downloaded",
@@ -68,6 +79,6 @@ const ContainerTopPanel = () => {
       </Stack>
     </TopPanel>
   );
-};
+});
 
 export default ContainerTopPanel;

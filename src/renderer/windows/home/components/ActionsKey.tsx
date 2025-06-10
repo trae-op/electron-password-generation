@@ -13,31 +13,15 @@ const ActionsKey = memo(({ isMasterKey }: TPropsHomeChildren) => {
 
   if (!isMasterKey) {
     return (
-      <IconButton
-        disabled={!isAuthenticated}
-        sx={{
-          position: "fixed",
-          bottom: 10,
-          right: 10,
-        }}
-        onClick={handleKey}
-      >
-        <HttpsIcon fontSize="large" />
+      <IconButton size="small" disabled={!isAuthenticated} onClick={handleKey}>
+        <HttpsIcon fontSize="medium" />
       </IconButton>
     );
   }
 
   return (
-    <IconButton
-      disabled={!isAuthenticated}
-      sx={{
-        position: "fixed",
-        bottom: 10,
-        right: 70,
-      }}
-      onClick={handleKey}
-    >
-      <NoEncryptionGmailerrorredIcon fontSize="large" />
+    <IconButton size="small" disabled={!isAuthenticated} onClick={handleKey}>
+      <NoEncryptionGmailerrorredIcon fontSize="medium" />
     </IconButton>
   );
 });

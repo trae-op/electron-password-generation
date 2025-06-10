@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import Box from "@mui/material/Box";
 import { Provider as ProviderUser } from "@ui-business/User";
 import {
   useIpc as useIpcMasterKey,
@@ -10,8 +11,6 @@ import { LoadingSpinner } from "@components/LoadingSpinner";
 
 const LazyTopPanel = lazy(() => import("./TopPanel"));
 const LazyResources = lazy(() => import("./Resources"));
-const LazyAddResource = lazy(() => import("./AddResource"));
-const LazyActionsKey = lazy(() => import("./ActionsKey"));
 
 const Home = () => {
   useIpcMasterKey();
@@ -21,21 +20,15 @@ const Home = () => {
     <ProviderSync>
       <ProviderUser>
         <Suspense fallback={<LoadingSpinner />}>
-          <LazyTopPanel />
+          <LazyTopPanel isMasterKey={isMasterKey} />
         </Suspense>
 
         <ProviderMasterKey>
-          <Suspense fallback={<LoadingSpinner />}>
-            <LazyResources isMasterKey={isMasterKey} />
-          </Suspense>
-
-          <Suspense fallback={<LoadingSpinner />}>
-            <LazyActionsKey isMasterKey={isMasterKey} />
-          </Suspense>
-
-          <Suspense fallback={<LoadingSpinner />}>
-            <LazyAddResource isMasterKey={isMasterKey} />
-          </Suspense>
+          <Box sx={{ mt: 6, width: "100%" }}>
+            <Suspense fallback={<LoadingSpinner />}>
+              <LazyResources isMasterKey={isMasterKey} />
+            </Suspense>
+          </Box>
         </ProviderMasterKey>
       </ProviderUser>
     </ProviderSync>
