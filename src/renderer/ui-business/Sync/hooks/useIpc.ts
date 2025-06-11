@@ -6,9 +6,25 @@ export const useIpc = () => {
     useControlContextActions();
 
   useEffect(() => {
+    window.electron.send.sync();
+  }, []);
+
+  useEffect(() => {
     const unSub = window.electron.receive.subscribeSync(
       ({ isAuthenticated, isResources, isUser }) => {
-        setAuthenticated(isAuthenticated);
+        setAuthenticated((prevValue) => {
+          if (prevValue === undefined) {
+            return isAuthenticated;
+          }
+
+          if (prevValue !== undefined && isAuthenticated === undefined) {
+            return prevValue;
+          }
+
+          if (isAuthenticated !== undefined && prevValue !== undefined) {
+            return isAuthenticated;
+          }
+        });
         setUser((prevValue) => {
           if (prevValue === undefined) {
             return isUser;

@@ -88,9 +88,6 @@ export class TwoFactorIpc {
       ipcWebContentsSend("authSocialNetwork", mainWindow.webContents, {
         isAuthenticated: true,
       });
-      ipcWebContentsSend("sync", mainWindow.webContents, {
-        isAuthenticated: true,
-      });
       this.authService.setCheckAccessInterval(mainWindow);
     }
   }

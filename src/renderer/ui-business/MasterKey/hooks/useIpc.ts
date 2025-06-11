@@ -5,12 +5,12 @@ export const useIpc = () => {
   const { setMasterKey } = useControlContextActions();
 
   useEffect(() => {
-    window.electron.receive.subscribeMasterKey(({ isMasterKey }) => {
-      setMasterKey(isMasterKey);
-    });
+    window.electron.send.checkMasterKey();
   }, []);
 
   useEffect(() => {
-    window.electron.send.checkMasterKey();
+    window.electron.receive.subscribeMasterKey(({ isMasterKey }) => {
+      setMasterKey(isMasterKey);
+    });
   }, []);
 };

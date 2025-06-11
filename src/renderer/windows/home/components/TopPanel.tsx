@@ -15,12 +15,14 @@ import {
 import { TopPanel } from "@layouts/TopPanel";
 import { Container as ContainerAppVersion } from "@ui-composites/AppVersion";
 import { PreloadStatusTopPanel } from "./PreloadStatusTopPanel";
+import { useIpc as useIpcSync } from "@ui-business/Sync";
 import { TPropsHomeChildren } from "./types";
 
 const LazyAddResource = lazy(() => import("./AddResource"));
 const LazyActionsKey = lazy(() => import("./ActionsKey"));
 
 const ContainerTopPanel = memo(({ isMasterKey }: TPropsHomeChildren) => {
+  useIpcSync();
   const value = useIpcUpdate();
 
   return (

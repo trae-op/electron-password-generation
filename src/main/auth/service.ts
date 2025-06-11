@@ -6,6 +6,7 @@ import { RestApiService } from "../rest-api/service.js";
 import {
   deleteFromElectronStorage,
   getElectronStorage,
+  deleteStore,
 } from "../$shared/store.js";
 import { ipcWebContentsSend } from "../$shared/utils.js";
 import { getWindow as getWindows } from "../@core/control-window/receive.js";
@@ -47,9 +48,9 @@ export class AuthService {
     return response.data;
   }
 
-  async checkAuthenticated(
+  checkAuthenticated(
     window: BrowserWindow
-  ): Promise<{ isAuthenticated: boolean } | undefined> {
+  ): { isAuthenticated: boolean } | undefined {
     const cacheAccess = this.cacheAccess();
     if (cacheAccess !== undefined) {
       ipcWebContentsSend("sync", window.webContents, {
@@ -69,19 +70,9 @@ export class AuthService {
       });
 
       const response = await this.access();
-      if (response !== undefined) {
-        ipcWebContentsSend("sync", window.webContents, {
-          isAuthenticated: response.ok,
-        });
-
-        return {
-          isAuthenticated: true,
-        };
-      } else {
-        ipcWebContentsSend("sync", window.webContents, {
-          isAuthenticated: true,
-        });
-      }
+      ipcWebContentsSend("sync", window.webContents, {
+        isAuthenticated: (response !== undefined && response.ok) || true,
+      });
 
       const authToken = getElectronStorage("authToken");
       if (authToken === undefined) {
@@ -112,6 +103,7 @@ export class AuthService {
     deleteFromElectronStorage("authToken");
     deleteFromElectronStorage("response");
     deleteFromElectronStorage("userId");
+    deleteStore("masterKey");
     deleteFromElectronStorage("twoFactorSecret");
     ipcWebContentsSend("authSocialNetwork", window.webContents, {
       isAuthenticated: false,

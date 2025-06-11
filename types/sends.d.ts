@@ -24,6 +24,7 @@ type TEventPayloadSend = {
   twoFactorCodeVerify: TCallbackSendTwoFactorCodeVerify;
   twoFactorVerify: undefined;
   checkUser: undefined;
+  sync: undefined;
   logout: undefined;
   openUpdateResource: TCallbackOpenUpdateResource;
   openDeleteResource: TCallbackOpenDeleteResource;
@@ -46,6 +47,7 @@ type TSend = {
   ) => void;
   windowTwoFactorVerify: () => void;
   checkUser: () => void;
+  sync: () => void;
   sendTwoFactorCodeVerify: (
     payload: TEventPayloadSend["twoFactorCodeVerify"]
   ) => void;

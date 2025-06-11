@@ -29,7 +29,7 @@ export class MasterKeyIpc {
       this.masterKeyWindow = await masterKeyWindow.create();
     });
 
-    this.ipcGetMasterKey();
+    this.ipcCheckMasterKey();
     this.ipcPostMasterKey();
     this.ipcDeleteMasterKey();
     this.ipcCopyMasterKey();
@@ -98,7 +98,7 @@ export class MasterKeyIpc {
     });
   }
 
-  private ipcGetMasterKey(): void {
+  private ipcCheckMasterKey(): void {
     ipcMainOn("checkMasterKey", (event) => {
       const masterKey = getStore("masterKey");
 

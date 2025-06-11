@@ -56,6 +56,9 @@ electron.contextBridge.exposeInMainWorld("electron", {
     checkUser: () => {
       ipcSend("checkUser");
     },
+    sync: () => {
+      ipcSend("sync");
+    },
     windowAuthSocialNetwork: (payload) => {
       ipcSend("authSocialNetwork", payload);
     },

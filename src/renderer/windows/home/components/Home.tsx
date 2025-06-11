@@ -1,6 +1,5 @@
 import { lazy, Suspense } from "react";
 import Box from "@mui/material/Box";
-import { Provider as ProviderUser } from "@ui-business/User";
 import {
   useIpc as useIpcMasterKey,
   Provider as ProviderMasterKey,
@@ -18,19 +17,17 @@ const Home = () => {
 
   return (
     <ProviderSync>
-      <ProviderUser>
-        <Suspense fallback={<LoadingSpinner />}>
-          <LazyTopPanel isMasterKey={isMasterKey} />
-        </Suspense>
+      <Suspense fallback={<LoadingSpinner />}>
+        <LazyTopPanel isMasterKey={isMasterKey} />
+      </Suspense>
 
-        <ProviderMasterKey>
-          <Box sx={{ mt: 6, width: "100%" }}>
-            <Suspense fallback={<LoadingSpinner />}>
-              <LazyResources isMasterKey={isMasterKey} />
-            </Suspense>
-          </Box>
-        </ProviderMasterKey>
-      </ProviderUser>
+      <ProviderMasterKey>
+        <Box sx={{ mt: 6, width: "100%" }}>
+          <Suspense fallback={<LoadingSpinner />}>
+            <LazyResources isMasterKey={isMasterKey} />
+          </Suspense>
+        </Box>
+      </ProviderMasterKey>
     </ProviderSync>
   );
 };

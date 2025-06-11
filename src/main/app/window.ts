@@ -9,7 +9,7 @@ import { AuthService } from "../auth/service.js";
 import { ControlUpdateWindowsPlatformService } from "../updater/services/windows/control-update.js";
 import { TrayService } from "../tray/service.js";
 import { destroyWindows } from "../@core/control-window/destroy.js";
-import { ipcWebContentsSend, isDev } from "../$shared/utils.js";
+import { ipcMainOn, ipcWebContentsSend, isDev } from "../$shared/utils.js";
 import { menu } from "../config.js";
 
 @WindowManager<TWindows["main"]>({
@@ -48,6 +48,7 @@ export class AppWindow implements TWindowManager {
     this.buildMenu(window);
     this.buildTray(window);
     this.checkAuthenticated(window);
+    this.ipcCheckSync(window);
     this.authService.setCheckAccessInterval(window);
 
     const userId = getElectronStorage("userId");
@@ -58,12 +59,23 @@ export class AppWindow implements TWindowManager {
     }
   }
 
-  private async checkAuthenticated(window: BrowserWindow) {
-    const result = await this.authService.checkAuthenticated(window);
-    ipcWebContentsSend("authSocialNetwork", window.webContents, {
-      isAuthenticated:
-        result !== undefined && result.isAuthenticated !== undefined,
+  private ipcCheckSync(window: BrowserWindow): void {
+    ipcMainOn("sync", (event) => {
+      const result = this.authService.checkAuthenticated(window);
+
+      event.reply("sync", {
+        isAuthenticated: result !== undefined && result.isAuthenticated,
+      });
     });
+  }
+
+  private async checkAuthenticated(window: BrowserWindow) {
+    const result = this.authService.checkAuthenticated(window);
+    if (result !== undefined && result.isAuthenticated !== undefined) {
+      ipcWebContentsSend("authSocialNetwork", window.webContents, {
+        isAuthenticated: result.isAuthenticated,
+      });
+    }
   }
 
   private buildTray(window: BrowserWindow): void {
