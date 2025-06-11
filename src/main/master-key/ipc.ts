@@ -2,7 +2,6 @@ import { BrowserWindow, clipboard } from "electron";
 import { IpcHandler } from "../@core/decorators/ipc-handler.js";
 import { getWindow as getWindows } from "../@core/control-window/receive.js";
 import { TParamOnInit } from "../@core/types/ipc-handler.js";
-import { ResourcesService } from "../resources/services/resources.js";
 import { CryptoService } from "../crypto/service.js";
 import {
   ipcMainHandle,
@@ -14,15 +13,13 @@ import {
   getElectronStorage,
   deleteFromElectronStorage,
 } from "../$shared/store.js";
+import { restApi } from "../config.js";
 
 @IpcHandler()
 export class MasterKeyIpc {
   masterKeyWindow: BrowserWindow | undefined;
 
-  constructor(
-    private resourcesService: ResourcesService,
-    private cryptoService: CryptoService
-  ) {}
+  constructor(private cryptoService: CryptoService) {}
 
   onInit({ getWindow }: TParamOnInit<TWindows["masterKey"]>): void {
     const masterKeyWindow = getWindow("window:master-key");
@@ -50,21 +47,43 @@ export class MasterKeyIpc {
     });
   }
 
+  private cacheResources(): TResource[] | undefined {
+    let resources: TResource[] | undefined = undefined;
+    const cacheResponse = getElectronStorage("response");
+
+    if (cacheResponse !== undefined) {
+      resources =
+        cacheResponse[
+          `${restApi.urls.base}${restApi.urls.baseApi}${restApi.urls.resources.base}`
+        ];
+    }
+
+    if (resources !== undefined) {
+      return resources;
+    }
+
+    return undefined;
+  }
+
   private ipcCopyMasterKey(): void {
     ipcMainHandle("copyMasterKey", async (payload) => {
       if (payload !== undefined) {
-        const resource = await this.resourcesService.byId(payload.id);
+        const cacheResources = this.cacheResources();
+        const foundUser =
+          cacheResources !== undefined
+            ? cacheResources.find((res) => res.id + "" === payload.id)
+            : undefined;
         const masterKey = getElectronStorage("masterKey");
 
         if (
           masterKey !== undefined &&
-          resource !== undefined &&
-          resource.salt !== null
+          foundUser !== undefined &&
+          foundUser.salt !== null
         ) {
           const encryptedVault = await this.cryptoService.decrypt(masterKey, {
-            iv: resource.iv,
-            salt: resource.salt,
-            encryptedData: resource.key,
+            iv: foundUser.iv,
+            salt: foundUser.salt,
+            encryptedData: foundUser.key,
           });
           clipboard.writeText(encryptedVault);
 

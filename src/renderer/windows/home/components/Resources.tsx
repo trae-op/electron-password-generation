@@ -15,7 +15,7 @@ const Container = memo(({ children }: { children: React.ReactElement }) => {
       <Stack
         spacing={2}
         direction="row"
-        sx={{ flexWrap: "wrap", width: "87%", height: "100%" }}
+        sx={{ flexWrap: "wrap", width: "100%", height: "100%" }}
         useFlexGap
       >
         <Typography
@@ -32,7 +32,7 @@ const Container = memo(({ children }: { children: React.ReactElement }) => {
   return (
     <Box
       sx={{
-        width: "87%",
+        width: "100%",
         height: "calc(100vh - 80px)",
         overflowY: "auto",
         overflowX: "hidden",

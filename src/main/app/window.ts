@@ -18,7 +18,7 @@ import { menu } from "../config.js";
   options: {
     resizable: isDev(),
     show: false,
-    width: 280,
+    width: 320,
     height: 500,
   },
 })
@@ -59,12 +59,11 @@ export class AppWindow implements TWindowManager {
   }
 
   private async checkAuthenticated(window: BrowserWindow) {
-    const response = await this.authService.checkAuthenticated(window);
-    if (response !== undefined) {
-      ipcWebContentsSend("authSocialNetwork", window.webContents, {
-        isAuthenticated: response.isAuthenticated,
-      });
-    }
+    const result = await this.authService.checkAuthenticated(window);
+    ipcWebContentsSend("authSocialNetwork", window.webContents, {
+      isAuthenticated:
+        result !== undefined && result.isAuthenticated !== undefined,
+    });
   }
 
   private buildTray(window: BrowserWindow): void {

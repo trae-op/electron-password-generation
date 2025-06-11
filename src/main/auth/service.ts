@@ -55,31 +55,33 @@ export class AuthService {
       ipcWebContentsSend("sync", window.webContents, {
         isAuthenticated: cacheAccess.ok,
       });
-    }
-
-    ipcWebContentsSend("sync", window.webContents, {
-      isAuthenticated: false,
-    });
-
-    const response = await this.access();
-    if (response !== undefined) {
-      ipcWebContentsSend("sync", window.webContents, {
-        isAuthenticated: response.ok,
-      });
 
       return {
         isAuthenticated: true,
       };
-    } else {
-      ipcWebContentsSend("sync", window.webContents, {
-        isAuthenticated: true,
-      });
     }
   }
 
   setCheckAccessInterval(window: BrowserWindow) {
     const interval = setInterval(async () => {
-      await this.checkAuthenticated(window);
+      ipcWebContentsSend("sync", window.webContents, {
+        isAuthenticated: false,
+      });
+
+      const response = await this.access();
+      if (response !== undefined) {
+        ipcWebContentsSend("sync", window.webContents, {
+          isAuthenticated: response.ok,
+        });
+
+        return {
+          isAuthenticated: true,
+        };
+      } else {
+        ipcWebContentsSend("sync", window.webContents, {
+          isAuthenticated: true,
+        });
+      }
 
       const authToken = getElectronStorage("authToken");
       if (authToken === undefined) {
