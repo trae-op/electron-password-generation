@@ -2,6 +2,7 @@ import ElectronStorage from "electron-store";
 
 type TStore = {
   updateProcess: boolean;
+  masterKey: string;
 };
 
 export type TCacheResponse = {
@@ -12,7 +13,6 @@ export type TElectronStorage = {
   authToken: string;
   userId: string;
   twoFactorSecret: string;
-  masterKey: string;
   response: TCacheResponse;
 };
 
@@ -33,6 +33,10 @@ export function setStore<K extends keyof TStore>(name: K, value: TStore[K]) {
 
 export function clearStore() {
   store.clear();
+}
+
+export function deleteStore<K extends keyof TStore>(name: K) {
+  store.delete(name);
 }
 
 export function getElectronStorage<K extends keyof TElectronStorage>(key: K) {

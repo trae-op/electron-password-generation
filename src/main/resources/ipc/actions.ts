@@ -11,7 +11,7 @@ import { ResourcesService } from "../services/resources.js";
 import { CryptoService } from "../../crypto/service.js";
 import { TEncryptedVault } from "../services/types.js";
 import { CacheWindowsService } from "../services/cacheWindows.js";
-import { getElectronStorage } from "../../$shared/store.js";
+import { getStore, getElectronStorage } from "../../$shared/store.js";
 import { TrayService } from "../../tray/service.js";
 import { restApi } from "../../config.js";
 
@@ -53,7 +53,7 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
       const updateResourceWindow = this.cacheWindowsService.getResourceWindows(
         "updateResourceWindow"
       );
-      const masterKey = getElectronStorage("masterKey");
+      const masterKey = getStore("masterKey");
 
       if (
         masterKey !== undefined &&
@@ -103,7 +103,7 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
       let encryptedVault: TEncryptedVault | undefined;
       const addResourceWindow =
         this.cacheWindowsService.getResourceWindows("addResourceWindow");
-      const masterKey = getElectronStorage("masterKey");
+      const masterKey = getStore("masterKey");
 
       if (
         masterKey !== undefined &&
@@ -263,7 +263,7 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
   }
 
   private async copyMasterKey(resource: TResource) {
-    const masterKey = getElectronStorage("masterKey");
+    const masterKey = getStore("masterKey");
     if (masterKey !== undefined && resource.salt !== null) {
       const encryptedVault = await this.cryptoService.decrypt(masterKey, {
         iv: resource.iv,

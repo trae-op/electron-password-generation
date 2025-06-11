@@ -9,9 +9,10 @@ import {
   ipcWebContentsSend,
 } from "../$shared/utils.js";
 import {
-  setElectronStorage,
+  setStore,
+  getStore,
+  deleteStore,
   getElectronStorage,
-  deleteFromElectronStorage,
 } from "../$shared/store.js";
 import { restApi } from "../config.js";
 
@@ -37,7 +38,7 @@ export class MasterKeyIpc {
   private ipcPostMasterKey(): void {
     ipcMainHandle("postMasterKey", async (payload) => {
       if (payload !== undefined) {
-        setElectronStorage("masterKey", payload.key);
+        setStore("masterKey", payload.key);
       }
 
       this.hideMasterKeyWindow();
@@ -73,7 +74,7 @@ export class MasterKeyIpc {
           cacheResources !== undefined
             ? cacheResources.find((res) => res.id + "" === payload.id)
             : undefined;
-        const masterKey = getElectronStorage("masterKey");
+        const masterKey = getStore("masterKey");
 
         if (
           masterKey !== undefined &&
@@ -99,7 +100,7 @@ export class MasterKeyIpc {
 
   private ipcGetMasterKey(): void {
     ipcMainOn("checkMasterKey", (event) => {
-      const masterKey = getElectronStorage("masterKey");
+      const masterKey = getStore("masterKey");
 
       event.reply("masterKey", {
         isMasterKey: Boolean(masterKey),
@@ -109,10 +110,10 @@ export class MasterKeyIpc {
 
   private ipcDeleteMasterKey(): void {
     ipcMainOn("deleteMasterKey", () => {
-      const masterKey = getElectronStorage("masterKey");
+      const masterKey = getStore("masterKey");
 
       if (masterKey !== undefined) {
-        deleteFromElectronStorage("masterKey");
+        deleteStore("masterKey");
         this.getMasterKey();
         this.hideMasterKeyWindow();
       }
@@ -120,7 +121,7 @@ export class MasterKeyIpc {
   }
 
   private getMasterKey(): void {
-    const masterKey = getElectronStorage("masterKey");
+    const masterKey = getStore("masterKey");
     const mainWindow = getWindows<TWindows["main"]>("window:main");
     if (mainWindow !== undefined) {
       ipcWebContentsSend("masterKey", mainWindow.webContents, {
