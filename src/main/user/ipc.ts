@@ -27,9 +27,11 @@ export class UserIpc {
         }
 
         const user = userId ? await this.userService.byId(userId) : undefined;
-        event.reply("checkUser", {
-          user,
-        });
+        if (user !== undefined) {
+          event.reply("checkUser", {
+            user,
+          });
+        }
 
         ipcWebContentsSend("sync", mainWindow.webContents, {
           isUser: true,

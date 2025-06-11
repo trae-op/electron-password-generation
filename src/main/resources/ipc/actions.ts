@@ -87,11 +87,12 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
         const resources = await this.getResources();
 
         if (resources !== undefined) {
-          this.updateTrayMenu(resources.items);
+          this.updateTrayMenu(resources);
+          updateResourceWindow.hide();
+          ipcWebContentsSend("resources", mainWindow.webContents, {
+            items: resources,
+          });
         }
-
-        updateResourceWindow.hide();
-        ipcWebContentsSend("resources", mainWindow.webContents, resources);
       }
 
       return undefined;
@@ -133,11 +134,12 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
         const resources = await this.getResources();
 
         if (resources !== undefined) {
-          this.updateTrayMenu(resources.items);
+          this.updateTrayMenu(resources);
+          addResourceWindow.hide();
+          ipcWebContentsSend("resources", mainWindow.webContents, {
+            items: resources,
+          });
         }
-
-        addResourceWindow.hide();
-        ipcWebContentsSend("resources", mainWindow.webContents, resources);
       }
 
       return undefined;
@@ -190,10 +192,11 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
 
         const resources = await this.getResources();
         if (resources !== undefined) {
-          this.updateTrayMenu(resources.items);
+          this.updateTrayMenu(resources);
+          event.reply("resources", {
+            items: resources,
+          });
         }
-
-        event.reply("resources", resources);
 
         ipcWebContentsSend("sync", mainWindow.webContents, {
           isResources: true,
@@ -202,14 +205,14 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
     });
   }
 
-  private async getResources(): Promise<{
-    items: TResource[];
-  }> {
+  private async getResources(): Promise<TResource[] | undefined> {
     const resources = await this.resourcesService.list();
 
-    return {
-      items: resources || [],
-    };
+    if (resources === undefined) {
+      return;
+    }
+
+    return resources;
   }
 
   private ipcDeleteResource(mainWindow: BrowserWindow | undefined): void {
@@ -229,11 +232,12 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
         const resources = await this.getResources();
 
         if (resources !== undefined) {
-          this.updateTrayMenu(resources.items);
+          this.updateTrayMenu(resources);
+          deleteResourceWindow.hide();
+          ipcWebContentsSend("resources", mainWindow.webContents, {
+            items: resources,
+          });
         }
-
-        deleteResourceWindow.hide();
-        ipcWebContentsSend("resources", mainWindow.webContents, resources);
       }
 
       return undefined;
