@@ -8,7 +8,6 @@ import type {
 } from "../@core/types/ipc-handler.js";
 import { ipcMainOn } from "../$shared/utils.js";
 import { TrayService } from "../tray/service.js";
-import { CheckForUpdatesService } from "./services/check-for-updates.js";
 import { OpenLatestVersionService } from "./services/mac-os/open-latest-version.js";
 
 const { autoUpdater } = pkg;
@@ -19,7 +18,6 @@ export class UpdaterIpc implements TIpcHandlerInterface {
 
   constructor(
     private trayService: TrayService,
-    private checkForUpdatesService: CheckForUpdatesService,
     private openLatestVersionService: OpenLatestVersionService
   ) {}
 
@@ -35,8 +33,6 @@ export class UpdaterIpc implements TIpcHandlerInterface {
             } else {
               this.updateAppWindow = await updateAppWindow.create();
             }
-
-            this.checkForUpdatesService.checkForUpdates();
           };
         }
 

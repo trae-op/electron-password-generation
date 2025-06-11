@@ -16,9 +16,19 @@ import { CheckForUpdatesService } from "./services/check-for-updates.js";
   },
 })
 export class UpdaterWindow implements TWindowManager {
+  private isCheckFirst = true;
   constructor(private checkForUpdatesService: CheckForUpdatesService) {}
 
   onDidFinishLoad(): void {
-    this.checkForUpdatesService.checkForUpdates();
+    if (this.isCheckFirst) {
+      this.checkForUpdatesService.checkForUpdates();
+      this.isCheckFirst = false;
+    }
+  }
+
+  onShow() {
+    if (!this.isCheckFirst) {
+      this.checkForUpdatesService.checkForUpdates();
+    }
   }
 }
