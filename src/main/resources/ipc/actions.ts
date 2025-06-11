@@ -1,4 +1,4 @@
-import { BrowserWindow, clipboard } from "electron";
+import { BrowserWindow, clipboard, dialog } from "electron";
 import {
   ipcMainHandle,
   ipcMainOn,
@@ -271,6 +271,12 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
         encryptedData: resource.key,
       });
       clipboard.writeText(encryptedVault);
+    } else {
+      dialog.showMessageBox({
+        title: "Warning!",
+        message:
+          "You don't have access to copy! You must enter the master key!",
+      });
     }
   }
 }
