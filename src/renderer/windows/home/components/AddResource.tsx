@@ -1,9 +1,7 @@
 import { memo } from "react";
-import {
-  AddButton as AddResourceButton,
-  Provider as ProviderAddResourceButton,
-} from "@ui-business/AddResource";
+import { AddButton, Provider } from "@ui-business/AddResource";
 import { useControlContext as useControlContextSync } from "@ui-business/Sync";
+import { Form as FormGenerateCharacters } from "@ui-business/GenerateCharacters";
 import { TPropsHomeChildren } from "./types";
 
 const AddResource = memo(({ isMasterKey }: TPropsHomeChildren) => {
@@ -14,9 +12,9 @@ const AddResource = memo(({ isMasterKey }: TPropsHomeChildren) => {
   }
 
   return (
-    <ProviderAddResourceButton>
-      <AddResourceButton size="small" disabled={!isAuthenticated} />
-    </ProviderAddResourceButton>
+    <Provider renderGenerateCharacters={<FormGenerateCharacters />}>
+      <AddButton size="small" disabled={!isAuthenticated} />
+    </Provider>
   );
 });
 
