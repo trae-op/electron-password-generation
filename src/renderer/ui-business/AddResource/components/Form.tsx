@@ -2,11 +2,11 @@ import { useActionState, memo } from "react";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { SubmitButton } from "./SubmitButton";
-import type { TPropsForm } from "./types";
 import { useControl } from "../hooks/useControl";
 import { useControlContext } from "../hooks/useControlContext";
+import { CheckboxGenerateKey } from "./CheckboxGenerateKey";
 
-export const Form = memo(({ renderGenerateCharacters }: TPropsForm) => {
+export const Form = memo(() => {
   const { name } = useControlContext();
   const { handleTextInputChange, submitFormAction } = useControl();
   const [_, formAction] = useActionState(submitFormAction, undefined);
@@ -23,7 +23,7 @@ export const Form = memo(({ renderGenerateCharacters }: TPropsForm) => {
           fullWidth
         />
 
-        {renderGenerateCharacters}
+        <CheckboxGenerateKey />
 
         <SubmitButton />
       </Stack>

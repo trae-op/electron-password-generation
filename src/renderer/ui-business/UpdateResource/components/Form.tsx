@@ -6,7 +6,7 @@ import { LoadingSpinner } from "@components/LoadingSpinner";
 import { SubmitButton } from "./SubmitButton";
 import { useControl } from "../hooks/useControl";
 import { useControlContext } from "../hooks/useControlContext";
-import { CheckboxUpdateKey } from "./CheckboxUpdateKey";
+import { CheckboxGenerateKey } from "./CheckboxGenerateKey";
 
 export const Form = () => {
   useIpc();
@@ -30,7 +30,7 @@ export const Form = () => {
           fullWidth
         />
 
-        <CheckboxUpdateKey />
+        <CheckboxGenerateKey />
 
         <SubmitButton />
       </Stack>

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import TextField from "@mui/material/TextField";
 import { useControlContextComponents } from "../hooks/useControlContext";
 
-export const CheckboxUpdateKey = () => {
+export const CheckboxGenerateKey = () => {
   const { renderGenerateCharacters } = useControlContextComponents();
   const [isUpdateKey, setUpdateKey] = useState(false);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,13 +18,17 @@ export const CheckboxUpdateKey = () => {
           <Checkbox
             checked={isUpdateKey}
             onChange={handleChange}
-            name="update-key"
+            name="generate-key"
           />
         }
-        label="Update key"
+        label="Generate key"
       />
 
-      {isUpdateKey && renderGenerateCharacters}
+      {isUpdateKey ? (
+        renderGenerateCharacters
+      ) : (
+        <TextField type="text" variant="outlined" name="password" fullWidth />
+      )}
     </>
   );
 };

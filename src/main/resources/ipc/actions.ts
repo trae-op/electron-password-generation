@@ -59,6 +59,7 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
         masterKey !== undefined &&
         payload !== undefined &&
         typeof payload.key === "string" &&
+        payload.key.length &&
         payload.key.length
       ) {
         encryptedVault = await this.cryptoService.encrypt(
@@ -110,7 +111,8 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
         masterKey !== undefined &&
         payload !== undefined &&
         payload.key &&
-        typeof payload.key === "string"
+        typeof payload.key === "string" &&
+        payload.key.length
       ) {
         encryptedVault = await this.cryptoService.encrypt(
           masterKey,
