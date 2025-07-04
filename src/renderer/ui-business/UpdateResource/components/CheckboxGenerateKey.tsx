@@ -27,7 +27,13 @@ export const CheckboxGenerateKey = () => {
       {isUpdateKey ? (
         renderGenerateCharacters
       ) : (
-        <TextField type="text" variant="outlined" name="password" fullWidth />
+        <TextField
+          label="Made-up password"
+          type="text"
+          variant="outlined"
+          name="password"
+          fullWidth
+        />
       )}
     </>
   );
