@@ -29,12 +29,15 @@ export class DownloadFileService {
       }
 
       const filePath = path.join(folderPath, name);
+      const token = process.env.GH_TOKEN;
       const res = await fetch(
         `${restApi.urls.githubReleases}/assets/${assetId}`,
         {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${process.env.GH_TOKEN}`,
+            ...(token !== undefined
+              ? { Authorization: `Bearer ${token}` }
+              : {}),
             Accept: "application/octet-stream",
           },
         }

@@ -22,11 +22,11 @@ export class CheckForUpdateService {
 
       const downloadsPath = app.getPath("downloads");
       const folderPath = path.join(downloadsPath, folders.download);
-
+      const token = process.env.GH_TOKEN;
       const response = await fetch(`${restApi.urls.githubReleases}/latest`, {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${process.env.GH_TOKEN}`,
+          ...(token !== undefined ? { Authorization: `Bearer ${token}` } : {}),
           Accept: "application/json",
         },
       });

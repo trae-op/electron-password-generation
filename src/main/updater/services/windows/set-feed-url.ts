@@ -11,13 +11,18 @@ export class SetFeedUrlService {
 
   setFeedURL() {
     if (isPlatform("win32") && !isDev()) {
+      const token = process.env.GH_TOKEN;
       autoUpdater.disableDifferentialDownload = true;
       autoUpdater.setFeedURL({
         provider: "github",
         repo: publishOptions.repo,
         owner: publishOptions.owner,
         private: true,
-        token: process.env.GH_TOKEN,
+        ...(token !== undefined
+          ? {
+              token: process.env.GH_TOKEN,
+            }
+          : {}),
       });
     }
   }
