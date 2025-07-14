@@ -29,7 +29,7 @@ jobs:
         run: npm run transpile:electron && npm run build && npx electron-builder --mac --x64 --publish=always
 
   build-windows:
-    runs-on: windows-2019
+    runs-on: windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
