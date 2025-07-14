@@ -18,7 +18,7 @@ import { menu } from "../config.js";
   options: {
     resizable: isDev(),
     show: false,
-    width: 320,
+    width: 350,
     height: 500,
   },
 })

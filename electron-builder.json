@@ -40,7 +40,8 @@
       "provider": "github",
       "owner": "trae-op",
       "repo": "electron-password-generation",
-      "releaseType": "release"
+      "releaseType": "release",
+      "private": true
     }
   ]
 }
