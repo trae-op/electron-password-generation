@@ -7,11 +7,13 @@ import {
 } from "@ui-business/MasterKey";
 import { Provider as ProviderSync } from "@ui-business/Sync";
 import { LoadingSpinner } from "@components/LoadingSpinner";
+import { useClosePreloadWindow } from "@hooks/closePreloadWindow";
 
 const LazyTopPanel = lazy(() => import("./TopPanel"));
 const LazyResources = lazy(() => import("./Resources"));
 
 const Home = () => {
+  useClosePreloadWindow("window:main");
   useIpcMasterKey();
   const { isMasterKey } = useControlContextMasterKey();
 

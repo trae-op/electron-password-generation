@@ -28,7 +28,7 @@ const theme = createTheme({
 });
 
 export const MainLayout = () => {
-  useClosePreloadWindow();
+  useClosePreloadWindow("sign-in");
 
   return (
     <ThemeProvider theme={theme}>

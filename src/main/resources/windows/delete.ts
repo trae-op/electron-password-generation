@@ -6,7 +6,6 @@ import { TWindowManager } from "../../@core/types/window-manager.js";
   hash: "window/resource/delete",
   isCache: true,
   options: {
-    alwaysOnTop: true,
     width: 350,
     height: 190,
   },

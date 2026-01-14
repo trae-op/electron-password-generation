@@ -71,11 +71,10 @@ export class AppWindow implements TWindowManager {
 
   private async checkAuthenticated(window: BrowserWindow) {
     const result = this.authService.checkAuthenticated(window);
-    if (result !== undefined && result.isAuthenticated !== undefined) {
-      ipcWebContentsSend("authSocialNetwork", window.webContents, {
-        isAuthenticated: result.isAuthenticated,
-      });
-    }
+    ipcWebContentsSend("authSocialNetwork", window.webContents, {
+      isAuthenticated:
+        result !== undefined && result.isAuthenticated !== undefined,
+    });
   }
 
   private buildTray(window: BrowserWindow): void {

@@ -6,7 +6,6 @@ import { TWindowManager } from "../../@core/types/window-manager.js";
   hash: "window/resource/update",
   isCache: true,
   options: {
-    alwaysOnTop: true,
     width: 400,
     height: 500,
   },
