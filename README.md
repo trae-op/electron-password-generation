@@ -14,8 +14,11 @@ Electron desktop app for generating, storing, and quickly copying strong passwor
 
 - Home dashboard lists saved resources (e.g., Google) with copy, edit, and delete actions.
 - Password generator window lets you choose length, include numbers/uppercase/special characters, and optionally update an existing key.
+  ![create-gp](create-gp-gif.gif)
 - Master key window to set, update, or remove the vault lock.
+  ![unblock-gp](gp-unbloked-gif.gif)
 - Tray menu exposes resources for quick copy/open plus update and quit shortcuts.
+  ![tray-copy-gp](tray-copy-gif.gif)
 - Two-factor windows handle QR enrollment and verification flows.
 - Updater window prompts when a new version is available.
 
