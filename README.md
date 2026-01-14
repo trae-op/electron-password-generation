@@ -19,7 +19,7 @@ Electron desktop app for generating, storing, and quickly copying strong passwor
   ![unblock-gp](gp-unbloked-gif.gif)
 - Tray menu exposes resources for quick copy/open plus update and quit shortcuts.
   ![tray-copy-gp](tray-copy-gif.gif)
-- Two-factor windows handle QR enrollment and verification flows.
+- Two-factor windows handle QR enrollment and verification flows; the app currently relies on the user configuring Google Authenticator (or any other TOTP-compatible app) to scan the QR code, copy the secret, and provide the short-lived codes whenever sensitive actions require the extra factor.
 - Updater window prompts when a new version is available.
 
 ## Technology stack
