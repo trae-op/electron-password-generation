@@ -1,54 +1,33 @@
-# React + TypeScript + Vite
+# electron-gp
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Electron desktop app for generating, storing, and quickly copying strong passwords. It ships with a master-key lock, optional two-factor verification, and a system-tray menu for instant access to saved resources.
 
-Currently, two official plugins are available:
+## Why it is useful
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Keeps credentials local-first and gated behind a user-defined master key.
+- Generates complex passwords on demand with length and character-set controls.
+- Streamlines daily use with one-click copy actions and a tray menu shortcut per resource.
+- Supports two-factor flows and optional social login to protect critical actions.
+- Auto-update support keeps the app current without manual downloads.
 
-## Expanding the ESLint configuration
+## Core functionality
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Home dashboard lists saved resources (e.g., Google) with copy, edit, and delete actions.
+- Password generator window lets you choose length, include numbers/uppercase/special characters, and optionally update an existing key.
+- Master key window to set, update, or remove the vault lock.
+- Tray menu exposes resources for quick copy/open plus update and quit shortcuts.
+- Two-factor windows handle QR enrollment and verification flows.
+- Updater window prompts when a new version is available.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Technology stack
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Platform: Electron (multi-window app, tray, auto-updater).
+- Frontend: React 19, React Router, TypeScript, Vite, Material UI + Emotion styling.
+- Data & services: electron-store for persisted vault data, axios for API calls, reflect-metadata for DI-style modules.
+- Build & tooling: TypeScript project references, electron-builder, ESLint, Vitest unit tests
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Project structure (high level)
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- `src/main`: Electron main process modules (app bootstrap, tray, updater, auth, resources, master key, notifications, user, two-factor).
+- `src/renderer`: React UI (windows for home, add/update/delete resource, master key form, updater, login, 2FA QR/verify; layouts and route guards).
+- `dist-main` / `dist-renderer`: Built Electron main and renderer bundles.
