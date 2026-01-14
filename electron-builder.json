@@ -41,7 +41,7 @@
       "owner": "trae-op",
       "repo": "electron-password-generation",
       "releaseType": "release",
-      "private": true
+      "private": false
     }
   ]
 }
