@@ -25,7 +25,7 @@ jobs:
 
       - name: Run Build for macOS
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run transpile:electron && npm run build && npx electron-builder --mac --x64 --publish=always
 
   build-windows:
@@ -44,5 +44,5 @@ jobs:
 
       - name: Run Build for Windows
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run transpile:electron && npm run build && npx electron-builder --win --x64 --publish=always
