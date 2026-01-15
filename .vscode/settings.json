@@ -1,0 +1,15 @@
+{
+  "github.copilot.chat.codeGeneration.instructions": [
+    {
+      "file": "./docs/сontext-pattern.md"
+    },
+    {
+      "file": "./docs/react-form-instructions.md"
+    }
+  ],
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "file": "./docs/git-commit-instructions.md"
+    }
+  ]
+}
