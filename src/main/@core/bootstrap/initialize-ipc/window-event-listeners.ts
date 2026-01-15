@@ -1,8 +1,5 @@
 import { BrowserWindow } from "electron";
-import type {
-  TWindowManager,
-  TWindowManagerWithHandlers,
-} from "../../types/window-manager.js";
+import type { TWindowManagerWithHandlers } from "../../types/window-manager.js";
 
 type TEventEmitter = {
   on: (...args: any[]) => any;
@@ -120,12 +117,11 @@ const attachHandlersToEmitter = (
 
 export function attachWindowEventListeners(
   browserWindow: BrowserWindow,
-  windowInstance: TWindowManager
+  windowInstance: TWindowManagerWithHandlers
 ): void {
   const entry = windowListeners.get(browserWindow);
-  const typedInstance = windowInstance as TWindowManagerWithHandlers;
 
-  if (entry && entry.instance === typedInstance) {
+  if (entry && entry.instance === windowInstance) {
     return;
   }
 
@@ -134,12 +130,12 @@ export function attachWindowEventListeners(
   }
 
   const handlerNames =
-    getPrototypeMethodNames(typedInstance).filter(isHandlerName);
+    getPrototypeMethodNames(windowInstance).filter(isHandlerName);
 
   const windowCleanups = attachHandlersToEmitter(
     browserWindow,
     browserWindow,
-    typedInstance,
+    windowInstance,
     handlerNames,
     (name) => !isWebContentsHandler(name)
   );
@@ -147,13 +143,13 @@ export function attachWindowEventListeners(
   const webContentsCleanups = attachHandlersToEmitter(
     browserWindow.webContents,
     browserWindow,
-    typedInstance,
+    windowInstance,
     handlerNames,
     (name) => isWebContentsHandler(name)
   );
 
   windowListeners.set(browserWindow, {
-    instance: typedInstance,
+    instance: windowInstance,
     cleanup: [...windowCleanups, ...webContentsCleanups],
   });
 

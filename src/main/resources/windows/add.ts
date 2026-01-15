@@ -1,5 +1,5 @@
 import { WindowManager } from "../../@core/decorators/window-manager.js";
-import { TWindowManager } from "../../@core/types/window-manager.js";
+import type { TWindowManager } from "../../types.js";
 
 @WindowManager<TWindows["addResource"]>({
   hash: "window/resource/add",

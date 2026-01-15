@@ -1,6 +1,5 @@
 import { app, BrowserWindow, Event } from "electron";
 import { WindowManager } from "../@core/decorators/window-manager.js";
-import { TWindowManager } from "../@core/types/window-manager.js";
 import { MenuService } from "../menu/service.js";
 import { getElectronStorage } from "../$shared/store.js";
 import { SetFeedUrlService } from "../updater/services/windows/set-feed-url.js";
@@ -11,6 +10,7 @@ import { TrayService } from "../tray/service.js";
 import { destroyWindows } from "../@core/control-window/destroy.js";
 import { ipcMainOn, ipcWebContentsSend, isDev } from "../$shared/utils.js";
 import { menu } from "../config.js";
+import type { TWindowManager } from "../types.js";
 
 @WindowManager<TWindows["main"]>({
   hash: "window:main",

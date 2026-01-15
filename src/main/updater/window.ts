@@ -1,5 +1,5 @@
 import { WindowManager } from "../@core/decorators/window-manager.js";
-import { TWindowManager } from "../@core/types/window-manager.js";
+import type { TWindowManager } from "../types.js";
 import { CheckForUpdatesService } from "./services/check-for-updates.js";
 
 @WindowManager<TWindows["updateApp"]>({

@@ -1,8 +1,8 @@
 import { BrowserWindow } from "electron";
 import { WindowManager } from "../../@core/decorators/window-manager.js";
-import { TWindowManager } from "../../@core/types/window-manager.js";
 import { ipcWebContentsSend } from "../../$shared/utils.js";
 import { TwoFactorRestApiService } from "../services/rest-api.js";
+import type { TWindowManager } from "../../types.js";
 
 @WindowManager<TWindows["twoFactorQA"]>({
   hash: "window:two-factor-qa",

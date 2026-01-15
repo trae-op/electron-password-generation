@@ -1,8 +1,8 @@
 import { app } from "electron";
 import path from "node:path";
 import { WindowManager } from "../@core/decorators/window-manager.js";
-import { TWindowManager } from "../@core/types/window-manager.js";
 import { isDev } from "../$shared/utils.js";
+import type { TWindowManager } from "../types.js";
 
 @WindowManager<TWindows["preloadApp"]>({
   hash: "window:preload-app",

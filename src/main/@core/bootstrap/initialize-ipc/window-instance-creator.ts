@@ -1,8 +1,10 @@
 import { container } from "../../container.js";
 import type { Constructor } from "../../types/constructor.js";
-import type { TWindowManager } from "../../types/window-manager.js";
+import type { TWindowManagerWithHandlers } from "../../types/window-manager.js";
 
-export async function createWindowInstance<T extends TWindowManager>(
+export async function createWindowInstance<
+  T extends TWindowManagerWithHandlers
+>(
   moduleClass: Constructor,
   windowClass: Constructor<T>
 ): Promise<T | undefined> {

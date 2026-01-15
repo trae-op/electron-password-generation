@@ -5,10 +5,10 @@ import {
   type WebContentsWillRedirectEventParams,
 } from "electron";
 import { WindowManager } from "../@core/decorators/window-manager.js";
-import { TWindowManager } from "../@core/types/window-manager.js";
 import { setElectronStorage } from "../$shared/store.js";
 import { TwoFactorWindowsFactoryService } from "../two-factor/services/windows-factory.js";
 import { messages } from "../config.js";
+import type { TWindowManager } from "../types.js";
 
 @WindowManager<TWindows["authSocialNetwork"]>({
   hash: "window:auth-social-network",
