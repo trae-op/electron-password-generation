@@ -21,7 +21,7 @@ export class MasterKeyWindow implements TWindowManager {
   isSync = false;
   constructor() {}
 
-  onDidFinishLoad(): void {
+  onWebContentsDidFinishLoad(): void {
     this.isSync = true;
   }
 

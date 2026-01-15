@@ -22,14 +22,19 @@ import { messages } from "../config.js";
   },
 })
 export class AuthSocialNetworkWindow implements TWindowManager {
+  private window: BrowserWindow | undefined;
+
   constructor(
     private twoFactorWindowsFactoryService: TwoFactorWindowsFactoryService
   ) {}
 
-  onWillRedirect(
+  onWebContentsDidFinishLoad(window: BrowserWindow): void {
+    this.window = window;
+  }
+
+  onWebContentsWillRedirect(
     _: Event<WebContentsWillRedirectEventParams>,
-    url: string,
-    window: BrowserWindow
+    url: string
   ): void {
     const callBackUrl = new URL(url);
     const searchParams = new URLSearchParams(callBackUrl.search);
@@ -38,15 +43,15 @@ export class AuthSocialNetworkWindow implements TWindowManager {
 
     switch (true) {
       case isSetup: {
-        this.setToStore("window:two-factor-qa", window, searchParams);
+        this.setToStore("window:two-factor-qa", searchParams);
         break;
       }
       case isVerify: {
-        this.setToStore("window:two-factor-verify", window, searchParams);
+        this.setToStore("window:two-factor-verify", searchParams);
         break;
       }
       case /api\/auth\/user\-exists\?message\=/g.test(url): {
-        window.close();
+        this.window?.close();
         const message = searchParams.get("message");
         const email = searchParams.get("email");
 
@@ -66,10 +71,9 @@ export class AuthSocialNetworkWindow implements TWindowManager {
 
   private setToStore(
     nameWindow: TWindows["twoFactorQA"] | TWindows["twoFactorVerify"],
-    window: BrowserWindow,
     searchParams: URLSearchParams
   ): void {
-    window.close();
+    this.window?.close();
     const token = searchParams.get("token");
     const userId = searchParams.get("userId");
 

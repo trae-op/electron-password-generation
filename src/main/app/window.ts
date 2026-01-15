@@ -44,7 +44,7 @@ export class AppWindow implements TWindowManager {
     });
   }
 
-  onDidFinishLoad(window: BrowserWindow): void {
+  onWebContentsDidFinishLoad(window: BrowserWindow): void {
     this.buildMenu(window);
     this.buildTray(window);
     this.checkAuthenticated(window);

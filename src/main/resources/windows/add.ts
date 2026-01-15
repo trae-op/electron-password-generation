@@ -12,5 +12,5 @@ import { TWindowManager } from "../../@core/types/window-manager.js";
 export class AddWindow implements TWindowManager {
   constructor() {}
 
-  onDidFinishLoad(): void {}
+  onWebContentsDidFinishLoad(): void {}
 }

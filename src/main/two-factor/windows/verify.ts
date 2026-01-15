@@ -18,5 +18,5 @@ import { TWindowManager } from "../../@core/types/window-manager.js";
 export class TwoFactorVerifyWindow implements TWindowManager {
   constructor() {}
 
-  onDidFinishLoad(window: BrowserWindow) {}
+  onWebContentsDidFinishLoad(window: BrowserWindow) {}
 }

@@ -19,7 +19,7 @@ export class UpdaterWindow implements TWindowManager {
   private isCheckFirst = true;
   constructor(private checkForUpdatesService: CheckForUpdatesService) {}
 
-  onDidFinishLoad(): void {
+  onWebContentsDidFinishLoad(): void {
     if (this.isCheckFirst) {
       this.checkForUpdatesService.checkForUpdates();
       this.isCheckFirst = false;

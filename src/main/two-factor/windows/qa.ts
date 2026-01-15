@@ -20,7 +20,7 @@ import { TwoFactorRestApiService } from "../services/rest-api.js";
 export class TwoFactorQAWindow implements TWindowManager {
   constructor(private twoFactorRestApiService: TwoFactorRestApiService) {}
 
-  async onDidFinishLoad(window: BrowserWindow) {
+  async onWebContentsDidFinishLoad(window: BrowserWindow) {
     const response = await this.twoFactorRestApiService.generateQA();
 
     // window.webContents.openDevTools();
