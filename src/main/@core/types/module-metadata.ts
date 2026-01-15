@@ -1,10 +1,10 @@
-import { TIpcHandlerInterface } from "./ipc-handler.js";
-import { Constructor } from "./constructor.js";
+import type { TIpcHandlerInterface } from "./ipc-handler.js";
+import type { Constructor } from "./constructor.js";
 
-export interface RgModuleMetadata {
+export type RgModuleMetadata = {
   imports?: Constructor[];
   ipc?: (new (...args: any[]) => TIpcHandlerInterface)[];
   windows?: Constructor[];
   providers?: Constructor[];
   exports?: Constructor[];
-}
+};

@@ -11,5 +11,7 @@ export async function instantiateModule(
       return container.resolve(moduleClass, dependency);
     })
   );
-  return new moduleClass(...resolvedDependencies);
+  const instance = new moduleClass(...resolvedDependencies);
+  container.registerInstance(moduleClass, instance);
+  return instance;
 }

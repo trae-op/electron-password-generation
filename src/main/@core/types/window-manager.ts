@@ -6,9 +6,9 @@ import {
 } from "electron";
 import type { TParamsCreateWindow } from "../control-window/types.js";
 
-export interface WindowManagerOptions extends TParamsCreateWindow {
+export type WindowManagerOptions = TParamsCreateWindow & {
   options: BrowserWindowConstructorOptions;
-}
+};
 
 export type TWindowManager = {
   onDidFinishLoad?: (window: BrowserWindow) => void;

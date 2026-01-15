@@ -10,7 +10,12 @@ export async function initializeModule(
   moduleClass: Constructor,
   metadata: RgModuleMetadata
 ): Promise<void> {
-  container.addModule(moduleClass, metadata);
+  const isNewModule = container.addModule(moduleClass, metadata);
+  container.setModuleMetadata(moduleClass, metadata);
+
+  if (!isNewModule) {
+    return;
+  }
   await registerProviders(moduleClass, metadata);
   await registerImports(metadata);
   await registerWindows(moduleClass, metadata);

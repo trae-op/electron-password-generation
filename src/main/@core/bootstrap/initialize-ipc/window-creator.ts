@@ -8,6 +8,6 @@ export function createWindowWithParams<W extends TParamsCreateWindow>(
   params?: W
 ): BrowserWindow {
   const mergedSettings =
-    params !== undefined ? merge(baseMetadata, params) : baseMetadata;
+    params !== undefined ? merge({}, baseMetadata, params) : baseMetadata;
   return createWindow(mergedSettings);
 }
