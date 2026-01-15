@@ -8,6 +8,9 @@
     },
     {
       "file": "./docs/typescript.md"
+    },
+    {
+      "file": "./docs/javascript.md"
     }
   ],
   "github.copilot.chat.commitMessageGeneration.instructions": [
