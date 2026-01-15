@@ -7,4 +7,3 @@ export {
   useSetMasterKeyValueDispatch,
 } from "./useSelectors";
 export type { TContext, TProviderProps } from "./types";
-export * from "./context";
