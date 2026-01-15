@@ -1,11 +1,11 @@
 import { memo } from "react";
-import { useControlContext } from "../hooks";
+import { useResourcesListSelector } from "../context";
 import { useIpc } from "../hooks/useIpc";
 import { Item } from "./Item";
 
 export const Items = memo(() => {
   useIpc();
-  const { list } = useControlContext();
+  const list = useResourcesListSelector();
 
   if (list === undefined) {
     return null;

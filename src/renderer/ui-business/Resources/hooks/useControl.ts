@@ -1,9 +1,9 @@
 import { useCallback, useMemo } from "react";
 import { THookControl } from "./types";
-import { useControlContextActions } from "./useControlContext";
+import { useSetResourcesCopyKeyResourceIdDispatch } from "../context";
 
 export const useControl = (id?: string): THookControl => {
-  const { setCopyKeyResourceId } = useControlContextActions();
+  const setCopyKeyResourceId = useSetResourcesCopyKeyResourceIdDispatch();
   const submitCopyKeyFormAction = useCallback(async (): Promise<undefined> => {
     if (id !== undefined) {
       const responce = await window.electron.invoke.copyMasterKey({

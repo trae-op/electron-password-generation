@@ -1,20 +1,32 @@
-import { useContext } from "react";
-import { Context, ContextActions } from "../context";
+import {
+  useSetTwoFactorBase64Dispatch,
+  useSetTwoFactorCodeDispatch,
+  useSetTwoFactorPendingDispatch,
+  useTwoFactorBase64Selector,
+  useTwoFactorCodeSelector,
+  useTwoFactorPendingSelector,
+} from "../context";
 
 export const useControlContext = () => {
-  const context = useContext(Context);
+  const pending = useTwoFactorPendingSelector();
+  const base64 = useTwoFactorBase64Selector();
+  const twoFactorCode = useTwoFactorCodeSelector();
 
-  if (!context) {
-    throw new Error("useControlContext must be used inside Provider");
-  }
-  return context;
+  return {
+    pending,
+    base64,
+    twoFactorCode,
+  };
 };
 
 export const useControlContextActions = () => {
-  const context = useContext(ContextActions);
+  const setPending = useSetTwoFactorPendingDispatch();
+  const setBase64 = useSetTwoFactorBase64Dispatch();
+  const setTwoFactorCode = useSetTwoFactorCodeDispatch();
 
-  if (!context) {
-    throw new Error("useControlContextActions must be used inside Provider");
-  }
-  return context;
+  return {
+    setPending,
+    setBase64,
+    setTwoFactorCode,
+  };
 };

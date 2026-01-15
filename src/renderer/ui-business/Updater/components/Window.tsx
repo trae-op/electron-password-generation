@@ -3,21 +3,27 @@ import Button, { ButtonProps } from "@mui/material/Button";
 import { Circular } from "./CircularProgress";
 import { DownloadedButton } from "./DownloadedButton";
 import { useIpc } from "../hooks";
-import { Context } from "../context";
+import { Provider as UpdaterProvider } from "../context";
 import { Message } from "./Message";
 
-export const Window = () => {
-  const value = useIpc();
+const WindowContent = () => {
+  useIpc();
 
   return (
-    <Context.Provider value={value}>
-      <Stack spacing={2} alignItems="center">
-        <Message />
-        <Circular />
-        <DownloadedButton<ButtonProps> component={Button} variant="outlined">
-          Update downloaded
-        </DownloadedButton>
-      </Stack>
-    </Context.Provider>
+    <Stack spacing={2} alignItems="center">
+      <Message />
+      <Circular />
+      <DownloadedButton<ButtonProps> component={Button} variant="outlined">
+        Update downloaded
+      </DownloadedButton>
+    </Stack>
+  );
+};
+
+export const Window = () => {
+  return (
+    <UpdaterProvider>
+      <WindowContent />
+    </UpdaterProvider>
   );
 };

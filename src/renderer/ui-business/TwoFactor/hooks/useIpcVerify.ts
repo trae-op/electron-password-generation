@@ -1,8 +1,12 @@
 import { useEffect } from "react";
-import { useControlContextActions } from "./useControlContext";
+import {
+  useSetTwoFactorCodeDispatch,
+  useSetTwoFactorPendingDispatch,
+} from "../context";
 
 export const useIpcVerify = () => {
-  const { setPending, setTwoFactorCode } = useControlContextActions();
+  const setPending = useSetTwoFactorPendingDispatch();
+  const setTwoFactorCode = useSetTwoFactorCodeDispatch();
 
   useEffect(() => {
     const unSub =
@@ -12,5 +16,5 @@ export const useIpcVerify = () => {
       });
 
     return unSub;
-  }, []);
+  }, [setPending, setTwoFactorCode]);
 };

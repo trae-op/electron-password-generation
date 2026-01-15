@@ -1,17 +1,17 @@
 import { ChangeEvent, useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { useControlContextActions } from "./useControlContext";
+import { useSetUpdateResourceNameDispatch } from "../context";
 import { THookControl } from "./types";
 
 export const useControl = (): THookControl => {
   const { id } = useParams<{ id: string }>();
-  const { setName } = useControlContextActions();
+  const setName = useSetUpdateResourceNameDispatch();
 
   const handleTextInputChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       setName(event.target.value);
     },
-    []
+    [setName]
   );
 
   const submitFormAction = useCallback(

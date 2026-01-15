@@ -6,18 +6,23 @@ import type {
 } from "./types";
 import { isValidTwoFactor } from "@utils/regexes";
 import {
-  useControlContext,
-  useControlContextActions,
-} from "./useControlContext";
+  useSetTwoFactorCodeDispatch,
+  useSetTwoFactorPendingDispatch,
+  useTwoFactorCodeSelector,
+} from "../context";
 
 export const useControlTwoFactorVerify = (): THookControlTwoFactorVerify => {
-  const { setTwoFactorCode, setPending } = useControlContextActions();
-  const { twoFactorCode } = useControlContext();
+  const setTwoFactorCode = useSetTwoFactorCodeDispatch();
+  const setPending = useSetTwoFactorPendingDispatch();
+  const twoFactorCode = useTwoFactorCodeSelector();
   const [isFocus, setFocus] = useState(false);
 
-  const handleChange = useCallback((event: TChangeEvent) => {
-    setTwoFactorCode(event.target.value);
-  }, []);
+  const handleChange = useCallback(
+    (event: TChangeEvent) => {
+      setTwoFactorCode(event.target.value);
+    },
+    [setTwoFactorCode]
+  );
 
   const handleSubmit = useCallback(
     (event: TFormEvent) => {
@@ -25,7 +30,7 @@ export const useControlTwoFactorVerify = (): THookControlTwoFactorVerify => {
       setPending(true);
       window.electron.send.sendTwoFactorCodeVerify({ twoFactorCode });
     },
-    [twoFactorCode]
+    [setPending, twoFactorCode]
   );
 
   const handleFocus = useCallback(() => {

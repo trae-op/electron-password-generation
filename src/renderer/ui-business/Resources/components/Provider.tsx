@@ -1,45 +1,46 @@
-import { useState, useMemo, useCallback } from "react";
-import isEqual from "lodash.isequal";
-import { Context, ContextActions } from "../context";
+import { useEffect } from "react";
+import type { ReactNode } from "react";
+import {
+  Provider as ResourcesProvider,
+  useSetResourcesIsDisabledActionsDispatch,
+  useSetResourcesIsMasterKeyDispatch,
+} from "../context";
 import type { TPropsProvider } from "./types";
+
+const ProviderBridge = ({
+  children,
+  isMasterKey,
+  isDisabledActions,
+}: Required<Pick<TPropsProvider, "isMasterKey" | "isDisabledActions">> & {
+  children: ReactNode;
+}) => {
+  const setIsMasterKey = useSetResourcesIsMasterKeyDispatch();
+  const setIsDisabledActions = useSetResourcesIsDisabledActionsDispatch();
+
+  useEffect(() => {
+    setIsMasterKey(isMasterKey);
+  }, [isMasterKey, setIsMasterKey]);
+
+  useEffect(() => {
+    setIsDisabledActions(isDisabledActions);
+  }, [isDisabledActions, setIsDisabledActions]);
+
+  return children;
+};
 
 export const Provider = ({
   children,
   isMasterKey = false,
   isDisabledActions = false,
 }: TPropsProvider) => {
-  const [list, setList] = useState<TResource[] | undefined>(undefined);
-  const [copyKeyResourceId, setCopyKeyResourceId] = useState<
-    string | undefined
-  >(undefined);
-
-  const setItems = useCallback((items: TResource[]) => {
-    setList((prevItems) => (isEqual(prevItems, items) ? prevItems : items));
-  }, []);
-
-  const value = useMemo(
-    () => ({
-      list,
-      isMasterKey,
-      isDisabledActions,
-      copyKeyResourceId,
-    }),
-    [list, isMasterKey, copyKeyResourceId, isDisabledActions]
-  );
-
-  const actions = useMemo(
-    () => ({
-      setItems,
-      setCopyKeyResourceId,
-    }),
-    [setItems, setCopyKeyResourceId]
-  );
-
   return (
-    <Context.Provider value={value}>
-      <ContextActions.Provider value={actions}>
+    <ResourcesProvider>
+      <ProviderBridge
+        isMasterKey={isMasterKey}
+        isDisabledActions={isDisabledActions}
+      >
         {children}
-      </ContextActions.Provider>
-    </Context.Provider>
+      </ProviderBridge>
+    </ResourcesProvider>
   );
 };

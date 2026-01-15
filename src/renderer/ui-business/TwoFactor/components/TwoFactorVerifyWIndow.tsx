@@ -2,13 +2,13 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import { useControlTwoFactorVerify } from "../hooks/useControlTwoFactorVerify";
-import { useControlContext } from "../hooks/useControlContext";
+import { useTwoFactorPendingSelector } from "../context";
 import { useIpcVerify } from "../hooks/useIpcVerify";
 import { messages } from "@config/config";
 
 export const TwoFactorVerifyWindow = () => {
   useIpcVerify();
-  const { pending } = useControlContext();
+  const pending = useTwoFactorPendingSelector();
   const {
     handleChange,
     handleSubmit,

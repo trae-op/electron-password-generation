@@ -1,9 +1,9 @@
 import { memo } from "react";
 import Typography, { type TypographyProps } from "@mui/material/Typography";
-import { useControlContext } from "../hooks";
+import { useUpdaterMessageSelector } from "../context";
 
 export const Message = memo((props: TypographyProps) => {
-  const { message } = useControlContext();
+  const message = useUpdaterMessageSelector();
 
   if (message === undefined) {
     return null;

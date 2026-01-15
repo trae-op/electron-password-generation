@@ -1,20 +1,26 @@
-import { useContext } from "react";
-import { Context, ContextActions } from "../context";
+import {
+  useMasterKeyIsMasterKeySelector,
+  useMasterKeyValueSelector,
+  useSetMasterKeyIsMasterKeyDispatch,
+  useSetMasterKeyValueDispatch,
+} from "../context";
 
 export const useControlContext = () => {
-  const context = useContext(Context);
+  const isMasterKey = useMasterKeyIsMasterKeySelector();
+  const key = useMasterKeyValueSelector();
 
-  if (!context) {
-    throw new Error("useControlContext must be used inside Provider");
-  }
-  return context;
+  return {
+    isMasterKey,
+    key,
+  };
 };
 
 export const useControlContextActions = () => {
-  const context = useContext(ContextActions);
+  const setMasterKey = useSetMasterKeyIsMasterKeyDispatch();
+  const setKey = useSetMasterKeyValueDispatch();
 
-  if (!context) {
-    throw new Error("useControlContextActions must be used inside Provider");
-  }
-  return context;
+  return {
+    setMasterKey,
+    setKey,
+  };
 };

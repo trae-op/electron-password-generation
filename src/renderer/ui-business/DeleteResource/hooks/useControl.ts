@@ -1,14 +1,16 @@
 import { useCallback, useMemo } from "react";
-import { useParams } from "react-router-dom";
 import { THookControl } from "./types";
+import { useDeleteResourceIdSelector } from "../context";
 
 export const useControl = (): THookControl => {
-  const { id } = useParams<{ id: string }>();
+  const id = useDeleteResourceIdSelector();
 
   const submitFormAction = useCallback(async (): Promise<undefined> => {
-    await window.electron.invoke.deleteResource({
-      id: id + "",
-    });
+    if (id !== undefined) {
+      await window.electron.invoke.deleteResource({
+        id: id + "",
+      });
+    }
   }, [id]);
 
   const handleCancel = useCallback(() => {

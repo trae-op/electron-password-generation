@@ -1,41 +1,37 @@
-import { useState, useMemo } from "react";
+import { useEffect } from "react";
+import type { ReactElement, ReactNode } from "react";
 import type { TPropsProvider } from "./types";
-import { Context, ContextActions, ContextComponents } from "../context";
+import {
+  Provider as AddResourceProvider,
+  useSetAddResourceRenderGenerateCharactersDispatch,
+} from "../context";
+
+const ProviderBridge = ({
+  children,
+  renderGenerateCharacters,
+}: {
+  children: ReactNode;
+  renderGenerateCharacters: ReactElement;
+}) => {
+  const setRenderGenerateCharacters =
+    useSetAddResourceRenderGenerateCharactersDispatch();
+
+  useEffect(() => {
+    setRenderGenerateCharacters(renderGenerateCharacters);
+  }, [renderGenerateCharacters, setRenderGenerateCharacters]);
+
+  return children;
+};
 
 export const Provider = ({
   children,
   renderGenerateCharacters,
 }: TPropsProvider) => {
-  const [name, setName] = useState("");
-
-  const value = useMemo(
-    () => ({
-      name,
-    }),
-    [name]
-  );
-
-  const actions = useMemo(
-    () => ({
-      setName,
-    }),
-    [setName]
-  );
-
-  const components = useMemo(
-    () => ({
-      renderGenerateCharacters,
-    }),
-    [renderGenerateCharacters]
-  );
-
   return (
-    <ContextComponents.Provider value={components}>
-      <Context.Provider value={value}>
-        <ContextActions.Provider value={actions}>
-          {children}
-        </ContextActions.Provider>
-      </Context.Provider>
-    </ContextComponents.Provider>
+    <AddResourceProvider>
+      <ProviderBridge renderGenerateCharacters={renderGenerateCharacters}>
+        {children}
+      </ProviderBridge>
+    </AddResourceProvider>
   );
 };

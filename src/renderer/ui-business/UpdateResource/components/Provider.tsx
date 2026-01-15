@@ -1,47 +1,37 @@
-import { useState, useMemo } from "react";
+import { useEffect } from "react";
+import type { ReactElement, ReactNode } from "react";
 import type { TPropsProvider } from "./types";
-import { Context, ContextActions, ContextComponents } from "../context";
+import {
+  Provider as UpdateResourceProvider,
+  useSetUpdateResourceRenderGenerateCharactersDispatch,
+} from "../context";
+
+const ProviderBridge = ({
+  children,
+  renderGenerateCharacters,
+}: {
+  children: ReactNode;
+  renderGenerateCharacters: ReactElement;
+}) => {
+  const setRenderGenerateCharacters =
+    useSetUpdateResourceRenderGenerateCharactersDispatch();
+
+  useEffect(() => {
+    setRenderGenerateCharacters(renderGenerateCharacters);
+  }, [renderGenerateCharacters, setRenderGenerateCharacters]);
+
+  return children;
+};
 
 export const Provider = ({
   children,
   renderGenerateCharacters,
 }: TPropsProvider) => {
-  const [result, setResult] = useState<TResource>();
-  const [name, setName] = useState("");
-  const [openCreateNewPassword, setOpenCreateNewPassword] = useState(false);
-
-  const value = useMemo(
-    () => ({
-      name,
-      result,
-      openCreateNewPassword,
-    }),
-    [name, result, openCreateNewPassword]
-  );
-
-  const actions = useMemo(
-    () => ({
-      setResult,
-      setName,
-      setOpenCreateNewPassword,
-    }),
-    [setResult, setName, setOpenCreateNewPassword]
-  );
-
-  const components = useMemo(
-    () => ({
-      renderGenerateCharacters,
-    }),
-    [renderGenerateCharacters]
-  );
-
   return (
-    <ContextComponents.Provider value={components}>
-      <Context.Provider value={value}>
-        <ContextActions.Provider value={actions}>
-          {children}
-        </ContextActions.Provider>
-      </Context.Provider>
-    </ContextComponents.Provider>
+    <UpdateResourceProvider>
+      <ProviderBridge renderGenerateCharacters={renderGenerateCharacters}>
+        {children}
+      </ProviderBridge>
+    </UpdateResourceProvider>
   );
 };

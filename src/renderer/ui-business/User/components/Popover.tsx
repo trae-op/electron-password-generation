@@ -4,10 +4,7 @@ import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
 import Popover from "@mui/material/Popover";
 import { useControl } from "../hooks/useControl";
-import {
-  useControlContext,
-  useControlContextUserPopover,
-} from "../hooks/useControlContext";
+import { useUserIsNewVersionAppSelector, useUserSelector } from "../context";
 import { useIpc } from "../hooks";
 import { Content } from "./Content";
 
@@ -42,9 +39,9 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 export const UserPopover = () => {
   useIpc();
-  const { isNewVersionApp } = useControlContextUserPopover();
+  const isNewVersionApp = useUserIsNewVersionAppSelector();
   const { handleClick, handleClose, id, isOpen, anchorEl } = useControl();
-  const { user } = useControlContext();
+  const user = useUserSelector();
 
   if (user === undefined) {
     return null;

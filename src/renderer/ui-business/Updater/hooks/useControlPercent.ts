@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import type { THookControlPercent } from "./types";
-import { useControlContext } from "./useControlContext";
+import { useUpdaterDownloadedPercentSelector } from "../context";
 
 export const useControlPercent = (): THookControlPercent => {
-  const { downloadedPercent } = useControlContext();
+  const downloadedPercent = useUpdaterDownloadedPercentSelector();
   const percent = useMemo(
     () =>
       downloadedPercent === undefined

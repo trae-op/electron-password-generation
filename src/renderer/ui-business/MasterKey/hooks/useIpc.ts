@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { useControlContextActions } from "./useControlContext";
+import { useSetMasterKeyIsMasterKeyDispatch } from "../context";
 
 export const useIpc = () => {
-  const { setMasterKey } = useControlContextActions();
+  const setMasterKey = useSetMasterKeyIsMasterKeyDispatch();
 
   useEffect(() => {
     window.electron.send.checkMasterKey();
@@ -12,5 +12,5 @@ export const useIpc = () => {
     window.electron.receive.subscribeMasterKey(({ isMasterKey }) => {
       setMasterKey(isMasterKey);
     });
-  }, []);
+  }, [setMasterKey]);
 };

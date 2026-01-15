@@ -5,6 +5,9 @@
     },
     {
       "file": "./docs/react-form-instructions.md"
+    },
+    {
+      "file": "./docs/typescript.md"
     }
   ],
   "github.copilot.chat.commitMessageGeneration.instructions": [

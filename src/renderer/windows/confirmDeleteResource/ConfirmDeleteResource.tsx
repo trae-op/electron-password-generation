@@ -1,7 +1,11 @@
-import { Confirm } from "@ui-business/DeleteResource";
+import { Confirm, Provider } from "@ui-business/DeleteResource";
 
 const ConfirmDeleteResource = () => {
-  return <Confirm />;
+  return (
+    <Provider>
+      <Confirm />
+    </Provider>
+  );
 };
 
 export default ConfirmDeleteResource;

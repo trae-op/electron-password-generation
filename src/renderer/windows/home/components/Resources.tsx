@@ -2,13 +2,16 @@ import { memo } from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { Provider as ProviderResources, Items } from "@ui-business/Resources";
+import {
+  Provider as ProviderResources,
+  Items,
+  useResourcesListSelector,
+} from "@ui-business/Resources";
 import { useControlContext as useControlContextSync } from "@ui-business/Sync";
-import { useControlContext as useControlContextResources } from "@ui-business/Resources";
 import { TPropsHomeChildren } from "./types";
 
 const Container = memo(({ children }: { children: React.ReactElement }) => {
-  const { list } = useControlContextResources();
+  const list = useResourcesListSelector();
 
   if (list !== undefined && list.length === 0) {
     return (

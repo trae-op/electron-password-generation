@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { useControlContextActions } from "./useControlContext";
+import { useSetAuthSocialNetworkAuthenticatedDispatch } from "../context";
 
 export const useIpc = () => {
-  const { setAuthenticated } = useControlContextActions();
+  const setAuthenticated = useSetAuthSocialNetworkAuthenticatedDispatch();
 
   useEffect(() => {
     window.electron.receive.subscribeWindowAuthSocialNetwork(
@@ -10,5 +10,5 @@ export const useIpc = () => {
         setAuthenticated(isAuthenticated);
       }
     );
-  }, []);
+  }, [setAuthenticated]);
 };

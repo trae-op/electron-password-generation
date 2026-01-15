@@ -1,10 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import isEqual from "lodash.isequal";
-import { useControlContextActions } from "./useControlContext";
+import {
+  useSetUpdateResourceNameDispatch,
+  useSetUpdateResourceResultDispatch,
+  useUpdateResourceResultSelector,
+} from "../context";
 
 export const useIpc = () => {
-  const { setResult, setName } = useControlContextActions();
+  const setResult = useSetUpdateResourceResultDispatch();
+  const setName = useSetUpdateResourceNameDispatch();
+  const result = useUpdateResourceResultSelector();
+  const resultRef = useRef(result);
+
+  useEffect(() => {
+    resultRef.current = result;
+  }, [result]);
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -15,10 +26,12 @@ export const useIpc = () => {
 
   useEffect(() => {
     window.electron.receive.subscribeGetResource(({ item }) => {
-      setResult((prevItem) => (isEqual(prevItem, item) ? prevItem : item));
+      if (!isEqual(resultRef.current, item)) {
+        setResult(item);
+      }
       if (item !== undefined) {
         setName(item.name);
       }
     });
-  }, []);
+  }, [setName, setResult]);
 };

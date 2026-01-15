@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { useControlContextActions } from "./useControlContext";
+import { useSetUserDispatch } from "../context";
 
 export const useIpc = () => {
-  const { setUser } = useControlContextActions();
+  const setUser = useSetUserDispatch();
 
   useEffect(() => {
     const unSub = window.electron.receive.subscribeCheckUser(({ user }) => {
@@ -10,7 +10,7 @@ export const useIpc = () => {
     });
 
     return unSub;
-  }, []);
+  }, [setUser]);
 
   useEffect(() => {
     window.electron.send.checkUser();

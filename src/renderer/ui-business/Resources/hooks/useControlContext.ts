@@ -1,20 +1,32 @@
-import { useContext } from "react";
-import { Context, ContextActions } from "../context";
+import {
+  useResourcesCopyKeyResourceIdSelector,
+  useResourcesIsDisabledActionsSelector,
+  useResourcesIsMasterKeySelector,
+  useResourcesListSelector,
+  useSetResourcesCopyKeyResourceIdDispatch,
+  useSetResourcesListDispatch,
+} from "../context";
 
 export const useControlContext = () => {
-  const context = useContext(Context);
+  const list = useResourcesListSelector();
+  const isMasterKey = useResourcesIsMasterKeySelector();
+  const copyKeyResourceId = useResourcesCopyKeyResourceIdSelector();
+  const isDisabledActions = useResourcesIsDisabledActionsSelector();
 
-  if (!context) {
-    throw new Error("useControlContext must be used inside Provider");
-  }
-  return context;
+  return {
+    list,
+    isMasterKey,
+    copyKeyResourceId,
+    isDisabledActions,
+  };
 };
 
 export const useControlContextActions = () => {
-  const context = useContext(ContextActions);
+  const setItems = useSetResourcesListDispatch();
+  const setCopyKeyResourceId = useSetResourcesCopyKeyResourceIdDispatch();
 
-  if (!context) {
-    throw new Error("useControlContextActions must be used inside Provider");
-  }
-  return context;
+  return {
+    setItems,
+    setCopyKeyResourceId,
+  };
 };

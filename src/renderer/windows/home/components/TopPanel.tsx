@@ -1,16 +1,21 @@
-import { lazy, memo, Suspense } from "react";
+import { lazy, memo, Suspense, useEffect, useMemo } from "react";
 import Stack from "@mui/material/Stack";
 import ListItemButton, {
   ListItemButtonProps,
 } from "@mui/material/ListItemButton";
 import { grey } from "@mui/material/colors";
-import { UserPopover, ContextUserPopover } from "@ui-business/User";
+import {
+  UserPopover,
+  useSetUserIsNewVersionAppDispatch,
+  useSetUserRenderButtonLogoutDispatch,
+  useSetUserRenderButtonUpdateAppDispatch,
+} from "@ui-business/User";
 import { LogoutButton } from "@ui-business/AuthSocialNetwork";
 import CircularProgress from "@mui/material/CircularProgress";
 import {
   useIpc as useIpcUpdate,
-  Context as ContextUpdater,
   DownloadedButton,
+  useUpdaterStatusSelector,
 } from "@ui-business/Updater";
 import { TopPanel } from "@layouts/TopPanel";
 import { Container as ContainerAppVersion } from "@ui-composites/AppVersion";
@@ -23,7 +28,41 @@ const LazyActionsKey = lazy(() => import("./ActionsKey"));
 
 const ContainerTopPanel = memo(({ isMasterKey }: TPropsHomeChildren) => {
   useIpcSync();
-  const value = useIpcUpdate();
+  useIpcUpdate();
+  const status = useUpdaterStatusSelector();
+  const setIsNewVersionApp = useSetUserIsNewVersionAppDispatch();
+  const setRenderButtonLogout = useSetUserRenderButtonLogoutDispatch();
+  const setRenderButtonUpdateApp = useSetUserRenderButtonUpdateAppDispatch();
+
+  const renderButtonLogout = useMemo(
+    () => (
+      <LogoutButton<ListItemButtonProps> component={ListItemButton}>
+        Logout
+      </LogoutButton>
+    ),
+    []
+  );
+
+  const renderButtonUpdateApp = useMemo(
+    () => (
+      <DownloadedButton<ListItemButtonProps> component={ListItemButton}>
+        Update
+      </DownloadedButton>
+    ),
+    []
+  );
+
+  useEffect(() => {
+    setIsNewVersionApp(status === "update-downloaded");
+  }, [setIsNewVersionApp, status]);
+
+  useEffect(() => {
+    setRenderButtonLogout(renderButtonLogout);
+  }, [renderButtonLogout, setRenderButtonLogout]);
+
+  useEffect(() => {
+    setRenderButtonUpdateApp(renderButtonUpdateApp);
+  }, [renderButtonUpdateApp, setRenderButtonUpdateApp]);
 
   return (
     <TopPanel
@@ -57,27 +96,7 @@ const ContainerTopPanel = memo(({ isMasterKey }: TPropsHomeChildren) => {
           <LazyAddResource isMasterKey={isMasterKey} />
         </Suspense>
 
-        <ContextUserPopover.Provider
-          value={{
-            isNewVersionApp: value.status === "update-downloaded",
-            renderButtonLogout: (
-              <LogoutButton<ListItemButtonProps> component={ListItemButton}>
-                Logout
-              </LogoutButton>
-            ),
-            renderButtonUpdateApp: (
-              <ContextUpdater.Provider value={value}>
-                <DownloadedButton<ListItemButtonProps>
-                  component={ListItemButton}
-                >
-                  Update
-                </DownloadedButton>
-              </ContextUpdater.Provider>
-            ),
-          }}
-        >
-          <UserPopover />
-        </ContextUserPopover.Provider>
+        <UserPopover />
       </Stack>
     </TopPanel>
   );

@@ -1,9 +1,10 @@
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import {
-  useControlContext,
-  useControlContextUserPopover,
-} from "../hooks/useControlContext";
+  useUserRenderButtonLogoutSelector,
+  useUserRenderButtonUpdateAppSelector,
+  useUserSelector,
+} from "../context";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
@@ -11,9 +12,9 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 
 export const Content = () => {
-  const { user } = useControlContext();
-  const { renderButtonLogout, renderButtonUpdateApp } =
-    useControlContextUserPopover();
+  const user = useUserSelector();
+  const renderButtonLogout = useUserRenderButtonLogoutSelector();
+  const renderButtonUpdateApp = useUserRenderButtonUpdateAppSelector();
 
   if (user === undefined) {
     return null;

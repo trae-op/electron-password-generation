@@ -1,9 +1,13 @@
 import { useCallback, useMemo } from "react";
 import type { THookUpdateDownloaded } from "./types";
-import { useControlContext } from "./useControlContext";
+import {
+  useUpdaterPlatformSelector,
+  useUpdaterUpdateFileSelector,
+} from "../context";
 
 export const useUpdateDownloaded = (): THookUpdateDownloaded => {
-  const { platform, updateFile } = useControlContext();
+  const platform = useUpdaterPlatformSelector();
+  const updateFile = useUpdaterUpdateFileSelector();
 
   const handleUpdate = useCallback(() => {
     if (platform === "win32") {

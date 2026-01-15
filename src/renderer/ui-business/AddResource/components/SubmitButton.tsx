@@ -1,7 +1,8 @@
 import { useFormStatus } from "react-dom";
 import Button from "@mui/material/Button";
+import type { TSubmitButtonProps } from "./types";
 
-export const SubmitButton = () => {
+export const SubmitButton = ({ label }: TSubmitButtonProps) => {
   const { pending } = useFormStatus();
 
   return (
@@ -13,7 +14,7 @@ export const SubmitButton = () => {
       loading={pending}
       disabled={pending}
     >
-      {pending ? "Sending..." : "Apply"}
+      {pending ? "Sending..." : label || "Apply"}
     </Button>
   );
 };

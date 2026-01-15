@@ -1,31 +1,35 @@
-import { useContext } from "react";
-import { Context, ContextActions, ContextUserPopover } from "../context";
+import {
+  useSetUserDispatch,
+  useUserIsNewVersionAppSelector,
+  useUserRenderButtonLogoutSelector,
+  useUserRenderButtonUpdateAppSelector,
+  useUserSelector,
+} from "../context";
 
 export const useControlContext = () => {
-  const context = useContext(Context);
+  const user = useUserSelector();
 
-  if (!context) {
-    throw new Error("useControlContext must be used inside Provider");
-  }
-  return context;
+  return {
+    user,
+  };
 };
 
 export const useControlContextActions = () => {
-  const context = useContext(ContextActions);
+  const setUser = useSetUserDispatch();
 
-  if (!context) {
-    throw new Error("useControlContextActions must be used inside Provider");
-  }
-  return context;
+  return {
+    setUser,
+  };
 };
 
 export const useControlContextUserPopover = () => {
-  const context = useContext(ContextUserPopover);
+  const renderButtonUpdateApp = useUserRenderButtonUpdateAppSelector();
+  const renderButtonLogout = useUserRenderButtonLogoutSelector();
+  const isNewVersionApp = useUserIsNewVersionAppSelector();
 
-  if (!context) {
-    throw new Error(
-      "useControlContextUserPopover must be used inside Provider"
-    );
-  }
-  return context;
+  return {
+    renderButtonUpdateApp,
+    renderButtonLogout,
+    isNewVersionApp,
+  };
 };

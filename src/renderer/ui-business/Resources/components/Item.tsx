@@ -8,7 +8,10 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { CopyKeyFormButton } from "./CopyKeyForm";
-import { useControlContext } from "../hooks/useControlContext";
+import {
+  useResourcesIsDisabledActionsSelector,
+  useResourcesIsMasterKeySelector,
+} from "../context";
 import { TPropsItem } from "./types";
 
 function arePropsEqual(oldProps: TPropsItem, newProps: TPropsItem): boolean {
@@ -17,7 +20,8 @@ function arePropsEqual(oldProps: TPropsItem, newProps: TPropsItem): boolean {
 
 export const Item = memo(
   ({ name, id, handleUpdate, handleDelete, handleKey }: TPropsItem) => {
-    const { isMasterKey, isDisabledActions } = useControlContext();
+    const isMasterKey = useResourcesIsMasterKeySelector();
+    const isDisabledActions = useResourcesIsDisabledActionsSelector();
 
     return (
       <Card sx={{ width: "100%" }}>

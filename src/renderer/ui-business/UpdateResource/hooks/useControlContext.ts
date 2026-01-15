@@ -1,29 +1,40 @@
-import { useContext } from "react";
-import { Context, ContextActions, ContextComponents } from "../context";
+import {
+  useSetUpdateResourceNameDispatch,
+  useSetUpdateResourceRenderGenerateCharactersDispatch,
+  useSetUpdateResourceResultDispatch,
+  useUpdateResourceNameSelector,
+  useUpdateResourceRenderGenerateCharactersSelector,
+  useUpdateResourceResultSelector,
+} from "../context";
 
 export const useControlContext = () => {
-  const context = useContext(Context);
+  const result = useUpdateResourceResultSelector();
+  const name = useUpdateResourceNameSelector();
 
-  if (!context) {
-    throw new Error("useControlContext must be used inside Provider");
-  }
-  return context;
+  return {
+    result,
+    name,
+  };
 };
 
 export const useControlContextActions = () => {
-  const context = useContext(ContextActions);
+  const setResult = useSetUpdateResourceResultDispatch();
+  const setName = useSetUpdateResourceNameDispatch();
 
-  if (!context) {
-    throw new Error("useControlContextActions must be used inside Provider");
-  }
-  return context;
+  return {
+    setResult,
+    setName,
+  };
 };
 
 export const useControlContextComponents = () => {
-  const context = useContext(ContextComponents);
+  const renderGenerateCharacters =
+    useUpdateResourceRenderGenerateCharactersSelector();
+  const setRenderGenerateCharacters =
+    useSetUpdateResourceRenderGenerateCharactersDispatch();
 
-  if (!context) {
-    throw new Error("ContextComponents must be used inside Provider");
-  }
-  return context;
+  return {
+    renderGenerateCharacters,
+    setRenderGenerateCharacters,
+  };
 };

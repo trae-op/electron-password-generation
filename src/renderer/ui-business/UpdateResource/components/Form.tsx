@@ -1,18 +1,16 @@
-import { useActionState } from "react";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
 import { useIpc } from "../hooks/useIpc";
 import { LoadingSpinner } from "@components/LoadingSpinner";
 import { SubmitButton } from "./SubmitButton";
-import { useControl } from "../hooks/useControl";
-import { useControlContext } from "../hooks/useControlContext";
-import { CheckboxGenerateKey } from "./CheckboxGenerateKey";
+import { useUpdateResourceForm } from "../hooks/useUpdateResourceForm";
+import { NameField } from "./fields/NameField";
+import { GenerateKeyField } from "./fields/GenerateKeyField";
+import { useUpdateResourceResultSelector } from "../context";
 
 export const Form = () => {
   useIpc();
-  const { result, name } = useControlContext();
-  const { handleTextInputChange, submitFormAction } = useControl();
-  const [_, formAction] = useActionState(submitFormAction, undefined);
+  const result = useUpdateResourceResultSelector();
+  const { state, formAction } = useUpdateResourceForm();
 
   if (result === undefined) {
     return <LoadingSpinner />;
@@ -21,16 +19,9 @@ export const Form = () => {
   return (
     <form action={formAction} noValidate autoComplete="off">
       <Stack direction="column" spacing={1}>
-        <TextField
-          label="Resource name"
-          variant="outlined"
-          name="name"
-          value={name}
-          onChange={handleTextInputChange}
-          fullWidth
-        />
+        <NameField error={state.errors?.name} />
 
-        <CheckboxGenerateKey />
+        <GenerateKeyField />
 
         <SubmitButton />
       </Stack>

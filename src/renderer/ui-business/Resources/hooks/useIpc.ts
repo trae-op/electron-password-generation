@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { useControlContextActions } from "./useControlContext";
+import { useSetResourcesListDispatch } from "../context";
 
 export const useIpc = () => {
-  const { setItems } = useControlContextActions();
+  const setList = useSetResourcesListDispatch();
 
   useEffect(() => {
     window.electron.send.resources();
@@ -10,7 +10,7 @@ export const useIpc = () => {
 
   useEffect(() => {
     window.electron.receive.subscribeResources(({ items }) => {
-      setItems(items);
+      setList(items);
     });
-  }, []);
+  }, [setList]);
 };

@@ -1,20 +1,20 @@
-import { useContext } from "react";
-import { Context, ContextActions } from "../context";
+import {
+  useAuthSocialNetworkAuthenticatedSelector,
+  useSetAuthSocialNetworkAuthenticatedDispatch,
+} from "../context";
 
 export const useControlContext = () => {
-  const context = useContext(Context);
+  const isAuthenticated = useAuthSocialNetworkAuthenticatedSelector();
 
-  if (!context) {
-    throw new Error("useControlContext must be used inside Provider");
-  }
-  return context;
+  return {
+    isAuthenticated,
+  };
 };
 
 export const useControlContextActions = () => {
-  const context = useContext(ContextActions);
+  const setAuthenticated = useSetAuthSocialNetworkAuthenticatedDispatch();
 
-  if (!context) {
-    throw new Error("useControlContextActions must be used inside Provider");
-  }
-  return context;
+  return {
+    setAuthenticated,
+  };
 };

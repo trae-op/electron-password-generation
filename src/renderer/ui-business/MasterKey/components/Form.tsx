@@ -1,19 +1,18 @@
-import { useActionState } from "react";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
 import { useIpc } from "../hooks/useIpc";
 import { SubmitButton } from "./SubmitButton";
 import { useControl } from "../hooks/useControl";
-import { useControlContext } from "../hooks/useControlContext";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { useMasterKeyForm } from "../hooks/useMasterKeyForm";
+import { MasterKeyField } from "./fields/MasterKeyField";
+import { useMasterKeyIsMasterKeySelector } from "../context";
 
 export const Form = () => {
   useIpc();
-  const { handleTextInputChange, submitFormAction, handleDeleteMasterKey } =
-    useControl();
-  const [_, formAction] = useActionState(submitFormAction, undefined);
-  const { isMasterKey } = useControlContext();
+  const { handleDeleteMasterKey } = useControl();
+  const { formAction } = useMasterKeyForm();
+  const isMasterKey = useMasterKeyIsMasterKeySelector();
 
   return (
     <form action={formAction} noValidate autoComplete="off">
@@ -21,14 +20,7 @@ export const Form = () => {
         <Typography variant="h6" gutterBottom>
           Add or update master key
         </Typography>
-        <TextField
-          label="Master key"
-          variant="outlined"
-          name="key"
-          type="password"
-          onChange={handleTextInputChange}
-          fullWidth
-        />
+        <MasterKeyField />
         <SubmitButton />
         {isMasterKey && (
           <Button

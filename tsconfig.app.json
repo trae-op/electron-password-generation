@@ -49,5 +49,9 @@
     }
   },
   "include": ["src"],
-  "exclude": ["src/main"]
+  "exclude": [
+    "src/main",
+    "src/renderer/ui-business/**/context.ts",
+    "src/renderer/ui-business/**/type.ts"
+  ]
 }
