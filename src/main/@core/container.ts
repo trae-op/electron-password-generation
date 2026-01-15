@@ -1,5 +1,12 @@
 import type { Constructor } from "./types/constructor.js";
 import type { RgModuleMetadata } from "./types/module-metadata.js";
+import type {
+  TClassProvider,
+  TExistingProvider,
+  TFactoryProvider,
+  TProvider,
+  TValueProvider,
+} from "./types/provider.js";
 
 type TModuleData = {
   providers: Map<any, any>;
@@ -113,6 +120,39 @@ export class Container {
       return this.instances.get(token) as T;
     }
 
+    if (this.isFactoryProvider(provider)) {
+      const dependencies = provider.inject ?? [];
+      const resolvedDependencies = await Promise.all(
+        dependencies.map(async (dep: any) => this.resolve(moduleClass, dep))
+      );
+      const instance = provider.useFactory(...resolvedDependencies);
+      this.instances.set(token, instance);
+      return instance as T;
+    }
+
+    if (this.isClassProvider(provider)) {
+      const dependencies =
+        provider.inject ??
+        (Reflect.getMetadata("design:paramtypes", provider.useClass) || []);
+      const resolvedDependencies = await Promise.all(
+        dependencies.map(async (dep: any) => this.resolve(moduleClass, dep))
+      );
+      const instance = new provider.useClass(...resolvedDependencies);
+      this.instances.set(token, instance);
+      return instance as T;
+    }
+
+    if (this.isValueProvider(provider)) {
+      this.instances.set(token, provider.useValue);
+      return provider.useValue as T;
+    }
+
+    if (this.isExistingProvider(provider)) {
+      const instance = await this.resolve(moduleClass, provider.useExisting);
+      this.instances.set(token, instance);
+      return instance as T;
+    }
+
     // If the provider is a class, instantiate it
     if (typeof provider === "function") {
       const dependencies =
@@ -125,9 +165,38 @@ export class Container {
       return instance as T;
     }
 
-    // If provider is a factory (not processing yet)
     // If provider is a value (return)
     return provider as T;
+  }
+
+  private isProviderObject(provider: unknown): provider is TProvider {
+    return (
+      typeof provider === "object" && provider !== null && "provide" in provider
+    );
+  }
+
+  private isFactoryProvider(provider: unknown): provider is TFactoryProvider {
+    return (
+      this.isProviderObject(provider) &&
+      "useFactory" in provider &&
+      typeof provider.useFactory === "function"
+    );
+  }
+
+  private isClassProvider(provider: unknown): provider is TClassProvider {
+    return (
+      this.isProviderObject(provider) &&
+      "useClass" in provider &&
+      typeof provider.useClass === "function"
+    );
+  }
+
+  private isValueProvider(provider: unknown): provider is TValueProvider {
+    return this.isProviderObject(provider) && "useValue" in provider;
+  }
+
+  private isExistingProvider(provider: unknown): provider is TExistingProvider {
+    return this.isProviderObject(provider) && "useExisting" in provider;
   }
 }
 

@@ -7,8 +7,24 @@ export async function registerProviders(
   metadata: RgModuleMetadata
 ): Promise<void> {
   if (metadata.providers) {
-    for (const providerClass of metadata.providers) {
-      container.addProvider(moduleClass, providerClass);
+    for (const provider of metadata.providers) {
+      if (typeof provider === "function") {
+        container.addProvider(moduleClass, provider);
+        continue;
+      }
+
+      if (
+        typeof provider === "object" &&
+        provider !== null &&
+        "provide" in provider
+      ) {
+        container.addProvider(moduleClass, provider.provide, provider);
+        continue;
+      }
+
+      throw new Error(
+        `Invalid provider definition registered in module ${moduleClass.name}`
+      );
     }
   }
 }
