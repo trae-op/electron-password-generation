@@ -5,12 +5,14 @@ import type {
   TExistingProvider,
   TFactoryProvider,
   TProvider,
+  TProviderToken,
   TValueProvider,
 } from "./types/provider.js";
+import { getDependencyTokens } from "./utils/dependency-tokens.js";
 
 type TModuleData = {
-  providers: Map<any, any>;
-  exports: Set<any>;
+  providers: Map<TProviderToken, any>;
+  exports: Set<TProviderToken>;
 };
 
 export class Container {
@@ -44,7 +46,11 @@ export class Container {
     return this.modules.has(moduleClass);
   }
 
-  addProvider(moduleClass: Constructor, provider: any, instance?: any): void {
+  addProvider(
+    moduleClass: Constructor,
+    provider: TProviderToken,
+    instance?: any
+  ): void {
     const moduleData = this.modules.get(moduleClass);
     if (!moduleData) {
       throw new Error(
@@ -55,7 +61,10 @@ export class Container {
     moduleData.providers.set(provider, instance ?? provider);
   }
 
-  getProvider<T = any>(moduleClass: Constructor, token: any): T | undefined {
+  getProvider<T = any>(
+    moduleClass: Constructor,
+    token: TProviderToken
+  ): T | undefined {
     const moduleData = this.modules.get(moduleClass);
     if (moduleData && moduleData.providers.has(token)) {
       return moduleData.providers.get(token);
@@ -63,7 +72,7 @@ export class Container {
     return undefined;
   }
 
-  getModuleExports(moduleClass: Constructor): Set<Constructor> {
+  getModuleExports(moduleClass: Constructor): Set<TProviderToken> {
     const moduleData = this.modules.get(moduleClass);
     return moduleData?.exports || new Set();
   }
@@ -72,13 +81,13 @@ export class Container {
     return this.moduleMetadata.get(moduleClass);
   }
 
-  registerInstance(token: any, instance: any): void {
+  registerInstance(token: TProviderToken, instance: any): void {
     this.instances.set(token, instance);
   }
 
   async resolve<T>(
     moduleClass: Constructor,
-    token: any
+    token: TProviderToken
   ): Promise<T | undefined> {
     if (this.instances.has(token)) {
       return this.instances.get(token) as T;
@@ -132,8 +141,7 @@ export class Container {
 
     if (this.isClassProvider(provider)) {
       const dependencies =
-        provider.inject ??
-        (Reflect.getMetadata("design:paramtypes", provider.useClass) || []);
+        provider.inject ?? getDependencyTokens(provider.useClass);
       const resolvedDependencies = await Promise.all(
         dependencies.map(async (dep: any) => this.resolve(moduleClass, dep))
       );
@@ -155,8 +163,7 @@ export class Container {
 
     // If the provider is a class, instantiate it
     if (typeof provider === "function") {
-      const dependencies =
-        Reflect.getMetadata("design:paramtypes", provider) || [];
+      const dependencies = getDependencyTokens(provider);
       const resolvedDependencies = await Promise.all(
         dependencies.map(async (dep: any) => this.resolve(moduleClass, dep))
       );

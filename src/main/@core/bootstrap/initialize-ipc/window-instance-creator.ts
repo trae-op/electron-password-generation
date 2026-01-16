@@ -1,6 +1,7 @@
 import { container } from "../../container.js";
 import type { Constructor } from "../../types/constructor.js";
 import type { TWindowManagerWithHandlers } from "../../types/window-manager.js";
+import { getDependencyTokens } from "../../utils/dependency-tokens.js";
 
 export async function createWindowInstance<
   T extends TWindowManagerWithHandlers
@@ -12,8 +13,7 @@ export async function createWindowInstance<
     return undefined;
   }
 
-  const dependenciesTypes =
-    Reflect.getMetadata("design:paramtypes", windowClass) || [];
+  const dependenciesTypes = getDependencyTokens(windowClass);
 
   const resolvedDependencies = await Promise.all(
     dependenciesTypes.map((depType: any) =>

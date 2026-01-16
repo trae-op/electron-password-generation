@@ -1,12 +1,6 @@
 {
   "github.copilot.chat.codeGeneration.instructions": [
     {
-      "file": "./docs/сontext-pattern.md"
-    },
-    {
-      "file": "./docs/react-form-instructions.md"
-    },
-    {
       "file": "./docs/typescript.md"
     },
     {

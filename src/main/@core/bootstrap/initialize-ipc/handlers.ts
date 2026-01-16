@@ -23,6 +23,13 @@ export async function initializeIpcHandlers(
       if (ipcInstance && typeof ipcInstance.onInit === "function") {
         ipcInstance.onInit({
           getWindow: (name?: string): TWindowFactory => {
+            if (!name) {
+              return {
+                create: async (): Promise<BrowserWindow | undefined> =>
+                  undefined,
+              };
+            }
+
             const windowMetadata = container.getProvider<TMetadataWindow>(
               moduleClass,
               name

@@ -1,12 +1,6 @@
 import type { Constructor } from "./constructor.js";
 
-export type TAbstractConstructor<T = any> = abstract new (...args: any[]) => T;
-
-export type TProviderToken<T = any> =
-  | Constructor<T>
-  | TAbstractConstructor<T>
-  | string
-  | symbol;
+export type TProviderToken<T = any> = Constructor<T> | string | symbol;
 
 export type TClassProvider<T = any> = {
   provide: TProviderToken<T>;

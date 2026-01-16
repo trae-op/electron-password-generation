@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Event } from "electron";
 import { WindowManager } from "../@core/decorators/window-manager.js";
-import { MenuProvider } from "./providers.js";
+import { Inject } from "../@core/decorators/inject.js";
 import { getElectronStorage } from "../$shared/store.js";
 import { SetFeedUrlService } from "../updater/services/windows/set-feed-url.js";
 import { CheckForUpdatesService } from "../updater/services/check-for-updates.js";
@@ -11,6 +11,8 @@ import { destroyWindows } from "../@core/control-window/destroy.js";
 import { ipcMainOn, ipcWebContentsSend, isDev } from "../$shared/utils.js";
 import { menu } from "../config.js";
 import type { TWindowManager } from "../types.js";
+import { MENU_PROVIDER } from "./tokens.js";
+import type { TMenuProvider } from "./types.js";
 
 @WindowManager<TWindows["main"]>({
   hash: "window:main",
@@ -26,7 +28,7 @@ export class AppWindow implements TWindowManager {
   private isWillClose = false;
 
   constructor(
-    private menuProvider: MenuProvider,
+    @Inject(MENU_PROVIDER) private readonly menuProvider: TMenuProvider,
     private trayService: TrayService,
     private authService: AuthService,
     private setFeedUrlService: SetFeedUrlService,

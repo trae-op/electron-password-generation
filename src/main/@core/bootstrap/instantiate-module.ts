@@ -1,11 +1,11 @@
 import { container } from "../container.js";
 import type { Constructor } from "../types/constructor.js";
+import { getDependencyTokens } from "../utils/dependency-tokens.js";
 
 export async function instantiateModule(
   moduleClass: Constructor
 ): Promise<any> {
-  const paramTypes = Reflect.getMetadata("design:paramtypes", moduleClass);
-  const dependencies = (paramTypes || []) as any[];
+  const dependencies = getDependencyTokens(moduleClass);
   const resolvedDependencies = await Promise.all(
     dependencies.map(async (dependency) => {
       return container.resolve(moduleClass, dependency);

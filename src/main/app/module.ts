@@ -6,8 +6,9 @@ import { AuthModule } from "../auth/module.js";
 import { AppIpc } from "./ipc.js";
 import { AppService } from "./service.js";
 import { AppWindow } from "./window.js";
-import { MenuProvider } from "./providers.js";
 import { MenuService } from "../menu/service.js";
+import { MENU_PROVIDER } from "./tokens.js";
+import type { TMenuProvider } from "./types.js";
 
 @RgModule({
   imports: [MenuModule, TrayModule, UpdaterModule, AuthModule],
@@ -16,13 +17,11 @@ import { MenuService } from "../menu/service.js";
   providers: [
     AppService,
     {
-      provide: MenuProvider,
-      useFactory: ({ menu, buildMenu }: MenuService): MenuProvider => {
-        return {
-          getMenu: () => menu,
-          buildMenu: (items) => buildMenu(items),
-        };
-      },
+      provide: MENU_PROVIDER,
+      useFactory: (menuService: MenuService): TMenuProvider => ({
+        getMenu: () => menuService.menu,
+        buildMenu: (items) => menuService.buildMenu(items),
+      }),
       inject: [MenuService],
     },
   ],
