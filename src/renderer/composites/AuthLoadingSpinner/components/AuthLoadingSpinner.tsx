@@ -1,5 +1,5 @@
 import { LoadingSpinner } from "@components/LoadingSpinner";
-import { useControlContext } from "@ui-business/AuthSocialNetwork";
+import { useControlContext } from "@conceptions/AuthSocialNetwork";
 
 export const AuthLoadingSpinner = () => {
   const { isAuthenticated } = useControlContext();

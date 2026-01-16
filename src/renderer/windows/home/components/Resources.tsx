@@ -6,8 +6,8 @@ import {
   Provider as ProviderResources,
   Items,
   useResourcesListSelector,
-} from "@ui-business/Resources";
-import { useControlContext as useControlContextSync } from "@ui-business/Sync";
+} from "@conceptions/Resources";
+import { useControlContext as useControlContextSync } from "@conceptions/Sync";
 import { TPropsHomeChildren } from "./types";
 
 const Container = memo(({ children }: { children: React.ReactElement }) => {

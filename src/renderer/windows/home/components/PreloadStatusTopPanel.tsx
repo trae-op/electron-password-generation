@@ -1,5 +1,5 @@
 import CircularProgress from "@mui/material/CircularProgress";
-import { useControlContext } from "@ui-business/Sync";
+import { useControlContext } from "@conceptions/Sync";
 
 export const PreloadStatusTopPanel = () => {
   const { isAuthenticated, isResources, isUser } = useControlContext();

@@ -1,4 +1,4 @@
-import { Window } from "@ui-business/Updater";
+import { Window } from "@conceptions/Updater";
 
 const Updater = () => {
   return <Window />;

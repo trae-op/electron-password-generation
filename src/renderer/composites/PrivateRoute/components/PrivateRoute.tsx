@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useControlContext as useControlContextAuth } from "@ui-business/AuthSocialNetwork";
+import { useControlContext as useControlContextAuth } from "@conceptions/AuthSocialNetwork";
 
 export const PrivateRoute = () => {
   const { isAuthenticated } = useControlContextAuth();

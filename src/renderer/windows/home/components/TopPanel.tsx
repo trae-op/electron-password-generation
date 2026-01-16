@@ -9,18 +9,18 @@ import {
   useSetUserIsNewVersionAppDispatch,
   useSetUserRenderButtonLogoutDispatch,
   useSetUserRenderButtonUpdateAppDispatch,
-} from "@ui-business/User";
-import { LogoutButton } from "@ui-business/AuthSocialNetwork";
+} from "@conceptions/User";
+import { LogoutButton } from "@conceptions/AuthSocialNetwork";
 import CircularProgress from "@mui/material/CircularProgress";
 import {
   useIpc as useIpcUpdate,
   DownloadedButton,
   useUpdaterStatusSelector,
-} from "@ui-business/Updater";
+} from "@conceptions/Updater";
 import { TopPanel } from "@layouts/TopPanel";
-import { Container as ContainerAppVersion } from "@ui-composites/AppVersion";
+import { Container as ContainerAppVersion } from "@composites/AppVersion";
 import { PreloadStatusTopPanel } from "./PreloadStatusTopPanel";
-import { useIpc as useIpcSync } from "@ui-business/Sync";
+import { useIpc as useIpcSync } from "@conceptions/Sync";
 import { TPropsHomeChildren } from "./types";
 
 const LazyAddResource = lazy(() => import("./AddResource"));
@@ -40,7 +40,7 @@ const ContainerTopPanel = memo(({ isMasterKey }: TPropsHomeChildren) => {
         Logout
       </LogoutButton>
     ),
-    []
+    [],
   );
 
   const renderButtonUpdateApp = useMemo(
@@ -49,7 +49,7 @@ const ContainerTopPanel = memo(({ isMasterKey }: TPropsHomeChildren) => {
         Update
       </DownloadedButton>
     ),
-    []
+    [],
   );
 
   useEffect(() => {

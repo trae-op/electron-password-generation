@@ -1,5 +1,5 @@
-import { Form, Provider } from "@ui-business/UpdateResource";
-import { Form as FormGenerateCharacters } from "@ui-business/GenerateCharacters";
+import { Form, Provider } from "@conceptions/UpdateResource";
+import { Form as FormGenerateCharacters } from "@conceptions/GenerateCharacters";
 
 const UpdateResource = () => {
   return (

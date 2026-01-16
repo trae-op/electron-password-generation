@@ -42,8 +42,8 @@
       "@hooks/*": ["src/renderer/hooks/*"],
       "@components/*": ["src/renderer/components/*"],
       "@layouts/*": ["src/renderer/layouts/*"],
-      "@ui-business/*": ["src/renderer/ui-business/*"],
-      "@ui-composites/*": ["src/renderer/ui-composites/*"],
+      "@conceptions/*": ["src/renderer/conceptions/*"],
+      "@composites/*": ["src/renderer/composites/*"],
       "@utils/*": ["src/renderer/utils/*"],
       "@shared/*": ["src/renderer/shared/*"]
     }
@@ -51,7 +51,7 @@
   "include": ["src"],
   "exclude": [
     "src/main",
-    "src/renderer/ui-business/**/context.ts",
-    "src/renderer/ui-business/**/type.ts"
+    "src/renderer/conceptions/**/context.ts",
+    "src/renderer/conceptions/**/type.ts"
   ]
 }

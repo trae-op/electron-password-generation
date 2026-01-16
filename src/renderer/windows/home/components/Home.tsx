@@ -4,8 +4,8 @@ import {
   useIpc as useIpcMasterKey,
   Provider as ProviderMasterKey,
   useControlContext as useControlContextMasterKey,
-} from "@ui-business/MasterKey";
-import { Provider as ProviderSync } from "@ui-business/Sync";
+} from "@conceptions/MasterKey";
+import { Provider as ProviderSync } from "@conceptions/Sync";
 import { LoadingSpinner } from "@components/LoadingSpinner";
 import { useClosePreloadWindow } from "@hooks/closePreloadWindow";
 

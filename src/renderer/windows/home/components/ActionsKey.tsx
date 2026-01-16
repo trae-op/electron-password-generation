@@ -2,7 +2,7 @@ import { memo } from "react";
 import IconButton from "@mui/material/IconButton";
 import HttpsIcon from "@mui/icons-material/Https";
 import NoEncryptionGmailerrorredIcon from "@mui/icons-material/NoEncryptionGmailerrorred";
-import { useControlContext as useControlContextSync } from "@ui-business/Sync";
+import { useControlContext as useControlContextSync } from "@conceptions/Sync";
 import { TPropsHomeChildren } from "./types";
 
 const ActionsKey = memo(({ isMasterKey }: TPropsHomeChildren) => {

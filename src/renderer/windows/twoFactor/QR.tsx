@@ -1,4 +1,4 @@
-import { TwoFactorQRWindow } from "@ui-business/TwoFactor";
+import { TwoFactorQRWindow } from "@conceptions/TwoFactor";
 
 const QR = () => {
   return <TwoFactorQRWindow />;

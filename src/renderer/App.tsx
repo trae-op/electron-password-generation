@@ -3,34 +3,34 @@ import { HashRouter, Route, Routes } from "react-router-dom";
 import {
   Provider as ProviderAuth,
   ContainerRoutes,
-} from "@ui-business/AuthSocialNetwork";
-import { Provider as ProviderUpdater } from "@ui-business/Updater";
-import { Provider as ProviderTwoFactor } from "@ui-business/TwoFactor";
-import { Provider as ProviderUser } from "@ui-business/User";
-import { Provider as ProviderMasterKey } from "@ui-business/MasterKey";
+} from "@conceptions/AuthSocialNetwork";
+import { Provider as ProviderUpdater } from "@conceptions/Updater";
+import { Provider as ProviderTwoFactor } from "@conceptions/TwoFactor";
+import { Provider as ProviderUser } from "@conceptions/User";
+import { Provider as ProviderMasterKey } from "@conceptions/MasterKey";
 import { MainLayout } from "@layouts/Main";
 import { FormResourcesLayout } from "@layouts/FormResources";
-import { PublicRoute } from "@ui-composites/PublicRoute";
-import { PrivateRoute } from "@ui-composites/PrivateRoute";
+import { PublicRoute } from "@composites/PublicRoute";
+import { PrivateRoute } from "@composites/PrivateRoute";
 import { LoadingSpinner } from "@components/LoadingSpinner";
 
 const LazyHomeWindow = lazy(() => import("./windows/home/components/Home"));
 const LazyUpdateResourceWindow = lazy(
-  () => import("./windows/updateResource/UpdateResource")
+  () => import("./windows/updateResource/UpdateResource"),
 );
 const LazyAddResourceWindow = lazy(
-  () => import("./windows/addResource/AddResource")
+  () => import("./windows/addResource/AddResource"),
 );
 const LazyUpdaterWindow = lazy(() => import("./windows/updater/Updater"));
 const LazyMasterKeyFormWindow = lazy(
-  () => import("./windows/masterKey/MasterKeyForm")
+  () => import("./windows/masterKey/MasterKeyForm"),
 );
 const LazyTwoFactorQRWindow = lazy(() => import("./windows/twoFactor/QR"));
 const LazyTwoFactorVerifyWindow = lazy(
-  () => import("./windows/twoFactor/Verify")
+  () => import("./windows/twoFactor/Verify"),
 );
 const LazyConfirmDeleteResourceWindow = lazy(
-  () => import("./windows/confirmDeleteResource/ConfirmDeleteResource")
+  () => import("./windows/confirmDeleteResource/ConfirmDeleteResource"),
 );
 const LazyLogInWindow = lazy(() => import("./windows/logIn/LogIn"));
 

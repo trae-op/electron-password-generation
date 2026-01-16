@@ -1,4 +1,4 @@
-import { TwoFactorVerifyWindow } from "@ui-business/TwoFactor";
+import { TwoFactorVerifyWindow } from "@conceptions/TwoFactor";
 
 const Verify = () => {
   return <TwoFactorVerifyWindow />;

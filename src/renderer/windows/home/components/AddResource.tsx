@@ -1,7 +1,7 @@
 import { memo } from "react";
-import { AddButton, Provider } from "@ui-business/AddResource";
-import { useControlContext as useControlContextSync } from "@ui-business/Sync";
-import { Form as FormGenerateCharacters } from "@ui-business/GenerateCharacters";
+import { AddButton, Provider } from "@conceptions/AddResource";
+import { useControlContext as useControlContextSync } from "@conceptions/Sync";
+import { Form as FormGenerateCharacters } from "@conceptions/GenerateCharacters";
 import { TPropsHomeChildren } from "./types";
 
 const AddResource = memo(({ isMasterKey }: TPropsHomeChildren) => {

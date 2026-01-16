@@ -1,4 +1,4 @@
-import { Confirm, Provider } from "@ui-business/DeleteResource";
+import { Confirm, Provider } from "@conceptions/DeleteResource";
 
 const ConfirmDeleteResource = () => {
   return (
