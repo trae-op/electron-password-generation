@@ -9,4 +9,4 @@ export {
   useSetUpdateResourceRenderGenerateCharactersDispatch,
 } from "./useSelectors";
 export type { TContext, TProviderProps } from "./types";
-export * from "./context";
+export * from "./Context";
