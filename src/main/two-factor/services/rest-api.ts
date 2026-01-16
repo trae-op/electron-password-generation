@@ -1,8 +1,8 @@
 import { type AxiosRequestConfig } from "axios";
 import { messages, restApi } from "../../config.js";
 import { Injectable } from "../../@core/decorators/injectable.js";
-import { RestApiService } from "../../rest-api/service.js";
 import { getElectronStorage } from "../../$shared/store.js";
+import { Inject } from "../../@core/decorators/inject.js";
 import type {
   TResponseGenerate,
   TParamsAuthenticate,
@@ -10,10 +10,15 @@ import type {
   TResponseTwoFactorAuthenticate,
 } from "./types.js";
 import { dialog } from "electron";
+import { TWO_FACTOR_REST_API_PROVIDER } from "../tokens.js";
+import type { TTwoFactorRestApiProvider } from "../types.js";
 
 @Injectable()
 export class TwoFactorRestApiService {
-  constructor(private restApiService: RestApiService) {}
+  constructor(
+    @Inject(TWO_FACTOR_REST_API_PROVIDER)
+    private restApiProvider: TTwoFactorRestApiProvider
+  ) {}
 
   private getAuthorization(): AxiosRequestConfig["headers"] {
     const token = getElectronStorage("authToken");
@@ -29,7 +34,7 @@ export class TwoFactorRestApiService {
   }
 
   async generateQA<R extends TResponseGenerate>(): Promise<R | undefined> {
-    const response = await this.restApiService.get<R>(
+    const response = await this.restApiProvider.get<R>(
       `${restApi.urls.base}${restApi.urls.baseApi}${restApi.urls.auth.base}${restApi.urls.auth.twoFactor}${restApi.urls.auth.generate}`,
       {
         headers: this.getAuthorization(),
@@ -51,7 +56,7 @@ export class TwoFactorRestApiService {
   async authenticate<R extends TResponseTwoFactorAuthenticate>({
     body,
   }: TParamsAuthenticate): Promise<R | undefined> {
-    const response = await this.restApiService.post<R>(
+    const response = await this.restApiProvider.post<R>(
       `${restApi.urls.base}${restApi.urls.baseApi}${restApi.urls.auth.base}${restApi.urls.auth.twoFactor}${restApi.urls.auth.authenticate}`,
       body,
       {
@@ -74,7 +79,7 @@ export class TwoFactorRestApiService {
   async enableTwoFactor<R extends TResponseTwoFactorEnable>({
     body,
   }: TParamsAuthenticate): Promise<R | undefined> {
-    const response = await this.restApiService.post<R>(
+    const response = await this.restApiProvider.post<R>(
       `${restApi.urls.base}${restApi.urls.baseApi}${restApi.urls.auth.base}${restApi.urls.auth.twoFactor}${restApi.urls.auth.enable}`,
       body,
       {

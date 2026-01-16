@@ -2,7 +2,6 @@ import { BrowserWindow, clipboard } from "electron";
 import { IpcHandler } from "../@core/decorators/ipc-handler.js";
 import { getWindow as getWindows } from "../@core/control-window/receive.js";
 import { TParamOnInit } from "../@core/types/ipc-handler.js";
-import { CryptoService } from "../crypto/service.js";
 import {
   ipcMainHandle,
   ipcMainOn,
@@ -15,12 +14,18 @@ import {
   getElectronStorage,
 } from "../$shared/store.js";
 import { restApi } from "../config.js";
+import { Inject } from "../@core/decorators/inject.js";
+import { MASTER_KEY_CRYPTO_PROVIDER } from "./tokens.js";
+import type { TMasterKeyCryptoProvider } from "./types.js";
 
 @IpcHandler()
 export class MasterKeyIpc {
   masterKeyWindow: BrowserWindow | undefined;
 
-  constructor(private cryptoService: CryptoService) {}
+  constructor(
+    @Inject(MASTER_KEY_CRYPTO_PROVIDER)
+    private cryptoProvider: TMasterKeyCryptoProvider
+  ) {}
 
   onInit({ getWindow }: TParamOnInit<TWindows["masterKey"]>): void {
     const masterKeyWindow = getWindow("window:master-key");
@@ -81,7 +86,7 @@ export class MasterKeyIpc {
           foundUser !== undefined &&
           foundUser.salt !== null
         ) {
-          const encryptedVault = await this.cryptoService.decrypt(masterKey, {
+          const encryptedVault = await this.cryptoProvider.decrypt(masterKey, {
             iv: foundUser.iv,
             salt: foundUser.salt,
             encryptedData: foundUser.key,

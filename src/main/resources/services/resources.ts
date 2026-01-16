@@ -2,13 +2,18 @@ import { dialog } from "electron";
 import { type AxiosRequestConfig } from "axios";
 import { restApi } from "../../config.js";
 import { Injectable } from "../../@core/decorators/injectable.js";
-import { RestApiService } from "../../rest-api/service.js";
+import { Inject } from "../../@core/decorators/inject.js";
 import { getElectronStorage } from "../../$shared/store.js";
 import type { TPostBody, TPutBody } from "./types.js";
+import { RESOURCES_REST_API_PROVIDER } from "../tokens.js";
+import type { TResourcesRestApiProvider } from "../types.js";
 
 @Injectable()
 export class ResourcesService {
-  constructor(private restApiService: RestApiService) {}
+  constructor(
+    @Inject(RESOURCES_REST_API_PROVIDER)
+    private restApiProvider: TResourcesRestApiProvider
+  ) {}
 
   private getAuthorization(): AxiosRequestConfig["headers"] {
     const token = getElectronStorage("authToken");
@@ -24,7 +29,7 @@ export class ResourcesService {
   }
 
   async byId<R extends TResource>(id: string): Promise<R | undefined> {
-    const response = await this.restApiService.get<R>(
+    const response = await this.restApiProvider.get<R>(
       `${restApi.urls.base}${restApi.urls.baseApi}${
         restApi.urls.resources.base
       }${restApi.urls.resources.byId(id)}`,
@@ -45,7 +50,7 @@ export class ResourcesService {
   }
 
   async delete<R extends TResource>(id: string): Promise<R | undefined> {
-    const response = await this.restApiService.delete<R>(
+    const response = await this.restApiProvider.delete<R>(
       `${restApi.urls.base}${restApi.urls.baseApi}${
         restApi.urls.resources.base
       }${restApi.urls.resources.byId(id)}`,
@@ -66,7 +71,7 @@ export class ResourcesService {
   }
 
   async post<R extends TResource>(body: TPostBody): Promise<R | undefined> {
-    const response = await this.restApiService.post<R>(
+    const response = await this.restApiProvider.post<R>(
       `${restApi.urls.base}${restApi.urls.baseApi}${restApi.urls.resources.base}`,
       body,
       {
@@ -89,7 +94,7 @@ export class ResourcesService {
     id: string,
     body: TPutBody
   ): Promise<R | undefined> {
-    const response = await this.restApiService.put<R>(
+    const response = await this.restApiProvider.put<R>(
       `${restApi.urls.base}${restApi.urls.baseApi}${
         restApi.urls.resources.base
       }${restApi.urls.resources.byId(id)}`,
@@ -111,7 +116,7 @@ export class ResourcesService {
   }
 
   async list<R extends TResource[]>(): Promise<R | undefined> {
-    const response = await this.restApiService.get<R>(
+    const response = await this.restApiProvider.get<R>(
       `${restApi.urls.base}${restApi.urls.baseApi}${restApi.urls.resources.base}`,
       {
         headers: this.getAuthorization(),

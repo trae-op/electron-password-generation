@@ -7,8 +7,15 @@ import type { TNameWindows } from "./services/types.js";
 import { TwoFactorWindowsFactoryService } from "./services/windows-factory.js";
 import { TwoFactorRestApiService } from "./services/rest-api.js";
 import { getElectronStorage, setElectronStorage } from "../$shared/store.js";
-import { UserService } from "../user/service.js";
-import { AuthService } from "../auth/service.js";
+import { Inject } from "../@core/decorators/inject.js";
+import {
+  TWO_FACTOR_AUTH_PROVIDER,
+  TWO_FACTOR_USER_PROVIDER,
+} from "./tokens.js";
+import type {
+  TTwoFactorAuthProvider,
+  TTwoFactorUserProvider,
+} from "./types.js";
 
 @IpcHandler()
 export class TwoFactorIpc {
@@ -18,8 +25,10 @@ export class TwoFactorIpc {
   constructor(
     private twoFactorWindowsFactoryService: TwoFactorWindowsFactoryService,
     private twoFactorRestApiService: TwoFactorRestApiService,
-    private userService: UserService,
-    private authService: AuthService
+    @Inject(TWO_FACTOR_USER_PROVIDER)
+    private userProvider: TTwoFactorUserProvider,
+    @Inject(TWO_FACTOR_AUTH_PROVIDER)
+    private authProvider: TTwoFactorAuthProvider
   ) {}
 
   onInit({ getWindow }: TParamOnInit<TNameWindows>): void {
@@ -76,7 +85,7 @@ export class TwoFactorIpc {
 
   private async isAuthenticated() {
     const userId = getElectronStorage("userId");
-    const user = userId ? await this.userService.byId(userId) : undefined;
+    const user = userId ? await this.userProvider.byId(userId) : undefined;
     const mainWindow = getWindows<TNameWindows>("window:main");
 
     if (
@@ -88,7 +97,7 @@ export class TwoFactorIpc {
       ipcWebContentsSend("authSocialNetwork", mainWindow.webContents, {
         isAuthenticated: true,
       });
-      this.authService.setCheckAccessInterval(mainWindow);
+      this.authProvider.setCheckAccessInterval(mainWindow);
     }
   }
 

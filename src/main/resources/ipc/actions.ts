@@ -8,20 +8,29 @@ import { IpcHandler } from "../../@core/decorators/ipc-handler.js";
 import { getWindow as getWindows } from "../../@core/control-window/receive.js";
 import type { TIpcHandlerInterface } from "../../@core/types/ipc-handler.js";
 import { ResourcesService } from "../services/resources.js";
-import { CryptoService } from "../../crypto/service.js";
 import { TEncryptedVault } from "../services/types.js";
 import { CacheWindowsService } from "../services/cacheWindows.js";
 import { getStore, getElectronStorage } from "../../$shared/store.js";
-import { TrayService } from "../../tray/service.js";
 import { restApi } from "../../config.js";
+import { Inject } from "../../@core/decorators/inject.js";
+import {
+  RESOURCES_CRYPTO_PROVIDER,
+  RESOURCES_TRAY_PROVIDER,
+} from "../tokens.js";
+import type {
+  TResourcesCryptoProvider,
+  TResourcesTrayProvider,
+} from "../types.js";
 
 @IpcHandler()
 export class ResourcesActionsIpc implements TIpcHandlerInterface {
   constructor(
     private resourcesService: ResourcesService,
-    private cryptoService: CryptoService,
+    @Inject(RESOURCES_CRYPTO_PROVIDER)
+    private cryptoProvider: TResourcesCryptoProvider,
     private cacheWindowsService: CacheWindowsService,
-    private trayService: TrayService
+    @Inject(RESOURCES_TRAY_PROVIDER)
+    private trayProvider: TResourcesTrayProvider
   ) {}
 
   onInit() {
@@ -62,7 +71,7 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
         payload.key.length &&
         payload.key.length
       ) {
-        encryptedVault = await this.cryptoService.encrypt(
+        encryptedVault = await this.cryptoProvider.encrypt(
           masterKey,
           payload.key
         );
@@ -114,7 +123,7 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
         typeof payload.key === "string" &&
         payload.key.length
       ) {
-        encryptedVault = await this.cryptoService.encrypt(
+        encryptedVault = await this.cryptoProvider.encrypt(
           masterKey,
           payload.key
         );
@@ -247,8 +256,8 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
   }
 
   private updateTrayMenu(resources: TResource[]) {
-    this.trayService.buildTray(
-      this.trayService.trayMenu.map((item) => {
+    this.trayProvider.buildTray(
+      this.trayProvider.getTray().map((item) => {
         if (item.name === "resources") {
           if (resources.length) {
             item.visible = true;
@@ -271,7 +280,7 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
   private async copyMasterKey(resource: TResource) {
     const masterKey = getStore("masterKey");
     if (masterKey !== undefined && resource.salt !== null) {
-      const encryptedVault = await this.cryptoService.decrypt(masterKey, {
+      const encryptedVault = await this.cryptoProvider.decrypt(masterKey, {
         iv: resource.iv,
         salt: resource.salt,
         encryptedData: resource.key,

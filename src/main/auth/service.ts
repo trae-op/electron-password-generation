@@ -2,7 +2,7 @@ import { BrowserWindow } from "electron";
 import { type AxiosRequestConfig } from "axios";
 import { restApi, timers } from "../config.js";
 import { Injectable } from "../@core/decorators/injectable.js";
-import { RestApiService } from "../rest-api/service.js";
+import { Inject } from "../@core/decorators/inject.js";
 import {
   deleteFromElectronStorage,
   getElectronStorage,
@@ -10,10 +10,15 @@ import {
 } from "../$shared/store.js";
 import { ipcWebContentsSend } from "../$shared/utils.js";
 import { getWindow as getWindows } from "../@core/control-window/receive.js";
+import { AUTH_REST_API_PROVIDER } from "./tokens.js";
+import type { TAuthRestApiProvider } from "./types.js";
 
 @Injectable()
 export class AuthService {
-  constructor(private restApiService: RestApiService) {}
+  constructor(
+    @Inject(AUTH_REST_API_PROVIDER)
+    private restApiProvider: TAuthRestApiProvider
+  ) {}
 
   private getAuthorization(): AxiosRequestConfig["headers"] {
     const token = getElectronStorage("authToken");
@@ -29,7 +34,7 @@ export class AuthService {
   }
 
   async access<R extends { ok: boolean }>(): Promise<R | undefined> {
-    const response = await this.restApiService.get<R>(
+    const response = await this.restApiProvider.get<R>(
       `${restApi.urls.base}${restApi.urls.baseApi}${restApi.urls.auth.base}${restApi.urls.auth.access}`,
       {
         headers: this.getAuthorization(),

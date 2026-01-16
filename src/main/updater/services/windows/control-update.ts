@@ -3,9 +3,11 @@ import pkg from "electron-updater";
 import { Injectable } from "../../../@core/decorators/injectable.js";
 import { messages } from "../../../config.js";
 import { SendUpdateInfoService } from "../send-update-info.js";
-import { NotificationService } from "../../../notification/service.js";
 import { setStore } from "../../../$shared/store.js";
 import { isDev, isPlatform } from "../../../$shared/utils.js";
+import { Inject } from "../../../@core/decorators/inject.js";
+import { UPDATER_NOTIFICATION_PROVIDER } from "../../tokens.js";
+import type { TUpdaterNotificationProvider } from "../../types.js";
 
 const { autoUpdater } = pkg;
 
@@ -13,7 +15,8 @@ const { autoUpdater } = pkg;
 export class ControlUpdateWindowsPlatformService {
   constructor(
     private sendUpdateInfoService: SendUpdateInfoService,
-    private notificationService: NotificationService
+    @Inject(UPDATER_NOTIFICATION_PROVIDER)
+    private notificationProvider: TUpdaterNotificationProvider
   ) {}
 
   controlUpdate() {
@@ -62,7 +65,7 @@ export class ControlUpdateWindowsPlatformService {
           platform: process.platform,
         });
 
-        this.notificationService
+        this.notificationProvider
           .setNotification({
             title: messages.autoUpdater.notificationTitle,
             body: messages.autoUpdater.notificationBody,

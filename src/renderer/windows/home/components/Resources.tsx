@@ -59,11 +59,13 @@ const Container = memo(({ children }: { children: React.ReactElement }) => {
 });
 
 const Resources = memo(({ isMasterKey }: TPropsHomeChildren) => {
-  const { isAuthenticated } = useControlContextSync();
+  const { isAuthenticated, isResources, isUser } = useControlContextSync();
 
   return (
     <ProviderResources
-      isDisabledActions={!isAuthenticated}
+      isDisabledActions={
+        isResources && isUser && isAuthenticated ? false : true
+      }
       isMasterKey={isMasterKey}
     >
       <Container>

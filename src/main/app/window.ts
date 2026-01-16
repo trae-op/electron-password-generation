@@ -2,16 +2,22 @@ import { app, BrowserWindow, Event } from "electron";
 import { WindowManager } from "../@core/decorators/window-manager.js";
 import { Inject } from "../@core/decorators/inject.js";
 import { getElectronStorage } from "../$shared/store.js";
-import { SetFeedUrlService } from "../updater/services/windows/set-feed-url.js";
-import { CheckForUpdatesService } from "../updater/services/check-for-updates.js";
-import { AuthService } from "../auth/service.js";
-import { ControlUpdateWindowsPlatformService } from "../updater/services/windows/control-update.js";
 import { destroyWindows } from "../@core/control-window/destroy.js";
 import { ipcMainOn, ipcWebContentsSend, isDev } from "../$shared/utils.js";
 import { menu } from "../config.js";
 import type { TWindowManager } from "../types.js";
-import { MENU_PROVIDER, TRAY_PROVIDER } from "./tokens.js";
-import type { TMenuProvider, TTrayProvider } from "./types.js";
+import {
+  AUTH_PROVIDER,
+  MENU_PROVIDER,
+  TRAY_PROVIDER,
+  UPDATER_PROVIDER,
+} from "./tokens.js";
+import type {
+  TAuthProvider,
+  TMenuProvider,
+  TTrayProvider,
+  TUpdaterProvider,
+} from "./types.js";
 
 @WindowManager<TWindows["main"]>({
   hash: "window:main",
@@ -29,13 +35,11 @@ export class AppWindow implements TWindowManager {
   constructor(
     @Inject(MENU_PROVIDER) private readonly menuProvider: TMenuProvider,
     @Inject(TRAY_PROVIDER) private readonly trayProvider: TTrayProvider,
-    private authService: AuthService,
-    private setFeedUrlService: SetFeedUrlService,
-    private checkForUpdatesService: CheckForUpdatesService,
-    private controlUpdateWindowsPlatformService: ControlUpdateWindowsPlatformService
+    @Inject(AUTH_PROVIDER) private readonly authProvider: TAuthProvider,
+    @Inject(UPDATER_PROVIDER) private readonly updaterProvider: TUpdaterProvider
   ) {
-    this.setFeedUrlService.setFeedURL();
-    this.controlUpdateWindowsPlatformService.controlUpdate();
+    this.updaterProvider.setFeedUrl();
+    this.updaterProvider.controlUpdateWindowsPlatform();
 
     app.on("before-quit", () => {
       this.isWillClose = true;
@@ -50,19 +54,19 @@ export class AppWindow implements TWindowManager {
     this.buildTray(window);
     this.checkAuthenticated(window);
     this.ipcCheckSync(window);
-    this.authService.setCheckAccessInterval(window);
+    this.authProvider.setCheckAccessInterval(window);
 
     const userId = getElectronStorage("userId");
     const authToken = getElectronStorage("authToken");
 
     if (userId && authToken) {
-      this.checkForUpdatesService.checkForUpdates();
+      this.updaterProvider.checkForUpdates();
     }
   }
 
   private ipcCheckSync(window: BrowserWindow): void {
     ipcMainOn("sync", (event) => {
-      const result = this.authService.checkAuthenticated(window);
+      const result = this.authProvider.checkAuthenticated(window);
 
       event.reply("sync", {
         isAuthenticated: result !== undefined && result.isAuthenticated,
@@ -71,7 +75,7 @@ export class AppWindow implements TWindowManager {
   }
 
   private async checkAuthenticated(window: BrowserWindow) {
-    const result = this.authService.checkAuthenticated(window);
+    const result = this.authProvider.checkAuthenticated(window);
     ipcWebContentsSend("authSocialNetwork", window.webContents, {
       isAuthenticated:
         result !== undefined && result.isAuthenticated !== undefined,

@@ -5,7 +5,7 @@ import { Form as FormGenerateCharacters } from "@ui-business/GenerateCharacters"
 import { TPropsHomeChildren } from "./types";
 
 const AddResource = memo(({ isMasterKey }: TPropsHomeChildren) => {
-  const { isAuthenticated } = useControlContextSync();
+  const { isAuthenticated, isResources, isUser } = useControlContextSync();
 
   if (!isMasterKey) {
     return null;
@@ -13,7 +13,10 @@ const AddResource = memo(({ isMasterKey }: TPropsHomeChildren) => {
 
   return (
     <Provider renderGenerateCharacters={<FormGenerateCharacters />}>
-      <AddButton size="small" disabled={!isAuthenticated} />
+      <AddButton
+        size="small"
+        disabled={isAuthenticated && isResources && isUser ? false : true}
+      />
     </Provider>
   );
 });

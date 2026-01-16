@@ -7,8 +7,10 @@ import type {
   TParamOnInit,
 } from "../@core/types/ipc-handler.js";
 import { ipcMainOn } from "../$shared/utils.js";
-import { TrayService } from "../tray/service.js";
 import { OpenLatestVersionService } from "./services/mac-os/open-latest-version.js";
+import { Inject } from "../@core/decorators/inject.js";
+import { UPDATER_TRAY_PROVIDER } from "./tokens.js";
+import type { TUpdaterTrayProvider } from "./types.js";
 
 const { autoUpdater } = pkg;
 
@@ -17,15 +19,15 @@ export class UpdaterIpc implements TIpcHandlerInterface {
   private updateAppWindow: BrowserWindow | undefined = undefined;
 
   constructor(
-    private trayService: TrayService,
+    @Inject(UPDATER_TRAY_PROVIDER) private trayProvider: TUpdaterTrayProvider,
     private openLatestVersionService: OpenLatestVersionService
   ) {}
 
   onInit({ getWindow }: TParamOnInit<TWindows["updateApp"]>) {
     const updateAppWindow = getWindow("window:update-app");
 
-    this.trayService.buildTray(
-      this.trayService.trayMenu.map((item) => {
+    this.trayProvider.buildTray(
+      this.trayProvider.getTray().map((item) => {
         if (item.name === "check-update") {
           item.click = async () => {
             if (this.updateAppWindow) {
@@ -46,7 +48,7 @@ export class UpdaterIpc implements TIpcHandlerInterface {
 
     ipcMainOn("openLatestVersion", (_, { updateFile }) => {
       this.openLatestVersionService.openLatestVersion(updateFile);
-      this.trayService.destroyTray();
+      this.trayProvider.destroyTray();
       destroyWindows();
       app.quit();
     });

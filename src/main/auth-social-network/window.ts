@@ -6,9 +6,11 @@ import {
 } from "electron";
 import { WindowManager } from "../@core/decorators/window-manager.js";
 import { setElectronStorage } from "../$shared/store.js";
-import { TwoFactorWindowsFactoryService } from "../two-factor/services/windows-factory.js";
+import { Inject } from "../@core/decorators/inject.js";
 import { messages } from "../config.js";
 import type { TWindowManager } from "../types.js";
+import { AUTH_SOCIAL_NETWORK_TWO_FACTOR_PROVIDER } from "./tokens.js";
+import type { TAuthSocialNetworkTwoFactorProvider } from "./types.js";
 
 @WindowManager<TWindows["authSocialNetwork"]>({
   hash: "window:auth-social-network",
@@ -25,7 +27,8 @@ export class AuthSocialNetworkWindow implements TWindowManager {
   private window: BrowserWindow | undefined;
 
   constructor(
-    private twoFactorWindowsFactoryService: TwoFactorWindowsFactoryService
+    @Inject(AUTH_SOCIAL_NETWORK_TWO_FACTOR_PROVIDER)
+    private twoFactorProvider: TAuthSocialNetworkTwoFactorProvider
   ) {}
 
   onWebContentsDidFinishLoad(window: BrowserWindow): void {
@@ -80,7 +83,7 @@ export class AuthSocialNetworkWindow implements TWindowManager {
     if (token !== null && userId !== null) {
       setElectronStorage("authToken", token);
       setElectronStorage("userId", userId);
-      this.twoFactorWindowsFactoryService.createWindow(nameWindow);
+      this.twoFactorProvider.createWindow(nameWindow);
     } else {
       dialog.showMessageBox({
         title: messages.auth.errorTokenUserMissing,

@@ -3,14 +3,17 @@ import { messages } from "../../../config.js";
 import { CheckForUpdateService } from "./check-for-update.js";
 import { SendUpdateInfoService } from "../send-update-info.js";
 import { setStore } from "../../../$shared/store.js";
-import { NotificationService } from "../../../notification/service.js";
+import { Inject } from "../../../@core/decorators/inject.js";
+import { UPDATER_NOTIFICATION_PROVIDER } from "../../tokens.js";
+import type { TUpdaterNotificationProvider } from "../../types.js";
 
 @Injectable()
 export class ControlUpdateService {
   constructor(
     private checkForUpdateService: CheckForUpdateService,
     private sendUpdateInfoService: SendUpdateInfoService,
-    private notificationService: NotificationService
+    @Inject(UPDATER_NOTIFICATION_PROVIDER)
+    private notificationProvider: TUpdaterNotificationProvider
   ) {}
 
   controlUpdate() {
@@ -66,7 +69,7 @@ export class ControlUpdateService {
               updateFile,
             });
 
-            this.notificationService
+            this.notificationProvider
               .setNotification({
                 title: messages.autoUpdater.notificationTitle,
                 body: messages.autoUpdater.notificationBody,

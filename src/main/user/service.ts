@@ -1,12 +1,17 @@
 import { type AxiosRequestConfig } from "axios";
 import { messages, restApi } from "../config.js";
 import { Injectable } from "../@core/decorators/injectable.js";
-import { RestApiService } from "../rest-api/service.js";
+import { Inject } from "../@core/decorators/inject.js";
 import { getElectronStorage } from "../$shared/store.js";
+import { USER_REST_API_PROVIDER } from "./tokens.js";
+import type { TUserRestApiProvider } from "./types.js";
 
 @Injectable()
 export class UserService {
-  constructor(private restApiService: RestApiService) {}
+  constructor(
+    @Inject(USER_REST_API_PROVIDER)
+    private restApiProvider: TUserRestApiProvider
+  ) {}
 
   private getAuthorization(): AxiosRequestConfig["headers"] {
     const token = getElectronStorage("authToken");
@@ -22,7 +27,7 @@ export class UserService {
   }
 
   async byId<R extends TUser>(id: string): Promise<R | undefined> {
-    const response = await this.restApiService.get<R>(
+    const response = await this.restApiProvider.get<R>(
       `${restApi.urls.base}${restApi.urls.baseApi}${
         restApi.urls.user.base
       }${restApi.urls.user.byId(id)}`,
