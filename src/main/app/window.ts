@@ -6,13 +6,12 @@ import { SetFeedUrlService } from "../updater/services/windows/set-feed-url.js";
 import { CheckForUpdatesService } from "../updater/services/check-for-updates.js";
 import { AuthService } from "../auth/service.js";
 import { ControlUpdateWindowsPlatformService } from "../updater/services/windows/control-update.js";
-import { TrayService } from "../tray/service.js";
 import { destroyWindows } from "../@core/control-window/destroy.js";
 import { ipcMainOn, ipcWebContentsSend, isDev } from "../$shared/utils.js";
 import { menu } from "../config.js";
 import type { TWindowManager } from "../types.js";
-import { MENU_PROVIDER } from "./tokens.js";
-import type { TMenuProvider } from "./types.js";
+import { MENU_PROVIDER, TRAY_PROVIDER } from "./tokens.js";
+import type { TMenuProvider, TTrayProvider } from "./types.js";
 
 @WindowManager<TWindows["main"]>({
   hash: "window:main",
@@ -29,7 +28,7 @@ export class AppWindow implements TWindowManager {
 
   constructor(
     @Inject(MENU_PROVIDER) private readonly menuProvider: TMenuProvider,
-    private trayService: TrayService,
+    @Inject(TRAY_PROVIDER) private readonly trayProvider: TTrayProvider,
     private authService: AuthService,
     private setFeedUrlService: SetFeedUrlService,
     private checkForUpdatesService: CheckForUpdatesService,
@@ -41,7 +40,7 @@ export class AppWindow implements TWindowManager {
     app.on("before-quit", () => {
       this.isWillClose = true;
 
-      this.trayService.destroyTray();
+      this.trayProvider.destroyTray();
       destroyWindows();
     });
   }
@@ -80,8 +79,8 @@ export class AppWindow implements TWindowManager {
   }
 
   private buildTray(window: BrowserWindow): void {
-    this.trayService.buildTray(
-      this.trayService.trayMenu.map((item) => {
+    this.trayProvider.buildTray(
+      this.trayProvider.getTray().map((item) => {
         if (item.name === "show") {
           item.click = () => {
             window.show();
