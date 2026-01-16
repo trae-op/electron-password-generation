@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Event } from "electron";
 import { WindowManager } from "../@core/decorators/window-manager.js";
-import { MenuService } from "../menu/service.js";
+import { MenuProvider } from "./providers.js";
 import { getElectronStorage } from "../$shared/store.js";
 import { SetFeedUrlService } from "../updater/services/windows/set-feed-url.js";
 import { CheckForUpdatesService } from "../updater/services/check-for-updates.js";
@@ -26,7 +26,7 @@ export class AppWindow implements TWindowManager {
   private isWillClose = false;
 
   constructor(
-    private menuService: MenuService,
+    private menuProvider: MenuProvider,
     private trayService: TrayService,
     private authService: AuthService,
     private setFeedUrlService: SetFeedUrlService,
@@ -99,8 +99,8 @@ export class AppWindow implements TWindowManager {
   }
 
   private buildMenu(window: BrowserWindow): void {
-    this.menuService.buildMenu(
-      this.menuService.menu.map((item) => {
+    this.menuProvider.buildMenu(
+      this.menuProvider.getMenu().map((item) => {
         if (item.name === "app") {
           item.submenu = [
             {

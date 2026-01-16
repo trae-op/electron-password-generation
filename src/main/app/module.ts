@@ -6,7 +6,7 @@ import { AuthModule } from "../auth/module.js";
 import { AppIpc } from "./ipc.js";
 import { AppService } from "./service.js";
 import { AppWindow } from "./window.js";
-import { DataProvider } from "./data-provider.js";
+import { MenuProvider } from "./providers.js";
 import { MenuService } from "../menu/service.js";
 
 @RgModule({
@@ -16,10 +16,11 @@ import { MenuService } from "../menu/service.js";
   providers: [
     AppService,
     {
-      provide: DataProvider,
-      useFactory: (menuService: MenuService) => {
+      provide: MenuProvider,
+      useFactory: ({ menu, buildMenu }: MenuService): MenuProvider => {
         return {
-          getMenu: () => menuService.menu,
+          getMenu: () => menu,
+          buildMenu: (items) => buildMenu(items),
         };
       },
       inject: [MenuService],
