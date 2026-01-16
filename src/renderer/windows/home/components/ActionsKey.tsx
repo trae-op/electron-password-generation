@@ -6,21 +6,23 @@ import { useControlContext as useControlContextSync } from "@ui-business/Sync";
 import { TPropsHomeChildren } from "./types";
 
 const ActionsKey = memo(({ isMasterKey }: TPropsHomeChildren) => {
-  const { isAuthenticated } = useControlContextSync();
+  const { isAuthenticated, isResources, isUser } = useControlContextSync();
+  const isAccess = isResources && isUser && isAuthenticated ? false : true;
+
   const handleKey = () => {
     window.electron.send.windowMasterKey();
   };
 
   if (!isMasterKey) {
     return (
-      <IconButton size="small" disabled={!isAuthenticated} onClick={handleKey}>
+      <IconButton size="small" disabled={isAccess} onClick={handleKey}>
         <HttpsIcon fontSize="medium" />
       </IconButton>
     );
   }
 
   return (
-    <IconButton size="small" disabled={!isAuthenticated} onClick={handleKey}>
+    <IconButton size="small" disabled={isAccess} onClick={handleKey}>
       <NoEncryptionGmailerrorredIcon fontSize="medium" />
     </IconButton>
   );
