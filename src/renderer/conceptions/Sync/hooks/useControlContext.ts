@@ -1,20 +1,28 @@
-import { useContext } from "react";
-import { Context, ContextActions } from "../context";
+import {
+  useSyncIsAuthenticatedSelector,
+  useSyncIsResourcesSelector,
+  useSyncIsUserSelector,
+} from "../context/useSelectors";
+import { useSyncContext } from "../context/useContext";
 
 export const useControlContext = () => {
-  const context = useContext(Context);
+  const isAuthenticated = useSyncIsAuthenticatedSelector();
+  const isResources = useSyncIsResourcesSelector();
+  const isUser = useSyncIsUserSelector();
 
-  if (!context) {
-    throw new Error("useControlContext must be used inside Provider");
-  }
-  return context;
+  return {
+    isAuthenticated,
+    isResources,
+    isUser,
+  };
 };
 
 export const useControlContextActions = () => {
-  const context = useContext(ContextActions);
+  const { setAuthenticated, setResources, setUser } = useSyncContext();
 
-  if (!context) {
-    throw new Error("useControlContextActions must be used inside Provider");
-  }
-  return context;
+  return {
+    setAuthenticated,
+    setResources,
+    setUser,
+  };
 };
