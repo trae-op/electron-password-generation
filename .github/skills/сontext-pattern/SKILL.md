@@ -1,4 +1,17 @@
-# AI Agent React Context Pattern Guide
+---
+name: context-pattern
+description: Provides a React Context implementation pattern using useSyncExternalStore, with types, hooks, and examples. Be specific about capabilities and when to use the skill.
+---
+
+# React Context Pattern Guide
+
+### When to use this skill ✅
+
+- Create a reusable Context implementation that avoids unnecessary re-renders.
+- Add a standardized pattern for `Context` + selector hooks across a repository.
+- Provide examples, templates, or scripts for implementing `useSyncExternalStore`-based contexts.
+- Share best practices for performance-sensitive state management and selector optimization.
+- Teach the agent to apply this pattern during code reviews, refactors, or feature scaffolding.
 
 ## Overview
 

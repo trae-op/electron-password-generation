@@ -1,15 +1,17 @@
 ---
-name: react-form-instructions
-description: This guide describes the best practices for creating forms in React using modern hooks (useActionState, useFormStatus) with a component-based architecture that optimizes re-rendering and maintains clean separation of concerns. Use this when asked to create or update forms in "react".
+name: form-implementation
+description: Guidelines for implementing performant, accessible React forms using isolated field components, custom hooks, and server actions (`useActionState`/`useFormStatus`). Use for building FormData-friendly forms and enforcing TypeScript patterns.
 ---
 
 # React Form Implementation Guide for AI Agent
 
 ## When to use this skill
 
-Use this skill when I say some like this:
-
-- Create or update form with fields [enumeration of fields]. Where [enumeration of fields] are names of fields with types (text, number, checkbox and so on)
+- When building React forms that require per-field isolation and optimized re-rendering ✅
+- When using server-side actions that consume `FormData` (for example, `useActionState`) to handle submissions ✅
+- When you want consistent TypeScript typing and naming conventions for form state and props ✅
+- When creating reusable field components and custom hooks for complex or multi-step forms ✅
+- When documenting form best practices for contributors or an AI assistant ✅
 
 ## Core Principles
 

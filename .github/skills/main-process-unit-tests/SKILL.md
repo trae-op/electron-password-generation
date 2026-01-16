@@ -1,23 +1,19 @@
 ---
 name: main-process-unit-tests
-description: This document describes how to write unit tests for the Electron main process (`src/main`). Use this when asked to create or update and fix unit tests.
+description: Unit testing skill for Electron main process. guidelines, examples, and Vitest patterns to create and fix unit tests for services, IPC handlers, and DI-based code.
 ---
 
 # Main Process Unit Tests
 
 ## When to use this skill
 
-Use this skill when I say some like this:
+Use this skill when you want to:
 
-- Create unit tests for main process
-- Fix unit tests for main process
-- Create unit tests for [name of service or ipc and so on]
-- I see failed unit tests. Fix that!
-
-## Technologies
-
-- **Test Runner**: [Vitest](https://vitest.dev/)
-- **Mocking**: Vitest's built-in `vi` utilities.
+- Create or fix unit tests for Electron main process services and IPC handlers using Vitest
+- Mock Electron APIs, network calls, and file system interactions for reliable unit tests
+- Validate IPC handlers, provider factories, and DI-injected services in isolation
+- Diagnose and fix failing main-process unit tests and restore test suite health
+- Enforce project testing conventions (co-located tests, naming, and mocking patterns)
 
 ## Directory Structure
 
