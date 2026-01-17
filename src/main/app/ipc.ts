@@ -1,14 +1,21 @@
 import { app, dialog } from "electron";
-import { ipcMainOn } from "../$shared/utils.js";
-import { IpcHandler } from "../@core/decorators/ipc-handler.js";
-import { getWindow as getWindows } from "../@core/control-window/receive.js";
-import type {
-  TIpcHandlerInterface,
+import {
+  Inject,
   TParamOnInit,
-} from "../@core/types/ipc-handler.js";
+  TIpcHandlerInterface,
+  IpcHandler,
+  getWindow as getWindows,
+} from "@traeop/electron-modular";
+import { ipcMainOn } from "../$shared/utils.js";
+// import { IpcHandler } from "../@core/decorators/ipc-handler.js";
+// import { getWindow as getWindows } from "../@core/control-window/receive.js";
+// import type {
+//   TIpcHandlerInterface,
+//   TParamOnInit,
+// } from "../@core/types/ipc-handler.js";
 import { AppService } from "./service.js";
 import { messages } from "../config.js";
-import { Inject } from "../@core/decorators/inject.js";
+// import { Inject } from "../@core/decorators/inject.js";
 import { AUTH_PROVIDER } from "./tokens.js";
 import type { TAuthProvider, TDestroyProcess } from "./types.js";
 
@@ -16,7 +23,7 @@ import type { TAuthProvider, TDestroyProcess } from "./types.js";
 export class AppIpc implements TIpcHandlerInterface {
   constructor(
     private appService: AppService,
-    @Inject(AUTH_PROVIDER) private authProvider: TAuthProvider
+    @Inject(AUTH_PROVIDER) private authProvider: TAuthProvider,
   ) {
     process.on("uncaughtException", (error) => {
       this.destroyProcess({
