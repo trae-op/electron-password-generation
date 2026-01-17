@@ -1,13 +1,13 @@
 import { BrowserWindow } from "electron";
-import { IpcHandler } from "../@core/decorators/ipc-handler.js";
-import { TParamOnInit } from "../@core/types/ipc-handler.js";
-import { getWindow as getWindows } from "../@core/control-window/receive.js";
+import { IpcHandler } from "@traeop/electron-modular";
+import { TParamOnInit } from "@traeop/electron-modular";
+import { getWindow as getWindows } from "@traeop/electron-modular";
 import { ipcMainOn, ipcWebContentsSend } from "../$shared/utils.js";
 import type { TNameWindows } from "./services/types.js";
 import { TwoFactorWindowsFactoryService } from "./services/windows-factory.js";
 import { TwoFactorRestApiService } from "./services/rest-api.js";
 import { getElectronStorage, setElectronStorage } from "../$shared/store.js";
-import { Inject } from "../@core/decorators/inject.js";
+import { Inject } from "@traeop/electron-modular";
 import {
   TWO_FACTOR_AUTH_PROVIDER,
   TWO_FACTOR_USER_PROVIDER,
@@ -28,7 +28,7 @@ export class TwoFactorIpc {
     @Inject(TWO_FACTOR_USER_PROVIDER)
     private userProvider: TTwoFactorUserProvider,
     @Inject(TWO_FACTOR_AUTH_PROVIDER)
-    private authProvider: TTwoFactorAuthProvider
+    private authProvider: TTwoFactorAuthProvider,
   ) {}
 
   onInit({ getWindow }: TParamOnInit<TNameWindows>): void {
@@ -37,12 +37,12 @@ export class TwoFactorIpc {
 
     this.twoFactorWindowsFactoryService.addWindow(
       "window:two-factor-qa",
-      twoFactorQAWindow.create
+      twoFactorQAWindow.create,
     );
 
     this.twoFactorWindowsFactoryService.addWindow(
       "window:two-factor-verify",
-      twoFactorVerifyWindow.create
+      twoFactorVerifyWindow.create,
     );
 
     ipcMainOn("twoFactorVerify", async () => {

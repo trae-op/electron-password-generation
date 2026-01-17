@@ -1,5 +1,5 @@
-import { getWindow } from "../../@core/control-window/receive.js";
-import { Injectable } from "../../@core/decorators/injectable.js";
+import { getWindow } from "@traeop/electron-modular";
+import { Injectable } from "@traeop/electron-modular";
 import { ipcWebContentsSend } from "../../$shared/utils.js";
 
 @Injectable()

@@ -5,7 +5,7 @@ import { initSettings, bootstrapModules } from "@traeop/electron-modular";
 import { isDev } from "./$shared/utils.js";
 import { AppModule } from "./app/module.js";
 import { AuthSocialNetworkModule } from "./auth-social-network/module.js";
-// import { bootstrapModules } from "./@core/bootstrap/bootstrap.js";
+// import { bootstrapModules } from "@traeop/electron-modular";
 import { UpdaterModule } from "./updater/module.js";
 import { MasterKeyModule } from "./master-key/module.js";
 import { TwoFactorModule } from "./two-factor/module.js";
@@ -14,7 +14,7 @@ import { NotificationModule } from "./notification/module.js";
 import { AppVersionModule } from "./app-version/module.js";
 import { UserModule } from "./user/module.js";
 import { ResourcesModule } from "./resources/module.js";
-// import { initSettings } from "./@core/bootstrap/settings.js";
+// import { initSettings } from "@traeop/electron-modular";
 import { folders } from "./config.js";
 
 const envPath = path.join(process.resourcesPath, ".env");

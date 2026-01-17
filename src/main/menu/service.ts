@@ -1,6 +1,6 @@
 import { Menu } from "electron";
 import { menu } from "../config.js";
-import { Injectable } from "../@core/decorators/injectable.js";
+import { Injectable } from "@traeop/electron-modular";
 import { isPlatform } from "../$shared/utils.js";
 import type { TItem } from "./types.js";
 
@@ -42,7 +42,7 @@ export class MenuService {
 
   buildMenu(items?: TItem[]): void {
     Menu.setApplicationMenu(
-      Menu.buildFromTemplate(items !== undefined ? items : defaultMenu)
+      Menu.buildFromTemplate(items !== undefined ? items : defaultMenu),
     );
   }
 }

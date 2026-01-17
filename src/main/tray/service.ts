@@ -1,7 +1,7 @@
 import { Menu, Tray } from "electron";
 import path from "node:path";
 import { icons, menu } from "../config.js";
-import { Injectable } from "../@core/decorators/injectable.js";
+import { Injectable } from "@traeop/electron-modular";
 import { isDev, isPlatform } from "../$shared/utils.js";
 import type { TItem } from "./types.js";
 import { getAssetsPath } from "../$shared/pathResolver.js";
@@ -40,13 +40,13 @@ export class TrayService {
       tray = new Tray(
         path.join(
           getAssetsPath(),
-          isPlatform("darwin") ? icons.trayIconTemplate : icons.trayIcon
-        )
+          isPlatform("darwin") ? icons.trayIconTemplate : icons.trayIcon,
+        ),
       );
     }
 
     tray.setContextMenu(
-      Menu.buildFromTemplate(items !== undefined ? items : trayMenu)
+      Menu.buildFromTemplate(items !== undefined ? items : trayMenu),
     );
   }
 

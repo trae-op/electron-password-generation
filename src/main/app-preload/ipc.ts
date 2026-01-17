@@ -1,8 +1,8 @@
-import { IpcHandler } from "../@core/decorators/ipc-handler.js";
+import { IpcHandler } from "@traeop/electron-modular";
 import type {
   TIpcHandlerInterface,
   TParamOnInit,
-} from "../@core/types/ipc-handler.js";
+} from "@traeop/electron-modular";
 
 @IpcHandler()
 export class AppPreloadIpc implements TIpcHandlerInterface {

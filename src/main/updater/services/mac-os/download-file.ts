@@ -1,7 +1,7 @@
 import { app } from "electron";
 import path from "node:path";
 import fs from "node:fs";
-import { Injectable } from "../../../@core/decorators/injectable.js";
+import { Injectable } from "@traeop/electron-modular";
 import type { TOptionsDownloadFile } from "./types.js";
 import { folders, restApi } from "../../../config.js";
 import { CreateLatestVersionFolderService } from "./create-latest-version-folder.js";
@@ -9,7 +9,7 @@ import { CreateLatestVersionFolderService } from "./create-latest-version-folder
 @Injectable()
 export class DownloadFileService {
   constructor(
-    private createLatestVersionFolderService: CreateLatestVersionFolderService
+    private createLatestVersionFolderService: CreateLatestVersionFolderService,
   ) {}
 
   async downloadFile({
@@ -40,7 +40,7 @@ export class DownloadFileService {
               : {}),
             Accept: "application/octet-stream",
           },
-        }
+        },
       );
 
       if (!res.ok) {

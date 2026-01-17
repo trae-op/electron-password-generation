@@ -1,4 +1,4 @@
-import { RgModule } from "../@core/decorators/rg-module.js";
+import { RgModule } from "@traeop/electron-modular";
 import { AuthSocialNetworkIpc } from "./ipc.js";
 import { AuthSocialNetworkWindow } from "./window.js";
 import { TwoFactorModule } from "../two-factor/module.js";
@@ -14,7 +14,7 @@ import type { TAuthSocialNetworkTwoFactorProvider } from "./types.js";
     {
       provide: AUTH_SOCIAL_NETWORK_TWO_FACTOR_PROVIDER,
       useFactory: (
-        twoFactorWindowsFactoryService: TwoFactorWindowsFactoryService
+        twoFactorWindowsFactoryService: TwoFactorWindowsFactoryService,
       ): TAuthSocialNetworkTwoFactorProvider => ({
         createWindow: (nameWindow) =>
           twoFactorWindowsFactoryService.createWindow(nameWindow),

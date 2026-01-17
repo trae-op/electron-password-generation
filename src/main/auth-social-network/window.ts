@@ -4,9 +4,9 @@ import {
   type Event,
   type WebContentsWillRedirectEventParams,
 } from "electron";
-import { WindowManager } from "../@core/decorators/window-manager.js";
+import { WindowManager } from "@traeop/electron-modular";
 import { setElectronStorage } from "../$shared/store.js";
-import { Inject } from "../@core/decorators/inject.js";
+import { Inject } from "@traeop/electron-modular";
 import { messages } from "../config.js";
 import type { TWindowManager } from "../types.js";
 import { AUTH_SOCIAL_NETWORK_TWO_FACTOR_PROVIDER } from "./tokens.js";
@@ -28,7 +28,7 @@ export class AuthSocialNetworkWindow implements TWindowManager {
 
   constructor(
     @Inject(AUTH_SOCIAL_NETWORK_TWO_FACTOR_PROVIDER)
-    private twoFactorProvider: TAuthSocialNetworkTwoFactorProvider
+    private twoFactorProvider: TAuthSocialNetworkTwoFactorProvider,
   ) {}
 
   onWebContentsDidFinishLoad(window: BrowserWindow): void {
@@ -37,7 +37,7 @@ export class AuthSocialNetworkWindow implements TWindowManager {
 
   onWebContentsWillRedirect(
     _: Event<WebContentsWillRedirectEventParams>,
-    url: string
+    url: string,
   ): void {
     const callBackUrl = new URL(url);
     const searchParams = new URLSearchParams(callBackUrl.search);
@@ -74,7 +74,7 @@ export class AuthSocialNetworkWindow implements TWindowManager {
 
   private setToStore(
     nameWindow: TWindows["twoFactorQA"] | TWindows["twoFactorVerify"],
-    searchParams: URLSearchParams
+    searchParams: URLSearchParams,
   ): void {
     this.window?.close();
     const token = searchParams.get("token");

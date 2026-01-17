@@ -1,5 +1,5 @@
-import { IpcHandler } from "../@core/decorators/ipc-handler.js";
-import type { TIpcHandlerInterface } from "../@core/types/ipc-handler.js";
+import { IpcHandler } from "@traeop/electron-modular";
+import type { TIpcHandlerInterface } from "@traeop/electron-modular";
 import { NotificationService } from "./service.js";
 
 @IpcHandler()

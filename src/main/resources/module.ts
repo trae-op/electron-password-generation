@@ -1,4 +1,4 @@
-import { RgModule } from "../@core/decorators/rg-module.js";
+import { RgModule } from "@traeop/electron-modular";
 import { RestApiModule } from "../rest-api/module.js";
 import { RestApiService } from "../rest-api/service.js";
 import { CryptoModule } from "../crypto/module.js";
@@ -33,7 +33,7 @@ import type {
     {
       provide: RESOURCES_REST_API_PROVIDER,
       useFactory: (
-        restApiService: RestApiService
+        restApiService: RestApiService,
       ): TResourcesRestApiProvider => ({
         get: (endpoint, options) => restApiService.get(endpoint, options),
         post: (endpoint, data, options) =>

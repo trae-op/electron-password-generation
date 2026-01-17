@@ -4,10 +4,10 @@ import {
   WindowManager,
   destroyWindows,
 } from "@traeop/electron-modular";
-// import { WindowManager } from "../@core/decorators/window-manager.js";
-// import { Inject } from "../@core/decorators/inject.js";
+// import { WindowManager } from "@traeop/electron-modular";
+// import { Inject } from "@traeop/electron-modular";
 import { getElectronStorage } from "../$shared/store.js";
-// import { destroyWindows } from "../@core/control-window/destroy.js";
+// import { destroyWindows } from "@traeop/electron-modular";
 import { ipcMainOn, ipcWebContentsSend, isDev } from "../$shared/utils.js";
 import { menu } from "../config.js";
 import type { TWindowManager } from "../types.js";

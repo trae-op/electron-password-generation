@@ -1,5 +1,5 @@
 import { BrowserWindow } from "electron";
-import { WindowManager } from "../../@core/decorators/window-manager.js";
+import { WindowManager } from "@traeop/electron-modular";
 import { ipcWebContentsSend } from "../../$shared/utils.js";
 import { TwoFactorRestApiService } from "../services/rest-api.js";
 import type { TWindowManager } from "../../types.js";

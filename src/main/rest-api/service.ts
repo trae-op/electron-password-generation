@@ -3,7 +3,7 @@ import axios, {
   type AxiosInstance,
   type AxiosResponse,
 } from "axios";
-import { Injectable } from "../@core/decorators/injectable.js";
+import { Injectable } from "@traeop/electron-modular";
 import {
   setElectronStorage,
   getElectronStorage,
@@ -23,7 +23,7 @@ export class RestApiService {
 
     this.axiosInstance.interceptors.response.use(
       (response) => response,
-      (error: AxiosError) => Promise.reject(error)
+      (error: AxiosError) => Promise.reject(error),
     );
   }
 
@@ -67,12 +67,12 @@ export class RestApiService {
 
   async get<T>(
     endpoint: string,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<ApiResponse<T>> {
     try {
       const response: AxiosResponse<T> = await this.axiosInstance.get(
         endpoint,
-        options
+        options,
       );
 
       if (options?.isCache) {
@@ -99,7 +99,7 @@ export class RestApiService {
         const isIncomingArrayOfCacheableItems =
           Array.isArray(incomingValue) &&
           incomingValue.every(
-            (item) => typeof item === "object" && item !== null && "id" in item
+            (item) => typeof item === "object" && item !== null && "id" in item,
           );
 
         if (isIncomingArrayOfCacheableItems) {
@@ -110,7 +110,7 @@ export class RestApiService {
 
           incomingValue.forEach((incomingItem: any) => {
             const existingItemIndex = existingArray.findIndex(
-              (existingItem: any) => existingItem.id === incomingItem.id
+              (existingItem: any) => existingItem.id === incomingItem.id,
             );
 
             if (existingItemIndex !== -1) {
@@ -148,7 +148,7 @@ export class RestApiService {
 
   private setResponseElectronStorage(
     endpoint: string,
-    response: AxiosResponse<any, any>
+    response: AxiosResponse<any, any>,
   ) {
     if (response.status >= 200 && response.status < 300) {
       const merged = this.merge({
@@ -163,13 +163,13 @@ export class RestApiService {
   async post<T>(
     endpoint: string,
     data?: any,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<ApiResponse<T>> {
     try {
       const response: AxiosResponse<T> = await this.axiosInstance.post(
         endpoint,
         data,
-        options
+        options,
       );
       return this.handleResponse<T>(response);
     } catch (error: any) {
@@ -180,13 +180,13 @@ export class RestApiService {
   async put<T>(
     endpoint: string,
     data?: any,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<ApiResponse<T>> {
     try {
       const response: AxiosResponse<T> = await this.axiosInstance.put(
         endpoint,
         data,
-        options
+        options,
       );
       return this.handleResponse<T>(response);
     } catch (error: any) {
@@ -196,12 +196,12 @@ export class RestApiService {
 
   async delete<T>(
     endpoint: string,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<ApiResponse<T>> {
     try {
       const response: AxiosResponse<T> = await this.axiosInstance.delete(
         endpoint,
-        options
+        options,
       );
       return this.handleResponse<T>(response);
     } catch (error: any) {

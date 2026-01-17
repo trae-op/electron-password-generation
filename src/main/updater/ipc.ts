@@ -1,14 +1,14 @@
 import { app, BrowserWindow } from "electron";
 import pkg from "electron-updater";
-import { destroyWindows } from "../@core/control-window/destroy.js";
-import { IpcHandler } from "../@core/decorators/ipc-handler.js";
+import { destroyWindows } from "@traeop/electron-modular";
+import { IpcHandler } from "@traeop/electron-modular";
 import type {
   TIpcHandlerInterface,
   TParamOnInit,
-} from "../@core/types/ipc-handler.js";
+} from "@traeop/electron-modular";
 import { ipcMainOn } from "../$shared/utils.js";
 import { OpenLatestVersionService } from "./services/mac-os/open-latest-version.js";
-import { Inject } from "../@core/decorators/inject.js";
+import { Inject } from "@traeop/electron-modular";
 import { UPDATER_TRAY_PROVIDER } from "./tokens.js";
 import type { TUpdaterTrayProvider } from "./types.js";
 
@@ -20,7 +20,7 @@ export class UpdaterIpc implements TIpcHandlerInterface {
 
   constructor(
     @Inject(UPDATER_TRAY_PROVIDER) private trayProvider: TUpdaterTrayProvider,
-    private openLatestVersionService: OpenLatestVersionService
+    private openLatestVersionService: OpenLatestVersionService,
   ) {}
 
   onInit({ getWindow }: TParamOnInit<TWindows["updateApp"]>) {
@@ -39,7 +39,7 @@ export class UpdaterIpc implements TIpcHandlerInterface {
         }
 
         return item;
-      })
+      }),
     );
 
     ipcMainOn("restart", () => {

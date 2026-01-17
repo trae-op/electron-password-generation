@@ -1,4 +1,4 @@
-import { RgModule } from "../@core/decorators/rg-module.js";
+import { RgModule } from "@traeop/electron-modular";
 import { AppPreloadIpc } from "./ipc.js";
 import { AppPreloadWindow } from "./window.js";
 

@@ -1,7 +1,7 @@
 import { app, dialog } from "electron";
 import path from "node:path";
 import { compareVersions } from "compare-versions";
-import { Injectable } from "../../../@core/decorators/injectable.js";
+import { Injectable } from "@traeop/electron-modular";
 import { TOptionsUpdater } from "./types.js";
 import { folders, messages, restApi } from "../../../config.js";
 import { VerifyService } from "./verify.js";
@@ -11,7 +11,7 @@ import { DownloadFileService } from "./download-file.js";
 export class CheckForUpdateService {
   constructor(
     private downloadFileService: DownloadFileService,
-    private verifyService: VerifyService
+    private verifyService: VerifyService,
   ) {}
 
   async checkForUpdate({ eventCallBack }: TOptionsUpdater): Promise<any> {
@@ -38,13 +38,13 @@ export class CheckForUpdateService {
 
         if (compareVersions(latestVersion, currentVersion) === 1) {
           const updateFile = data.assets.find((asset: { name: string }) =>
-            asset.name.endsWith(".dmg")
+            asset.name.endsWith(".dmg"),
           );
 
           if (updateFile !== null && updateFile.browser_download_url) {
             const verify = await this.verifyService.isVerify(
               folderPath,
-              updateFile.name
+              updateFile.name,
             );
 
             if (verify) {

@@ -1,7 +1,7 @@
 import { access } from "fs/promises";
 import { constants } from "node:fs";
 import { join } from "node:path";
-import { Injectable } from "../../../@core/decorators/injectable.js";
+import { Injectable } from "@traeop/electron-modular";
 
 @Injectable()
 export class VerifyService {
