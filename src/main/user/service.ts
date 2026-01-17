@@ -1,7 +1,6 @@
 import { type AxiosRequestConfig } from "axios";
 import { messages, restApi } from "../config.js";
-import { Injectable } from "@traeop/electron-modular";
-import { Inject } from "@traeop/electron-modular";
+import { Injectable, Inject } from "@traeop/electron-modular";
 import { getElectronStorage } from "../$shared/store.js";
 import { USER_REST_API_PROVIDER } from "./tokens.js";
 import type { TUserRestApiProvider } from "./types.js";

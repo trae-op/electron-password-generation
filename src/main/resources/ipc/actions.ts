@@ -4,15 +4,17 @@ import {
   ipcMainOn,
   ipcWebContentsSend,
 } from "../../$shared/utils.js";
-import { IpcHandler } from "@traeop/electron-modular";
-import { getWindow as getWindows } from "@traeop/electron-modular";
-import type { TIpcHandlerInterface } from "@traeop/electron-modular";
+import {
+  IpcHandler,
+  getWindow as getWindows,
+  Inject,
+  type TIpcHandlerInterface,
+} from "@traeop/electron-modular";
 import { ResourcesService } from "../services/resources.js";
 import { TEncryptedVault } from "../services/types.js";
 import { CacheWindowsService } from "../services/cacheWindows.js";
 import { getStore, getElectronStorage } from "../../$shared/store.js";
 import { restApi } from "../../config.js";
-import { Inject } from "@traeop/electron-modular";
 import {
   RESOURCES_CRYPTO_PROVIDER,
   RESOURCES_TRAY_PROVIDER,

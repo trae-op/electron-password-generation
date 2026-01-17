@@ -1,7 +1,7 @@
-import { IpcHandler } from "@traeop/electron-modular";
-import type {
-  TIpcHandlerInterface,
-  TParamOnInit,
+import {
+  IpcHandler,
+  type TIpcHandlerInterface,
+  type TParamOnInit,
 } from "@traeop/electron-modular";
 
 @IpcHandler()

@@ -1,13 +1,16 @@
 import { BrowserWindow } from "electron";
-import { IpcHandler } from "@traeop/electron-modular";
-import { TParamOnInit } from "@traeop/electron-modular";
-import { getWindow as getWindows } from "@traeop/electron-modular";
+import {
+  IpcHandler,
+  getWindow as getWindows,
+  Inject,
+  type TParamOnInit,
+} from "@traeop/electron-modular";
 import { ipcMainOn, ipcWebContentsSend } from "../$shared/utils.js";
 import type { TNameWindows } from "./services/types.js";
 import { TwoFactorWindowsFactoryService } from "./services/windows-factory.js";
 import { TwoFactorRestApiService } from "./services/rest-api.js";
 import { getElectronStorage, setElectronStorage } from "../$shared/store.js";
-import { Inject } from "@traeop/electron-modular";
+
 import {
   TWO_FACTOR_AUTH_PROVIDER,
   TWO_FACTOR_USER_PROVIDER,

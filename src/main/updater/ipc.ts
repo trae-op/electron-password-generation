@@ -1,14 +1,15 @@
 import { app, BrowserWindow } from "electron";
 import pkg from "electron-updater";
-import { destroyWindows } from "@traeop/electron-modular";
-import { IpcHandler } from "@traeop/electron-modular";
-import type {
-  TIpcHandlerInterface,
-  TParamOnInit,
+import {
+  destroyWindows,
+  IpcHandler,
+  Inject,
+  type TIpcHandlerInterface,
+  type TParamOnInit,
 } from "@traeop/electron-modular";
 import { ipcMainOn } from "../$shared/utils.js";
 import { OpenLatestVersionService } from "./services/mac-os/open-latest-version.js";
-import { Inject } from "@traeop/electron-modular";
+
 import { UPDATER_TRAY_PROVIDER } from "./tokens.js";
 import type { TUpdaterTrayProvider } from "./types.js";
 

@@ -1,10 +1,10 @@
 import { ipcMainOn } from "../../$shared/utils.js";
-import { IpcHandler } from "@traeop/electron-modular";
-import type {
-  TIpcHandlerInterface,
-  TParamOnInit,
+import {
+  IpcHandler,
+  TWindowFactory,
+  type TIpcHandlerInterface,
+  type TParamOnInit,
 } from "@traeop/electron-modular";
-import { TWindowFactory } from "@traeop/electron-modular";
 import { CacheWindowsService } from "../services/cacheWindows.js";
 
 @IpcHandler()

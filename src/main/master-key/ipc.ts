@@ -1,7 +1,10 @@
 import { BrowserWindow, clipboard } from "electron";
-import { IpcHandler } from "@traeop/electron-modular";
-import { getWindow as getWindows } from "@traeop/electron-modular";
-import { TParamOnInit } from "@traeop/electron-modular";
+import {
+  IpcHandler,
+  getWindow as getWindows,
+  Inject,
+  type TParamOnInit,
+} from "@traeop/electron-modular";
 import {
   ipcMainHandle,
   ipcMainOn,
@@ -14,7 +17,7 @@ import {
   getElectronStorage,
 } from "../$shared/store.js";
 import { restApi } from "../config.js";
-import { Inject } from "@traeop/electron-modular";
+
 import { MASTER_KEY_CRYPTO_PROVIDER } from "./tokens.js";
 import type { TMasterKeyCryptoProvider } from "./types.js";
 

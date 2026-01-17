@@ -1,5 +1,4 @@
-import { getWindow } from "@traeop/electron-modular";
-import { Injectable } from "@traeop/electron-modular";
+import { getWindow, Injectable } from "@traeop/electron-modular";
 import { ipcWebContentsSend } from "../../$shared/utils.js";
 
 @Injectable()

@@ -1,4 +1,3 @@
-// import { RgModule } from "@traeop/electron-modular";
 import { RgModule } from "@traeop/electron-modular";
 import { MenuModule } from "../menu/module.js";
 import { TrayModule } from "../tray/module.js";

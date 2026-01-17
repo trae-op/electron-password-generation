@@ -1,9 +1,8 @@
-import { Injectable } from "@traeop/electron-modular";
+import { Injectable, Inject } from "@traeop/electron-modular";
 import { messages } from "../../../config.js";
 import { CheckForUpdateService } from "./check-for-update.js";
 import { SendUpdateInfoService } from "../send-update-info.js";
 import { setStore } from "../../../$shared/store.js";
-import { Inject } from "@traeop/electron-modular";
 import { UPDATER_NOTIFICATION_PROVIDER } from "../../tokens.js";
 import type { TUpdaterNotificationProvider } from "../../types.js";
 

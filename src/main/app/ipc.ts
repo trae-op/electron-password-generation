@@ -7,15 +7,8 @@ import {
   getWindow as getWindows,
 } from "@traeop/electron-modular";
 import { ipcMainOn } from "../$shared/utils.js";
-// import { IpcHandler } from "@traeop/electron-modular";
-// import { getWindow as getWindows } from "@traeop/electron-modular";
-// import type {
-//   TIpcHandlerInterface,
-//   TParamOnInit,
-// } from "@traeop/electron-modular";
 import { AppService } from "./service.js";
 import { messages } from "../config.js";
-// import { Inject } from "@traeop/electron-modular";
 import { AUTH_PROVIDER } from "./tokens.js";
 import type { TAuthProvider, TDestroyProcess } from "./types.js";
 

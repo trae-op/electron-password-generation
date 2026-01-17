@@ -1,15 +1,17 @@
 import { BrowserWindow } from "electron";
 import { type AxiosRequestConfig } from "axios";
 import { restApi, timers } from "../config.js";
-import { Injectable } from "@traeop/electron-modular";
-import { Inject } from "@traeop/electron-modular";
+import {
+  Injectable,
+  Inject,
+  getWindow as getWindows,
+} from "@traeop/electron-modular";
 import {
   deleteFromElectronStorage,
   getElectronStorage,
   deleteStore,
 } from "../$shared/store.js";
 import { ipcWebContentsSend } from "../$shared/utils.js";
-import { getWindow as getWindows } from "@traeop/electron-modular";
 import { AUTH_REST_API_PROVIDER } from "./tokens.js";
 import type { TAuthRestApiProvider } from "./types.js";
 

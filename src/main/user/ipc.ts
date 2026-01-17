@@ -1,5 +1,4 @@
-import { IpcHandler } from "@traeop/electron-modular";
-import { getWindow as getWindows } from "@traeop/electron-modular";
+import { IpcHandler, getWindow as getWindows } from "@traeop/electron-modular";
 import { ipcMainOn, ipcWebContentsSend } from "../$shared/utils.js";
 import { UserService } from "./service.js";
 import { getElectronStorage } from "../$shared/store.js";

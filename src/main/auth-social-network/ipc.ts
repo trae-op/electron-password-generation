@@ -1,7 +1,6 @@
 import { session } from "electron";
 import { restApi } from "../config.js";
-import { IpcHandler } from "@traeop/electron-modular";
-import { TParamOnInit } from "@traeop/electron-modular";
+import { IpcHandler, type TParamOnInit } from "@traeop/electron-modular";
 import { ipcMainOn } from "../$shared/utils.js";
 
 @IpcHandler()
