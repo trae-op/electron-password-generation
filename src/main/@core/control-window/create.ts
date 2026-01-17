@@ -1,40 +1,40 @@
 import { BrowserWindow, session, app } from "electron";
 import path from "node:path";
 import type { TParamsCreateWindow } from "./types.js";
-import { folders } from "../../config.js";
 import { cacheWindows } from "./cache.js";
 import { getWindow } from "./receive.js";
+import { getSettings } from "../bootstrap/settings.js";
 
 export function createWindow<N extends string>({
   hash,
   options,
-  paramsRoute,
   isCache,
   loadURL,
 }: TParamsCreateWindow<N>) {
-  const BASE_REST_API = process.env.BASE_REST_API;
-  const LOCALHOST_ELECTRON_SERVER_PORT =
-    process.env.LOCALHOST_ELECTRON_SERVER_PORT;
+  const settings = getSettings();
+  const BASE_REST_API = settings.baseRestApi;
+  const LOCALHOST_ELECTRON_SERVER_PORT = settings.localhostPort;
+  const { distRenderer, distMain } = settings.folders;
   const isDev = process.env.NODE_ENV === "development";
   const uiPath = path.join(
     app.getAppPath(),
-    "/" + folders.distRenderer + "/index.html"
+    "/" + distRenderer + "/index.html",
   );
   const preloadPath = path.join(
     app.getAppPath(),
     isDev ? "." : "..",
-    "/" + folders.distMain + "/preload.cjs"
+    "/" + distMain + "/preload.cjs",
   );
 
   if (!BASE_REST_API) {
     console.warn(
-      `Warning: You have to add an environment variable called "process.env.BASE_REST_API"!`
+      `Warning: You have to add an environment variable called "process.env.BASE_REST_API"!`,
     );
   }
 
   if (!LOCALHOST_ELECTRON_SERVER_PORT) {
     console.warn(
-      `Warning: You have to add an environment variable called "process.env.LOCALHOST_ELECTRON_SERVER_PORT"!`
+      `Warning: You have to add an environment variable called "process.env.LOCALHOST_ELECTRON_SERVER_PORT"!`,
     );
   }
 
@@ -86,9 +86,9 @@ export function createWindow<N extends string>({
 
   if (!loadURL && isDev) {
     newWindow.loadURL(
-      `http://localhost:${process.env.LOCALHOST_ELECTRON_SERVER_PORT}${
+      `http://localhost:${LOCALHOST_ELECTRON_SERVER_PORT}${
         hash !== undefined ? `#${hash}` : ""
-      }`
+      }`,
     );
   }
 

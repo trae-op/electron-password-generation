@@ -13,6 +13,8 @@ import { NotificationModule } from "./notification/module.js";
 import { AppVersionModule } from "./app-version/module.js";
 import { UserModule } from "./user/module.js";
 import { ResourcesModule } from "./resources/module.js";
+import { initSettings } from "./@core/bootstrap/settings.js";
+import { folders } from "./config.js";
 
 const envPath = path.join(process.resourcesPath, ".env");
 dotenv.config(!isDev() ? { path: envPath } : undefined);
@@ -20,6 +22,15 @@ dotenv.config(!isDev() ? { path: envPath } : undefined);
 app.disableHardwareAcceleration();
 
 Menu.setApplicationMenu(null);
+
+initSettings({
+  baseRestApi: process.env.BASE_REST_API ?? "",
+  localhostPort: process.env.LOCALHOST_ELECTRON_SERVER_PORT ?? "",
+  folders: {
+    distRenderer: folders.distRenderer,
+    distMain: folders.distMain,
+  },
+});
 
 app.on("ready", async () => {
   await bootstrapModules([
