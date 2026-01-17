@@ -225,28 +225,28 @@ const lazyExpensiveValue = createLazyValue(() => {
 const processLargeArray = (data) => {
   const result = [];
   const length = data.length;
-
+  
   for (let i = 0; i < length; i++) {
     if (data[i].active) {
       result.push(data[i].value);
     }
   }
-
+  
   return result;
 };
 
 const binarySearch = (arr, target) => {
   let left = 0;
   let right = arr.length - 1;
-
+  
   while (left <= right) {
     const mid = Math.floor((left + right) / 2);
-
+    
     if (arr[mid] === target) return mid;
     if (arr[mid] < target) left = mid + 1;
     else right = mid - 1;
   }
-
+  
   return -1;
 };
 ```
@@ -256,13 +256,13 @@ const binarySearch = (arr, target) => {
 ```
 const processBatch = async (items, batchSize, processor) => {
   const results = [];
-
+  
   for (let i = 0; i < items.length; i += batchSize) {
     const batch = items.slice(i, i + batchSize);
     const batchResults = await Promise.all(batch.map(processor));
     results.push(...batchResults);
   }
-
+  
   return results;
 };
 ```
@@ -279,14 +279,14 @@ const getPaginatedData = (data, page, pageSize) => {
 const lazyLoadData = (getData, pageSize) => {
   let page = 1;
   let hasMore = true;
-
+  
   return async () => {
     if (!hasMore) return null;
-
+    
     const data = await getData(page, pageSize);
     hasMore = data.length === pageSize;
     page++;
-
+    
     return data;
   };
 };
@@ -326,13 +326,13 @@ const runInWorker = (data) => {
 const processStream = async (stream, processor) => {
   const reader = stream.getReader();
   const results = [];
-
+  
   while (true) {
     const { done, value } = await reader.read();
     if (done) break;
     results.push(processor(value));
   }
-
+  
   return results;
 };
 ```
@@ -465,7 +465,7 @@ const createUser = (type, data) => {
     user: (data) => ({ ...data, role: 'user', permissions: ['read'] }),
     guest: (data) => ({ ...data, role: 'guest', permissions: [] })
   };
-
+  
   return userTypes[type](data);
 };
 ```
@@ -475,7 +475,7 @@ const createUser = (type, data) => {
 ```
 const createSingleton = (createInstance) => {
   let instance;
-
+  
   return () => {
     if (!instance) {
       instance = createInstance();
@@ -495,7 +495,7 @@ const getDatabase = createSingleton(() => ({
 ```
 const createObservable = () => {
   const observers = new Set();
-
+  
   return {
     subscribe: (observer) => {
       observers.add(observer);
@@ -522,7 +522,7 @@ const createCalculator = () => {
     multiply: (a, b) => a * b,
     divide: (a, b) => a / b
   };
-
+  
   return {
     calculate: (operation, a, b) => {
       const strategy = strategies[operation];
@@ -540,7 +540,7 @@ const createCalculator = () => {
 ```
 const createCounter = () => {
   let count = 0;
-
+  
   return {
     increment: () => ++count,
     decrement: () => --count,
@@ -573,13 +573,13 @@ const isValidUrl = (url) => {
 
 const validateSchema = (data, schema) => {
   const errors = {};
-
+  
   Object.entries(schema).forEach(([key, validator]) => {
     if (!validator(data[key])) {
       errors[key] = `Invalid value for ${key}`;
     }
   });
-
+  
   return Object.keys(errors).length === 0 ? null : errors;
 };
 ```
@@ -625,18 +625,18 @@ const deepClone = (obj) => {
   if (obj === null || typeof obj !== 'object') return obj;
   if (obj instanceof Date) return new Date(obj);
   if (obj instanceof Array) return obj.map(item => deepClone(item));
-
+  
   const clonedObj = {};
   Object.keys(obj).forEach(key => {
     clonedObj[key] = deepClone(obj[key]);
   });
-
+  
   return clonedObj;
 };
 
 const deepMerge = (target, source) => {
   const output = { ...target };
-
+  
   if (isObject(target) && isObject(source)) {
     Object.keys(source).forEach(key => {
       if (isObject(source[key])) {
@@ -650,7 +650,7 @@ const deepMerge = (target, source) => {
       }
     });
   }
-
+  
   return output;
 };
 
@@ -711,11 +711,11 @@ const truncate = (str, maxLength, suffix = '...') => {
 ```
 const createObjectPool = (factory, size = 10) => {
   const pool = [];
-
+  
   for (let i = 0; i < size; i++) {
     pool.push(factory());
   }
-
+  
   return {
     acquire: () => {
       if (pool.length > 0) {
@@ -737,7 +737,7 @@ const createObjectPool = (factory, size = 10) => {
 ```
 const createCache = () => {
   const cache = new WeakMap();
-
+  
   return {
     set: (key, value) => cache.set(key, value),
     get: (key) => cache.get(key),
@@ -753,19 +753,19 @@ const createCache = () => {
 ```
 const createMock = () => {
   const calls = [];
-
+  
   const mockFn = (...args) => {
     calls.push(args);
     return mockFn.returnValue;
   };
-
+  
   mockFn.calls = calls;
   mockFn.returnValue = undefined;
   mockFn.mockReturnValue = (value) => {
     mockFn.returnValue = value;
     return mockFn;
   };
-
+  
   return mockFn;
 };
 ```
