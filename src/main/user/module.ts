@@ -1,4 +1,4 @@
-import { RgModule } from "@traeop/electron-modular";
+import { RgModule } from "@_traeop_/electron-modular";
 import { RestApiModule } from "../rest-api/module.js";
 import { RestApiService } from "../rest-api/service.js";
 import { UserService } from "./service.js";

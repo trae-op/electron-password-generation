@@ -4,7 +4,7 @@ import {
   type Event,
   type WebContentsWillRedirectEventParams,
 } from "electron";
-import { WindowManager, Inject } from "@traeop/electron-modular";
+import { WindowManager, Inject } from "@_traeop_/electron-modular";
 import { setElectronStorage } from "../$shared/store.js";
 import { messages } from "../config.js";
 import type { TWindowManager } from "../types.js";

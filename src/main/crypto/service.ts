@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import { promisify } from "node:util";
-import { Injectable } from "@traeop/electron-modular";
+import { Injectable } from "@_traeop_/electron-modular";
 import { TEncryptedVault } from "./types.js";
 import { cryptoOptions } from "../config.js";
 import { dialog } from "electron";

@@ -1,6 +1,6 @@
 import { Menu } from "electron";
 import { menu } from "../config.js";
-import { Injectable } from "@traeop/electron-modular";
+import { Injectable } from "@_traeop_/electron-modular";
 import { isPlatform } from "../$shared/utils.js";
 import type { TItem } from "./types.js";
 

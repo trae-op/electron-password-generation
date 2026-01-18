@@ -1,7 +1,7 @@
 import { app, Menu } from "electron";
 import dotenv from "dotenv";
 import path from "node:path";
-import { initSettings, bootstrapModules } from "@traeop/electron-modular";
+import { initSettings, bootstrapModules } from "@_traeop_/electron-modular";
 import { isDev } from "./$shared/utils.js";
 import { AppModule } from "./app/module.js";
 import { AuthSocialNetworkModule } from "./auth-social-network/module.js";

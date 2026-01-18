@@ -1,7 +1,7 @@
 import { app } from "electron";
 import path from "node:path";
 import fs from "node:fs";
-import { Injectable } from "@traeop/electron-modular";
+import { Injectable } from "@_traeop_/electron-modular";
 import type { TOptionsDownloadFile } from "./types.js";
 import { folders, restApi } from "../../../config.js";
 import { CreateLatestVersionFolderService } from "./create-latest-version-folder.js";

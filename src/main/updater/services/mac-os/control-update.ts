@@ -1,4 +1,4 @@
-import { Injectable, Inject } from "@traeop/electron-modular";
+import { Injectable, Inject } from "@_traeop_/electron-modular";
 import { messages } from "../../../config.js";
 import { CheckForUpdateService } from "./check-for-update.js";
 import { SendUpdateInfoService } from "../send-update-info.js";

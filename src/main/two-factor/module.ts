@@ -1,4 +1,4 @@
-import { RgModule } from "@traeop/electron-modular";
+import { RgModule } from "@_traeop_/electron-modular";
 import { TwoFactorIpc } from "./ipc.js";
 import { TwoFactorQAWindow } from "./windows/qa.js";
 import { TwoFactorVerifyWindow } from "./windows/verify.js";

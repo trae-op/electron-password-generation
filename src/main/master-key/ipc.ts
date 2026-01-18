@@ -4,7 +4,7 @@ import {
   getWindow as getWindows,
   Inject,
   type TParamOnInit,
-} from "@traeop/electron-modular";
+} from "@_traeop_/electron-modular";
 import {
   ipcMainHandle,
   ipcMainOn,

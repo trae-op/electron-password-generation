@@ -2,7 +2,7 @@ import {
   IpcHandler,
   type TIpcHandlerInterface,
   type TParamOnInit,
-} from "@traeop/electron-modular";
+} from "@_traeop_/electron-modular";
 
 @IpcHandler()
 export class AppPreloadIpc implements TIpcHandlerInterface {

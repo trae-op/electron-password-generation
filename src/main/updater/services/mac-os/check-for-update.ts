@@ -1,7 +1,7 @@
 import { app, dialog } from "electron";
 import path from "node:path";
 import { compareVersions } from "compare-versions";
-import { Injectable } from "@traeop/electron-modular";
+import { Injectable } from "@_traeop_/electron-modular";
 import { TOptionsUpdater } from "./types.js";
 import { folders, messages, restApi } from "../../../config.js";
 import { VerifyService } from "./verify.js";

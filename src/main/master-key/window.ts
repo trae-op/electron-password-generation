@@ -1,5 +1,5 @@
 import { BrowserWindow } from "electron";
-import { WindowManager } from "@traeop/electron-modular";
+import { WindowManager } from "@_traeop_/electron-modular";
 import { ipcWebContentsSend } from "../$shared/utils.js";
 import { getStore } from "../$shared/store.js";
 import type { TWindowManager } from "../types.js";

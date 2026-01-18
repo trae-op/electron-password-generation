@@ -1,4 +1,4 @@
-import { WindowManager } from "@traeop/electron-modular";
+import { WindowManager } from "@_traeop_/electron-modular";
 import type { TWindowManager } from "../types.js";
 import { CheckForUpdatesService } from "./services/check-for-updates.js";
 

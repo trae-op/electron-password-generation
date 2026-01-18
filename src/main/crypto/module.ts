@@ -1,4 +1,4 @@
-import { RgModule } from "@traeop/electron-modular";
+import { RgModule } from "@_traeop_/electron-modular";
 import { CryptoService } from "./service.js";
 
 @RgModule({

@@ -1,5 +1,5 @@
 import { BrowserWindow } from "electron";
-import { WindowManager } from "@traeop/electron-modular";
+import { WindowManager } from "@_traeop_/electron-modular";
 import type { TWindowManager } from "../../types.js";
 @WindowManager<TWindows["twoFactorVerify"]>({
   hash: "window:two-factor-verify",

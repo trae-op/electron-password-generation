@@ -3,11 +3,11 @@ import {
   Inject,
   WindowManager,
   destroyWindows,
-} from "@traeop/electron-modular";
-// import { WindowManager } from "@traeop/electron-modular";
-// import { Inject } from "@traeop/electron-modular";
+} from "@_traeop_/electron-modular";
+// import { WindowManager } from "@_traeop_/electron-modular";
+// import { Inject } from "@_traeop_/electron-modular";
 import { getElectronStorage } from "../$shared/store.js";
-// import { destroyWindows } from "@traeop/electron-modular";
+// import { destroyWindows } from "@_traeop_/electron-modular";
 import { ipcMainOn, ipcWebContentsSend, isDev } from "../$shared/utils.js";
 import { menu } from "../config.js";
 import type { TWindowManager } from "../types.js";

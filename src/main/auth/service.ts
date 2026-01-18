@@ -5,7 +5,7 @@ import {
   Injectable,
   Inject,
   getWindow as getWindows,
-} from "@traeop/electron-modular";
+} from "@_traeop_/electron-modular";
 import {
   deleteFromElectronStorage,
   getElectronStorage,

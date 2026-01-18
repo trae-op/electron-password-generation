@@ -6,7 +6,7 @@ import {
   Inject,
   type TIpcHandlerInterface,
   type TParamOnInit,
-} from "@traeop/electron-modular";
+} from "@_traeop_/electron-modular";
 import { ipcMainOn } from "../$shared/utils.js";
 import { OpenLatestVersionService } from "./services/mac-os/open-latest-version.js";
 

@@ -1,4 +1,4 @@
-import { RgModule } from "@traeop/electron-modular";
+import { RgModule } from "@_traeop_/electron-modular";
 import { MenuModule } from "../menu/module.js";
 import { TrayModule } from "../tray/module.js";
 import { TrayService } from "../tray/service.js";

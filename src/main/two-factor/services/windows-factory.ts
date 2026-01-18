@@ -1,5 +1,5 @@
 import { BrowserWindow } from "electron";
-import { Injectable, type TWindowCreate } from "@traeop/electron-modular";
+import { Injectable, type TWindowCreate } from "@_traeop_/electron-modular";
 import type { TNameWindows } from "./types.js";
 
 let qaWindow: TWindowCreate | undefined = undefined;
