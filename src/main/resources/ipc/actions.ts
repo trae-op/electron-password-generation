@@ -9,7 +9,7 @@ import {
   getWindow as getWindows,
   Inject,
   type TIpcHandlerInterface,
-} from "@_traeop_/electron-modular";
+} from "@devisfuture/electron-modular";
 import { ResourcesService } from "../services/resources.js";
 import { TEncryptedVault } from "../services/types.js";
 import { CacheWindowsService } from "../services/cacheWindows.js";

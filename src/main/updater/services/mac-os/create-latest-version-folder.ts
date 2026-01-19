@@ -1,5 +1,5 @@
 import { mkdir } from "fs/promises";
-import { Injectable } from "@_traeop_/electron-modular";
+import { Injectable } from "@devisfuture/electron-modular";
 import type { TPromiseCreateFolder } from "./types.js";
 import { messages } from "../../../config.js";
 

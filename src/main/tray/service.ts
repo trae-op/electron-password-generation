@@ -1,7 +1,7 @@
 import { Menu, Tray } from "electron";
 import path from "node:path";
 import { icons, menu } from "../config.js";
-import { Injectable } from "@_traeop_/electron-modular";
+import { Injectable } from "@devisfuture/electron-modular";
 import { isDev, isPlatform } from "../$shared/utils.js";
 import type { TItem } from "./types.js";
 import { getAssetsPath } from "../$shared/pathResolver.js";

@@ -1,6 +1,6 @@
 import { app, shell } from "electron";
 import path from "node:path";
-import { Injectable } from "@_traeop_/electron-modular";
+import { Injectable } from "@devisfuture/electron-modular";
 import type { TPromiseOpenFolder } from "./types.js";
 import { folders, messages } from "../../../config.js";
 

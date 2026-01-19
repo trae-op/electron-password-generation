@@ -3,7 +3,7 @@ import {
   Inject,
   WindowManager,
   destroyWindows,
-} from "@_traeop_/electron-modular";
+} from "@devisfuture/electron-modular";
 import { getElectronStorage } from "../$shared/store.js";
 import { ipcMainOn, ipcWebContentsSend, isDev } from "../$shared/utils.js";
 import { menu } from "../config.js";

@@ -5,7 +5,7 @@ import {
   TIpcHandlerInterface,
   IpcHandler,
   getWindow as getWindows,
-} from "@_traeop_/electron-modular";
+} from "@devisfuture/electron-modular";
 import { ipcMainOn } from "../$shared/utils.js";
 import { AppService } from "./service.js";
 import { messages } from "../config.js";

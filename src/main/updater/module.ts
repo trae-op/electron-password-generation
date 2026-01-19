@@ -1,4 +1,4 @@
-import { RgModule } from "@_traeop_/electron-modular";
+import { RgModule } from "@devisfuture/electron-modular";
 import { CheckForUpdateService } from "./services/mac-os/check-for-update.js";
 import { VerifyService } from "./services/mac-os/verify.js";
 import { CreateLatestVersionFolderService } from "./services/mac-os/create-latest-version-folder.js";

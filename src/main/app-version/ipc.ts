@@ -2,7 +2,7 @@ import { app } from "electron";
 import {
   IpcHandler,
   type TIpcHandlerInterface,
-} from "@_traeop_/electron-modular";
+} from "@devisfuture/electron-modular";
 import { ipcMainHandle } from "../$shared/utils.js";
 
 @IpcHandler()

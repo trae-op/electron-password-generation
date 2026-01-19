@@ -1,4 +1,4 @@
-import { RgModule } from "@_traeop_/electron-modular";
+import { RgModule } from "@devisfuture/electron-modular";
 import { AuthSocialNetworkIpc } from "./ipc.js";
 import { AuthSocialNetworkWindow } from "./window.js";
 import { TwoFactorModule } from "../two-factor/module.js";

@@ -4,7 +4,7 @@ import {
   TWindowFactory,
   type TIpcHandlerInterface,
   type TParamOnInit,
-} from "@_traeop_/electron-modular";
+} from "@devisfuture/electron-modular";
 import { CacheWindowsService } from "../services/cacheWindows.js";
 
 @IpcHandler()

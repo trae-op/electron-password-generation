@@ -1,6 +1,6 @@
 import { type AxiosRequestConfig } from "axios";
 import { messages, restApi } from "../../config.js";
-import { Injectable, Inject } from "@_traeop_/electron-modular";
+import { Injectable, Inject } from "@devisfuture/electron-modular";
 import { getElectronStorage } from "../../$shared/store.js";
 import type {
   TResponseGenerate,

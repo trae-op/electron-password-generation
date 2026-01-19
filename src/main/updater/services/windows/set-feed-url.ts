@@ -1,6 +1,6 @@
 import pkg from "electron-updater";
 import { isDev, isPlatform } from "../../../$shared/utils.js";
-import { Injectable } from "@_traeop_/electron-modular";
+import { Injectable } from "@devisfuture/electron-modular";
 import { publishOptions } from "../../../config.js";
 
 const { autoUpdater } = pkg;

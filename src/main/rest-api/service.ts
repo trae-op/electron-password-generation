@@ -3,7 +3,7 @@ import axios, {
   type AxiosInstance,
   type AxiosResponse,
 } from "axios";
-import { Injectable } from "@_traeop_/electron-modular";
+import { Injectable } from "@devisfuture/electron-modular";
 import {
   setElectronStorage,
   getElectronStorage,

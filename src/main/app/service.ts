@@ -1,5 +1,5 @@
 import { app } from "electron";
-import { Inject, Injectable, getWindow } from "@_traeop_/electron-modular";
+import { Inject, Injectable, getWindow } from "@devisfuture/electron-modular";
 import { TRAY_PROVIDER } from "./tokens.js";
 import type { TTrayProvider } from "./types.js";
 

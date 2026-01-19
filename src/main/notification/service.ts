@@ -1,6 +1,6 @@
 import { Notification, type NotificationConstructorOptions } from "electron";
 import path from "node:path";
-import { Injectable } from "@_traeop_/electron-modular";
+import { Injectable } from "@devisfuture/electron-modular";
 import { icons } from "../config.js";
 import { getAssetsPath } from "../$shared/pathResolver.js";
 

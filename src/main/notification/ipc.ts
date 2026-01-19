@@ -1,7 +1,7 @@
 import {
   IpcHandler,
   type TIpcHandlerInterface,
-} from "@_traeop_/electron-modular";
+} from "@devisfuture/electron-modular";
 import { NotificationService } from "./service.js";
 
 @IpcHandler()

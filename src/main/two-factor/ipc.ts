@@ -4,7 +4,7 @@ import {
   getWindow as getWindows,
   Inject,
   type TParamOnInit,
-} from "@_traeop_/electron-modular";
+} from "@devisfuture/electron-modular";
 import { ipcMainOn, ipcWebContentsSend } from "../$shared/utils.js";
 import type { TNameWindows } from "./services/types.js";
 import { TwoFactorWindowsFactoryService } from "./services/windows-factory.js";

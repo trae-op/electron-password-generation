@@ -1,4 +1,4 @@
-import { RgModule } from "@_traeop_/electron-modular";
+import { RgModule } from "@devisfuture/electron-modular";
 import { TrayService } from "./service.js";
 
 @RgModule({

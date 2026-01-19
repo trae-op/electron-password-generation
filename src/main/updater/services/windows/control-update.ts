@@ -1,6 +1,6 @@
 import { dialog } from "electron";
 import pkg from "electron-updater";
-import { Injectable, Inject } from "@_traeop_/electron-modular";
+import { Injectable, Inject } from "@devisfuture/electron-modular";
 import { messages } from "../../../config.js";
 import { SendUpdateInfoService } from "../send-update-info.js";
 import { setStore } from "../../../$shared/store.js";

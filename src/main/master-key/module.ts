@@ -1,4 +1,4 @@
-import { RgModule } from "@_traeop_/electron-modular";
+import { RgModule } from "@devisfuture/electron-modular";
 import { MasterKeyIpc } from "./ipc.js";
 import { MasterKeyWindow } from "./window.js";
 import { ResourcesModule } from "../resources/module.js";
