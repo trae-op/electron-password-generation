@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import { promisify } from "node:util";
-import { Injectable } from "../@core/decorators/injectable.js";
+import { Injectable } from "@_traeop_/electron-modular";
 import { TEncryptedVault } from "./types.js";
 import { cryptoOptions } from "../config.js";
 import { dialog } from "electron";
@@ -17,13 +17,13 @@ export class CryptoService {
       salt,
       cryptoOptions.PBKDF2_ITERATIONS,
       cryptoOptions.AES_KEY_LENGTH_BYTES,
-      cryptoOptions.PBKDF2_DIGEST
+      cryptoOptions.PBKDF2_DIGEST,
     );
   }
 
   async encrypt(
     masterKey: string,
-    masterKeyToEncrypt: string
+    masterKeyToEncrypt: string,
   ): Promise<TEncryptedVault> {
     const salt: Buffer = crypto.randomBytes(cryptoOptions.SALT_LENGTH_BYTES);
     const derivedKey: Buffer = await this.deriveKey(masterKey, salt);
@@ -31,7 +31,7 @@ export class CryptoService {
     const cipher: crypto.Cipher = crypto.createCipheriv(
       cryptoOptions.AES_ALGORITHM,
       derivedKey,
-      iv
+      iv,
     );
 
     const encryptedData: Buffer = Buffer.concat([
@@ -48,19 +48,19 @@ export class CryptoService {
 
   async decrypt(
     masterKey: string,
-    encryptedVault: TEncryptedVault
+    encryptedVault: TEncryptedVault,
   ): Promise<string> {
     const salt: Buffer = Buffer.from(encryptedVault.salt, "hex");
     const iv: Buffer = Buffer.from(encryptedVault.iv, "hex");
     const encryptedDataBuffer: Buffer = Buffer.from(
       encryptedVault.encryptedData,
-      "hex"
+      "hex",
     );
     const derivedKey: Buffer = await this.deriveKey(masterKey, salt);
     const decipher: crypto.Decipher = crypto.createDecipheriv(
       cryptoOptions.AES_ALGORITHM,
       derivedKey,
-      iv
+      iv,
     );
 
     let decryptedBuffer: Buffer;

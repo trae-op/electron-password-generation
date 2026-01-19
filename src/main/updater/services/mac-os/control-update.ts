@@ -1,9 +1,8 @@
-import { Injectable } from "../../../@core/decorators/injectable.js";
+import { Injectable, Inject } from "@_traeop_/electron-modular";
 import { messages } from "../../../config.js";
 import { CheckForUpdateService } from "./check-for-update.js";
 import { SendUpdateInfoService } from "../send-update-info.js";
 import { setStore } from "../../../$shared/store.js";
-import { Inject } from "../../../@core/decorators/inject.js";
 import { UPDATER_NOTIFICATION_PROVIDER } from "../../tokens.js";
 import type { TUpdaterNotificationProvider } from "../../types.js";
 
@@ -13,7 +12,7 @@ export class ControlUpdateService {
     private checkForUpdateService: CheckForUpdateService,
     private sendUpdateInfoService: SendUpdateInfoService,
     @Inject(UPDATER_NOTIFICATION_PROVIDER)
-    private notificationProvider: TUpdaterNotificationProvider
+    private notificationProvider: TUpdaterNotificationProvider,
   ) {}
 
   controlUpdate() {

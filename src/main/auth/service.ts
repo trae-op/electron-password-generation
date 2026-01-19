@@ -1,15 +1,17 @@
 import { BrowserWindow } from "electron";
 import { type AxiosRequestConfig } from "axios";
 import { restApi, timers } from "../config.js";
-import { Injectable } from "../@core/decorators/injectable.js";
-import { Inject } from "../@core/decorators/inject.js";
+import {
+  Injectable,
+  Inject,
+  getWindow as getWindows,
+} from "@_traeop_/electron-modular";
 import {
   deleteFromElectronStorage,
   getElectronStorage,
   deleteStore,
 } from "../$shared/store.js";
 import { ipcWebContentsSend } from "../$shared/utils.js";
-import { getWindow as getWindows } from "../@core/control-window/receive.js";
 import { AUTH_REST_API_PROVIDER } from "./tokens.js";
 import type { TAuthRestApiProvider } from "./types.js";
 
@@ -17,7 +19,7 @@ import type { TAuthRestApiProvider } from "./types.js";
 export class AuthService {
   constructor(
     @Inject(AUTH_REST_API_PROVIDER)
-    private restApiProvider: TAuthRestApiProvider
+    private restApiProvider: TAuthRestApiProvider,
   ) {}
 
   private getAuthorization(): AxiosRequestConfig["headers"] {
@@ -39,7 +41,7 @@ export class AuthService {
       {
         headers: this.getAuthorization(),
         isCache: true,
-      }
+      },
     );
 
     if (response.error !== undefined) {
@@ -54,7 +56,7 @@ export class AuthService {
   }
 
   checkAuthenticated(
-    window: BrowserWindow
+    window: BrowserWindow,
   ): { isAuthenticated: boolean } | undefined {
     const cacheAccess = this.cacheAccess();
     if (cacheAccess !== undefined) {

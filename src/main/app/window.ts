@@ -1,8 +1,10 @@
 import { app, BrowserWindow, Event } from "electron";
-import { WindowManager } from "../@core/decorators/window-manager.js";
-import { Inject } from "../@core/decorators/inject.js";
+import {
+  Inject,
+  WindowManager,
+  destroyWindows,
+} from "@_traeop_/electron-modular";
 import { getElectronStorage } from "../$shared/store.js";
-import { destroyWindows } from "../@core/control-window/destroy.js";
 import { ipcMainOn, ipcWebContentsSend, isDev } from "../$shared/utils.js";
 import { menu } from "../config.js";
 import type { TWindowManager } from "../types.js";
@@ -36,7 +38,8 @@ export class AppWindow implements TWindowManager {
     @Inject(MENU_PROVIDER) private readonly menuProvider: TMenuProvider,
     @Inject(TRAY_PROVIDER) private readonly trayProvider: TTrayProvider,
     @Inject(AUTH_PROVIDER) private readonly authProvider: TAuthProvider,
-    @Inject(UPDATER_PROVIDER) private readonly updaterProvider: TUpdaterProvider
+    @Inject(UPDATER_PROVIDER)
+    private readonly updaterProvider: TUpdaterProvider,
   ) {
     this.updaterProvider.setFeedUrl();
     this.updaterProvider.controlUpdateWindowsPlatform();
@@ -99,7 +102,7 @@ export class AppWindow implements TWindowManager {
         }
 
         return item;
-      })
+      }),
     );
   }
 
@@ -134,7 +137,7 @@ export class AppWindow implements TWindowManager {
         }
 
         return item;
-      })
+      }),
     );
   }
 

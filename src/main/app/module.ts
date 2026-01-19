@@ -1,4 +1,4 @@
-import { RgModule } from "../@core/decorators/rg-module.js";
+import { RgModule } from "@_traeop_/electron-modular";
 import { MenuModule } from "../menu/module.js";
 import { TrayModule } from "../tray/module.js";
 import { TrayService } from "../tray/service.js";
@@ -64,7 +64,7 @@ import type {
       useFactory: (
         setFeedUrlService: SetFeedUrlService,
         checkForUpdatesService: CheckForUpdatesService,
-        controlUpdateWindowsPlatformService: ControlUpdateWindowsPlatformService
+        controlUpdateWindowsPlatformService: ControlUpdateWindowsPlatformService,
       ): TUpdaterProvider => ({
         setFeedUrl: () => setFeedUrlService.setFeedURL(),
         checkForUpdates: () => checkForUpdatesService.checkForUpdates(),

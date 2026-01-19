@@ -1,6 +1,6 @@
 import { app } from "electron";
 import path from "node:path";
-import { WindowManager } from "../@core/decorators/window-manager.js";
+import { WindowManager } from "@_traeop_/electron-modular";
 import { isDev } from "../$shared/utils.js";
 import type { TWindowManager } from "../types.js";
 
@@ -19,7 +19,7 @@ import type { TWindowManager } from "../types.js";
     app.getAppPath(),
     isDev()
       ? "./src/main/app-preload/spinner.html"
-      : "../dist-main/spinner.html"
+      : "../dist-main/spinner.html",
   )}`,
 })
 export class AppPreloadWindow implements TWindowManager {

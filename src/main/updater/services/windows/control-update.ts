@@ -1,11 +1,10 @@
 import { dialog } from "electron";
 import pkg from "electron-updater";
-import { Injectable } from "../../../@core/decorators/injectable.js";
+import { Injectable, Inject } from "@_traeop_/electron-modular";
 import { messages } from "../../../config.js";
 import { SendUpdateInfoService } from "../send-update-info.js";
 import { setStore } from "../../../$shared/store.js";
 import { isDev, isPlatform } from "../../../$shared/utils.js";
-import { Inject } from "../../../@core/decorators/inject.js";
 import { UPDATER_NOTIFICATION_PROVIDER } from "../../tokens.js";
 import type { TUpdaterNotificationProvider } from "../../types.js";
 
@@ -16,7 +15,7 @@ export class ControlUpdateWindowsPlatformService {
   constructor(
     private sendUpdateInfoService: SendUpdateInfoService,
     @Inject(UPDATER_NOTIFICATION_PROVIDER)
-    private notificationProvider: TUpdaterNotificationProvider
+    private notificationProvider: TUpdaterNotificationProvider,
   ) {}
 
   controlUpdate() {

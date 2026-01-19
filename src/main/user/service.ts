@@ -1,7 +1,6 @@
 import { type AxiosRequestConfig } from "axios";
-import { messages, restApi } from "../config.js";
-import { Injectable } from "../@core/decorators/injectable.js";
-import { Inject } from "../@core/decorators/inject.js";
+import { restApi } from "../config.js";
+import { Injectable, Inject } from "@_traeop_/electron-modular";
 import { getElectronStorage } from "../$shared/store.js";
 import { USER_REST_API_PROVIDER } from "./tokens.js";
 import type { TUserRestApiProvider } from "./types.js";
@@ -10,7 +9,7 @@ import type { TUserRestApiProvider } from "./types.js";
 export class UserService {
   constructor(
     @Inject(USER_REST_API_PROVIDER)
-    private restApiProvider: TUserRestApiProvider
+    private restApiProvider: TUserRestApiProvider,
   ) {}
 
   private getAuthorization(): AxiosRequestConfig["headers"] {
@@ -34,7 +33,7 @@ export class UserService {
       {
         headers: this.getAuthorization(),
         isCache: true,
-      }
+      },
     );
 
     if (response.error !== undefined) {

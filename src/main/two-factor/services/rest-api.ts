@@ -1,8 +1,7 @@
 import { type AxiosRequestConfig } from "axios";
 import { messages, restApi } from "../../config.js";
-import { Injectable } from "../../@core/decorators/injectable.js";
+import { Injectable, Inject } from "@_traeop_/electron-modular";
 import { getElectronStorage } from "../../$shared/store.js";
-import { Inject } from "../../@core/decorators/inject.js";
 import type {
   TResponseGenerate,
   TParamsAuthenticate,
@@ -17,7 +16,7 @@ import type { TTwoFactorRestApiProvider } from "../types.js";
 export class TwoFactorRestApiService {
   constructor(
     @Inject(TWO_FACTOR_REST_API_PROVIDER)
-    private restApiProvider: TTwoFactorRestApiProvider
+    private restApiProvider: TTwoFactorRestApiProvider,
   ) {}
 
   private getAuthorization(): AxiosRequestConfig["headers"] {
@@ -38,7 +37,7 @@ export class TwoFactorRestApiService {
       `${restApi.urls.base}${restApi.urls.baseApi}${restApi.urls.auth.base}${restApi.urls.auth.twoFactor}${restApi.urls.auth.generate}`,
       {
         headers: this.getAuthorization(),
-      }
+      },
     );
 
     if (response.error !== undefined) {
@@ -61,7 +60,7 @@ export class TwoFactorRestApiService {
       body,
       {
         headers: this.getAuthorization(),
-      }
+      },
     );
 
     if (response.error !== undefined) {
@@ -84,7 +83,7 @@ export class TwoFactorRestApiService {
       body,
       {
         headers: this.getAuthorization(),
-      }
+      },
     );
 
     if (response.error !== undefined) {

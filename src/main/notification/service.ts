@@ -1,6 +1,6 @@
 import { Notification, type NotificationConstructorOptions } from "electron";
 import path from "node:path";
-import { Injectable } from "../@core/decorators/injectable.js";
+import { Injectable } from "@_traeop_/electron-modular";
 import { icons } from "../config.js";
 import { getAssetsPath } from "../$shared/pathResolver.js";
 
@@ -17,7 +17,7 @@ export class NotificationService {
   }
 
   setNotification(
-    options: Partial<NotificationConstructorOptions>
+    options: Partial<NotificationConstructorOptions>,
   ): Notification | undefined {
     if (notification !== undefined) {
       notification = Object.assign(notification, options);

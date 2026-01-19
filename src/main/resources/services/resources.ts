@@ -1,8 +1,7 @@
 import { dialog } from "electron";
 import { type AxiosRequestConfig } from "axios";
 import { restApi } from "../../config.js";
-import { Injectable } from "../../@core/decorators/injectable.js";
-import { Inject } from "../../@core/decorators/inject.js";
+import { Injectable, Inject } from "@_traeop_/electron-modular";
 import { getElectronStorage } from "../../$shared/store.js";
 import type { TPostBody, TPutBody } from "./types.js";
 import { RESOURCES_REST_API_PROVIDER } from "../tokens.js";
@@ -12,7 +11,7 @@ import type { TResourcesRestApiProvider } from "../types.js";
 export class ResourcesService {
   constructor(
     @Inject(RESOURCES_REST_API_PROVIDER)
-    private restApiProvider: TResourcesRestApiProvider
+    private restApiProvider: TResourcesRestApiProvider,
   ) {}
 
   private getAuthorization(): AxiosRequestConfig["headers"] {
@@ -35,7 +34,7 @@ export class ResourcesService {
       }${restApi.urls.resources.byId(id)}`,
       {
         headers: this.getAuthorization(),
-      }
+      },
     );
 
     if (response.error !== undefined) {
@@ -56,7 +55,7 @@ export class ResourcesService {
       }${restApi.urls.resources.byId(id)}`,
       {
         headers: this.getAuthorization(),
-      }
+      },
     );
 
     if (response.error !== undefined) {
@@ -76,7 +75,7 @@ export class ResourcesService {
       body,
       {
         headers: this.getAuthorization(),
-      }
+      },
     );
 
     if (response.error !== undefined) {
@@ -92,7 +91,7 @@ export class ResourcesService {
 
   async put<R extends TResource>(
     id: string,
-    body: TPutBody
+    body: TPutBody,
   ): Promise<R | undefined> {
     const response = await this.restApiProvider.put<R>(
       `${restApi.urls.base}${restApi.urls.baseApi}${
@@ -101,7 +100,7 @@ export class ResourcesService {
       body,
       {
         headers: this.getAuthorization(),
-      }
+      },
     );
 
     if (response.error !== undefined) {
@@ -121,7 +120,7 @@ export class ResourcesService {
       {
         headers: this.getAuthorization(),
         isCache: true,
-      }
+      },
     );
 
     if (response.error !== undefined) {

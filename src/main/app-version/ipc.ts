@@ -1,6 +1,8 @@
 import { app } from "electron";
-import { IpcHandler } from "../@core/decorators/ipc-handler.js";
-import type { TIpcHandlerInterface } from "../@core/types/ipc-handler.js";
+import {
+  IpcHandler,
+  type TIpcHandlerInterface,
+} from "@_traeop_/electron-modular";
 import { ipcMainHandle } from "../$shared/utils.js";
 
 @IpcHandler()

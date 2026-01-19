@@ -1,4 +1,4 @@
-import { RgModule } from "../@core/decorators/rg-module.js";
+import { RgModule } from "@_traeop_/electron-modular";
 import { TwoFactorIpc } from "./ipc.js";
 import { TwoFactorQAWindow } from "./windows/qa.js";
 import { TwoFactorVerifyWindow } from "./windows/verify.js";
@@ -31,7 +31,7 @@ import type {
     {
       provide: TWO_FACTOR_REST_API_PROVIDER,
       useFactory: (
-        restApiService: RestApiService
+        restApiService: RestApiService,
       ): TTwoFactorRestApiProvider => ({
         get: (endpoint, options) => restApiService.get(endpoint, options),
         post: (endpoint, data, options) =>

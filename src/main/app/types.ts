@@ -21,7 +21,7 @@ export type TTrayProvider = {
 
 export type TAuthProvider = {
   checkAuthenticated: (
-    window: BrowserWindow
+    window: BrowserWindow,
   ) => { isAuthenticated: boolean } | undefined;
   setCheckAccessInterval: (window: BrowserWindow) => void;
   logout: (window: BrowserWindow) => void;

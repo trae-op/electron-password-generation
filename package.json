@@ -1,7 +1,7 @@
 {
   "name": "electron-gp",
   "private": true,
-  "version": "0.3.24",
+  "version": "1.3.25",
   "type": "module",
   "main": "dist-main/app.js",
   "author": "traeop",
@@ -23,6 +23,7 @@
     "build:linux": "npm run transpile:electron && npm run build && electron-builder --linux --x64"
   },
   "dependencies": {
+    "@_traeop_/electron-modular": "^1.0.8",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^7.0.1",
@@ -37,8 +38,7 @@
     "lodash.merge": "^4.6.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.4.1",
-    "reflect-metadata": "^0.2.2"
+    "react-router-dom": "^7.4.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

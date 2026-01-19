@@ -1,4 +1,4 @@
-import { WindowManager } from "../../@core/decorators/window-manager.js";
+import { WindowManager } from "@_traeop_/electron-modular";
 import type { TWindowManager } from "../../types.js";
 
 @WindowManager<TWindows["addResource"]>({

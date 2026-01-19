@@ -1,10 +1,10 @@
 import { ipcMainOn } from "../../$shared/utils.js";
-import { IpcHandler } from "../../@core/decorators/ipc-handler.js";
-import type {
-  TIpcHandlerInterface,
-  TParamOnInit,
-} from "../../@core/types/ipc-handler.js";
-import { TWindowFactory } from "../../@core/types/window-factory.js";
+import {
+  IpcHandler,
+  TWindowFactory,
+  type TIpcHandlerInterface,
+  type TParamOnInit,
+} from "@_traeop_/electron-modular";
 import { CacheWindowsService } from "../services/cacheWindows.js";
 
 @IpcHandler()
@@ -36,7 +36,7 @@ export class ResourcesOpenIpc implements TIpcHandlerInterface {
       if (updateResourceWindow !== undefined) {
         this.cacheWindowsService.setResourceWindows(
           "updateResourceWindow",
-          updateResourceWindow
+          updateResourceWindow,
         );
       }
     });
@@ -49,7 +49,7 @@ export class ResourcesOpenIpc implements TIpcHandlerInterface {
       if (addResourceWindow !== undefined) {
         this.cacheWindowsService.setResourceWindows(
           "addResourceWindow",
-          addResourceWindow
+          addResourceWindow,
         );
       }
     });
@@ -64,7 +64,7 @@ export class ResourcesOpenIpc implements TIpcHandlerInterface {
       if (deleteResourceWindow !== undefined) {
         this.cacheWindowsService.setResourceWindows(
           "deleteResourceWindow",
-          deleteResourceWindow
+          deleteResourceWindow,
         );
       }
     });

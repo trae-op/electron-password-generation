@@ -1,4 +1,4 @@
-import { Injectable } from "../../@core/decorators/injectable.js";
+import { Injectable } from "@_traeop_/electron-modular";
 import { getStore } from "../../$shared/store.js";
 
 @Injectable()

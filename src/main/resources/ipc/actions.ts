@@ -4,15 +4,17 @@ import {
   ipcMainOn,
   ipcWebContentsSend,
 } from "../../$shared/utils.js";
-import { IpcHandler } from "../../@core/decorators/ipc-handler.js";
-import { getWindow as getWindows } from "../../@core/control-window/receive.js";
-import type { TIpcHandlerInterface } from "../../@core/types/ipc-handler.js";
+import {
+  IpcHandler,
+  getWindow as getWindows,
+  Inject,
+  type TIpcHandlerInterface,
+} from "@_traeop_/electron-modular";
 import { ResourcesService } from "../services/resources.js";
 import { TEncryptedVault } from "../services/types.js";
 import { CacheWindowsService } from "../services/cacheWindows.js";
 import { getStore, getElectronStorage } from "../../$shared/store.js";
 import { restApi } from "../../config.js";
-import { Inject } from "../../@core/decorators/inject.js";
 import {
   RESOURCES_CRYPTO_PROVIDER,
   RESOURCES_TRAY_PROVIDER,
@@ -30,7 +32,7 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
     private cryptoProvider: TResourcesCryptoProvider,
     private cacheWindowsService: CacheWindowsService,
     @Inject(RESOURCES_TRAY_PROVIDER)
-    private trayProvider: TResourcesTrayProvider
+    private trayProvider: TResourcesTrayProvider,
   ) {}
 
   onInit() {
@@ -47,7 +49,7 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
   private ipcCancelDeleteResource(): void {
     ipcMainOn("cancelDeleteResource", () => {
       const deleteResourceWindow = this.cacheWindowsService.getResourceWindows(
-        "deleteResourceWindow"
+        "deleteResourceWindow",
       );
 
       if (deleteResourceWindow !== undefined) {
@@ -60,7 +62,7 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
     ipcMainHandle("putResource", async (payload) => {
       let encryptedVault: TEncryptedVault | undefined;
       const updateResourceWindow = this.cacheWindowsService.getResourceWindows(
-        "updateResourceWindow"
+        "updateResourceWindow",
       );
       const masterKey = getStore("masterKey");
 
@@ -73,7 +75,7 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
       ) {
         encryptedVault = await this.cryptoProvider.encrypt(
           masterKey,
-          payload.key
+          payload.key,
         );
       }
 
@@ -125,7 +127,7 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
       ) {
         encryptedVault = await this.cryptoProvider.encrypt(
           masterKey,
-          payload.key
+          payload.key,
         );
       }
 
@@ -229,7 +231,7 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
   private ipcDeleteResource(mainWindow: BrowserWindow | undefined): void {
     ipcMainHandle("deleteResource", async (payload) => {
       const deleteResourceWindow = this.cacheWindowsService.getResourceWindows(
-        "deleteResourceWindow"
+        "deleteResourceWindow",
       );
 
       if (
@@ -273,7 +275,7 @@ export class ResourcesActionsIpc implements TIpcHandlerInterface {
         }
 
         return item;
-      })
+      }),
     );
   }
 

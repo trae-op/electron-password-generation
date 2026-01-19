@@ -1,4 +1,4 @@
-import { RgModule } from "../@core/decorators/rg-module.js";
+import { RgModule } from "@_traeop_/electron-modular";
 import { CheckForUpdateService } from "./services/mac-os/check-for-update.js";
 import { VerifyService } from "./services/mac-os/verify.js";
 import { CreateLatestVersionFolderService } from "./services/mac-os/create-latest-version-folder.js";
@@ -53,7 +53,7 @@ import type {
     {
       provide: UPDATER_NOTIFICATION_PROVIDER,
       useFactory: (
-        notificationService: NotificationService
+        notificationService: NotificationService,
       ): TUpdaterNotificationProvider => ({
         initNotification: () => notificationService.initNotification(),
         setNotification: (options) =>
