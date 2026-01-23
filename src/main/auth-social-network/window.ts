@@ -20,6 +20,9 @@ import type { TAuthSocialNetworkTwoFactorProvider } from "./types.js";
     title: "",
     width: 400,
     height: 400,
+    webPreferences: {
+      sandbox: true,
+    },
   },
 })
 export class AuthSocialNetworkWindow implements TWindowManager {
